@@ -22,4 +22,10 @@
   - ./bash2zsh.sh
   - ./zoxide_install.sh
   - git submodule sync --recursive
+  - git submodule update --init --recursive
+  - >
+    git clean -fdx
+    vim/pack/vendor/start/
+    zsh/plugins/
+    tmux/plugins/
   # the following have to run after linking ~/.gitconfig
