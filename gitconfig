@@ -8,3 +8,5 @@
 [alias]
 	st = status -sb
 	cmm = commit -m
+[core]
+	editor = vim
