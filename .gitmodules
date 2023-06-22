@@ -29,3 +29,9 @@
 [submodule "tmux/plugins/tmux-cpu"]
 	path = tmux/plugins/tmux-cpu
 	url = https://github.com/tmux-plugins/tmux-cpu.git
+[submodule "vim/pack/vendor/start/vim-tmux-clipboard"]
+	path = vim/pack/vendor/start/vim-tmux-clipboard
+	url = https://github.com/roxma/vim-tmux-clipboard.git
+[submodule "vim/pack/vendor/start/vim-tmux-focus-events"]
+	path = vim/pack/vendor/start/vim-tmux-focus-events
+	url = https://github.com/tmux-plugins/vim-tmux-focus-events.git
