@@ -1,0 +1,24 @@
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/plugins/zsh-autosuggestions
+echo 'source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' 
+
+git clone https://github.com/marlonrichert/zsh-autocomplete.git ~/.zsh/plugins/zsh-autocomplete
+source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting
+source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export https_proxy=http://127.0.0.1:6152;
+export http_proxy=http://127.0.0.1:6152;
+export all_proxy=socks5://127.0.0.1:6153
+
+git submodule add -f https://github.com/tmux-plugins/tmux-cpu.git tmux/plugins/tmux-cpu
+git submodule add -f https://github.com/tmux-plugins/tmux-net-speed.git tmux/plugins/tmux-net-speed
+git submodule add -f https://github.com/tmux-plugins/tmux-sensible.git tmux/plugins/tmux-sensible
+git submodule add -f https://github.com/tmux-plugins/tpm.git tmux/plugins/tpm
+git submodule add -f https://github.com/preservim/nerdtree.git vim/pack/vendor/start/nerdtree
+git submodule add -f https://github.com/romkatv/powerlevel10k.git zsh/plugins/powerlevel10k
+git submodule add -f https://github.com/marlonrichert/zsh-autocomplete.git zsh/plugins/zsh-autocomplete
+git submodule add -f https://github.com/zsh-users/zsh-autosuggestions zsh/plugins/zsh-autosuggestions
+git submodule add -f https://github.com/zsh-users/zsh-syntax-highlighting.git zsh/plugins/zsh-syntax-highlighting
+git submodule add -f https://github.com/roxma/vim-tmux-clipboard.git vim/pack/vendor/start/vim-tmux-clipboard
+git submodule add -f https://github.com/tmux-plugins/vim-tmux-focus-events.git vim/pack/vendor/start/vim-tmux-focus-events
