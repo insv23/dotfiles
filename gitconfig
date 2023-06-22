@@ -7,3 +7,4 @@
 
 [alias]
 	st = status -sb
+	cmm = commit -m
