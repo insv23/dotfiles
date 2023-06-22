@@ -58,10 +58,10 @@ pxyoff() {
 }
 pxyon() {
     export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
-    export http_proxy="http://$HOSTIP:$pxy_http_port"
-    export https_proxy="http://$HOSTIP:$pxy_http_port"
-    export all_proxy="socks5://$HOSTIP:$pxy_all_port"
-    echo -e "\033[32m[√] Proxy On\033[0m"
+    export http_proxy="http://$pxy_ip:$pxy_http_port"
+    export https_proxy="http://$pxy_ip:$pxy_http_port"
+    export all_proxy="socks5://$pxy_ip:$pxy_all_port"
+    echo -e "\033[32m[√] Proxy On $pxy_ip:$pxy_http_port/$pxy_all_port\033[0m"
 }
 
 # docker
