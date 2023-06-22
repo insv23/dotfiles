@@ -1,6 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-apt update
-apt install zsh -y
-chsh -s /bin/zsh
-echo $SHELL
+if [ "$(uname)" == "Linux" ] && [ "$(lsb_release -si)" == "Ubuntu" ] && [ "$(basename $SHELL)" == "bash" ]
+then
+    apt update
+    apt install zsh -y
+    chsh -s /bin/zsh
+    echo $SHELL
+fi

@@ -18,5 +18,8 @@
     ~/.zshrc:
             
 - shell:
+  - touch ~/.hushlogin
+  - ./bash2zsh.sh
+  - ./zoxide_install.sh
   - git submodule sync --recursive
   # the following have to run after linking ~/.gitconfig
