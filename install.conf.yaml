@@ -8,6 +8,7 @@
 - link:
     ~/.bashrc:
     ~/.gitconfig:
+    ~/.hammerspoon:
     ~/.profile:
     ~/.p10k.zsh:
     ~/.tmux:
