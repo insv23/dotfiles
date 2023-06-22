@@ -1,3 +1,9 @@
 [user]
 	name = insv
 	email = insv23@outlook.com
+
+[init]
+	defaultBranch = main
+
+[alias]
+	st = status -sb
