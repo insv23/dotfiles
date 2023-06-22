@@ -21,5 +21,6 @@
   - touch ~/.hushlogin
   - ./bash2zsh.sh
   - ./zoxide_install.sh
-  - git submodule sync --recursive
+  - git submodule init
+  - git submodule update
   # the following have to run after linking ~/.gitconfig
