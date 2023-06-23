@@ -20,6 +20,7 @@
             
 - shell:
   - touch ~/.hushlogin
+  - touch ~/.walled
   - ./bash2zsh.sh
   - ./zoxide_install.sh
   - git submodule sync --recursive
