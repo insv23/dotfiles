@@ -9,6 +9,7 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 source ~/.zsh/aliases.sh
+source ~/.zsh/mac_aliases.sh
 
 source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 
