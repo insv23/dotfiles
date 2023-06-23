@@ -108,8 +108,8 @@
     time                    # current time
     # =========================[ Line #2 ]=========================
     newline
-    load                  # CPU load
-    ram                   # free RAM
+    #load                  # CPU load
+    #ram                   # free RAM
     context                 # user@hostname
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
