@@ -14,6 +14,9 @@ alias mv='mv -i'
 # git related aliases
 alias gag='git exec ag'
 
+# zshrc
+alias szsh='source ~/.zshrc'
+
 # Update dotfiles
 dfu() {
     (
