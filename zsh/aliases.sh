@@ -40,12 +40,13 @@ mkcd() {
 
 # proxy
 # Mac, WSL, Linux
-if (($(uname | grep -c "Darwin") == 1)); then
+if uname -a | grep -q "Darwin"; then
 	# if (($(uname) == Darwin)); then // Not Work on Linux: https://blog.insv.xyz/shell-str-compare
 	export pxy_ip=127.0.0.1
 	export pxy_http_port=8888
 	export pxy_all_port=8889
-elif (($(cat /proc/version | grep -c "WSL") == 1)); then
+# elif (($(cat /proc/version | grep -c "WSL") == 1)); then
+elif cat /proc/version | grep -q "WSL"; then
 	export pxy_ip=$(cat /etc/resolv.conf | grep "nameserver" | cut -f 2 -d " ")
 	export pxy_http_port=7890
 	export pxy_all_port=7890
