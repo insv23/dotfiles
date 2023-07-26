@@ -7,7 +7,7 @@
 
 - link:
     ~/.bashrc:
-    ~/.config/nvim/:
+    ~/.config/nvim/: ./nvim
     ~/.gitconfig:
     ~/.hammerspoon:
     ~/.profile:
