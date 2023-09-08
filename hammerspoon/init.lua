@@ -1,3 +1,3 @@
 require('reload')
-require('window')
+-- require('window')
 -- require('HoldCmdQ')
