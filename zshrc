@@ -12,7 +12,7 @@ set -o vi
 
 source ~/.zsh/aliases.sh
 source ~/.zsh/mac_aliases.sh
-source ~/.zsh/proxy.sh
+# source ~/.zsh/proxy.sh
 
 source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 
