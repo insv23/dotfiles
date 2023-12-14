@@ -1,4 +1,4 @@
-# ~/.profile: executed by Bourne-compatible login shells.
+# ~/.profile: executed by Bourne-compatble login shells.
 
 if [ "$BASH" ]; then
   if [ -f ~/.bashrc ]; then
