@@ -13,6 +13,7 @@ alias mv='mv -i'
 
 # git related aliases
 alias gag='git exec ag'
+alias ginsv='git config user.name "insv";git config user.email "insv23@outlook.com"'
 
 # zshrc
 alias szsh='source ~/.zshrc'
