@@ -7,6 +7,7 @@
 
 - link:
     ~/.bashrc:
+    ~/.config/nvim/: ./nvim
     ~/.gitconfig:
     ~/.hammerspoon:
     ~/.profile:
@@ -20,9 +21,10 @@
             
 - shell:
   - touch ~/.hushlogin
-  - touch ~/.walled
-  - ./bash2zsh.sh
-  - ./zsh/zoxide_install.sh
+  - ./zsh/install/bash2zsh.sh
+  - ./zsh/install/zoxide.sh
+  - ./zsh/install/brew.sh
+  - ./zsh/install/lazyvim.sh
   - git submodule sync --recursive
   - git submodule update --init --recursive
   - >
