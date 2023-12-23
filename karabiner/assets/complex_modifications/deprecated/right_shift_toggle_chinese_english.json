@@ -1,0 +1,29 @@
+{
+  "title": "Toggle Chinese English With left_shift",
+  "rules": [
+    {
+      "description": "Shift to Ctrl+Space (short press)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "left_shift"
+          },
+          "to_if_alone": [
+            {
+              "key_code": "spacebar",
+              "modifiers": [
+                "left_control"
+              ]
+            }
+          ],
+          "to_if_held_down": [
+            {
+              "key_code": "left_shift"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

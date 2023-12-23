@@ -1,0 +1,34 @@
+{
+  "title": "Tap Shift_L As F18 → Switch Input Source",
+  "rules": [
+    {
+      "description": "Tap Shift_L As F18",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "left_shift",
+            "modifiers": {
+              "optional": ["caps_lock"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_shift"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "f18"
+            }
+          ],
+          "to_if_held_down": [
+            {
+              "key_code": "left_shift"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}
