@@ -12,6 +12,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 
 # git related aliases
+# in `../gitconfig`
 alias gag='git exec ag'
 alias ginsv='git config user.name "insv";git config user.email "insv23@outlook.com"'
 
