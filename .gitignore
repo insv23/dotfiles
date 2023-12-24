@@ -4,3 +4,5 @@
 # karabiner
 automatic_backups/
 karabiner.json
+
+# nvim/lazy-lock.json
