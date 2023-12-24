@@ -19,6 +19,9 @@ alias ginsv='git config user.name "insv";git config user.email "insv23@outlook.c
 # zshrc
 alias szsh='source ~/.zshrc'
 
+# nvim
+alias nv='nvim'
+
 # Update dotfiles
 dfu() {
 	(
@@ -53,9 +56,10 @@ elif cat /proc/version | grep -q "WSL"; then
 	export pxy_http_port=7890
 	export pxy_all_port=7890
 else
-    export pxy_ip=127.0.0.1
-    export pxy_http_port=20171
-    export pxy_all_port=20170
+	export pxy_http_port=20171
+	export pxy_all_port=20170
+	export pxy_http_port=20171
+	export pxy_all_port=20170
 fi
 pxyoff() {
 	unset http_proxy
