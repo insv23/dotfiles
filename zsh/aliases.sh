@@ -15,6 +15,8 @@ alias mv='mv -i'
 # in `../gitconfig`
 alias gag='git exec ag'
 alias ginsv='git config user.name "insv";git config user.email "insv23@outlook.com"'
+# cd to git root directory
+alias cdgr='cd "$(git root)"'
 
 # zshrc
 alias szsh='source ~/.zshrc'
@@ -29,8 +31,12 @@ dfu() {
 	)
 }
 
-# cd to git root directory
-alias cdgr='cd "$(git root)"'
+# pyenv-virtualenv
+alias pyve='pyenv virtualenv'
+alias pyvels='pyenv virtualenvs'
+alias pyveon='pyenv activate'
+alias pyveoff='pyenv deactivate'
+alias pyverm='pyenv virtualenv-delete'
 
 # Create a directory and cd into it
 mkcd() {

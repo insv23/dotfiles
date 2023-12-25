@@ -23,6 +23,13 @@ source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+# Load pyenv-virtualenv automatically
+eval "$(pyenv virtualenv-init -)"
+
 export PATH="$HOME/.local/bin:$PATH"
 eval "$(zoxide init zsh)"
 eval "$(thefuck --alias)"
