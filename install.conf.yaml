@@ -3,7 +3,7 @@
       create: true
       relink: true
 
-- clean: ['~']
+- clean: ["~"]
 
 - link:
     ~/.bashrc:
@@ -18,19 +18,20 @@
     ~/.vim:
     ~/.vimrc:
     ~/.zsh:
+    ~/.zshenv: ./zsh/zshenv
     ~/.zshrc:
-            
+
 - shell:
-  - touch ~/.hushlogin
-  - ./zsh/install/bash2zsh.sh
-  - ./zsh/install/zoxide.sh
-  - ./zsh/install/brew.sh
-  - ./zsh/install/lazyvim.sh
-  - git submodule sync --recursive
-  - git submodule update --init --recursive
-  - >
-    git clean -fdx
-    vim/pack/vendor/start/
-    zsh/plugins/
-    tmux/plugins/
+    - touch ~/.hushlogin
+    - ./zsh/install/bash2zsh.sh
+    - ./zsh/install/zoxide.sh
+    - ./zsh/install/brew.sh
+    - ./zsh/install/lazyvim.sh
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
+    - >
+      git clean -fdx
+      vim/pack/vendor/start/
+      zsh/plugins/
+      tmux/plugins/
   # the following have to run after linking ~/.gitconfig
