@@ -1,4 +1,5 @@
 require('reload')
 require('autoPlayClickToKeepJamoAlive')
+require('QuickLaunch')
 -- require('window')
 -- require('HoldCmdQ')
