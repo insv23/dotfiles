@@ -7,6 +7,6 @@ hs.hotkey.bind({'alt'}, 'c', function () hs.application.launchOrFocus("cursor") 
 hs.hotkey.bind({'alt'}, 'n', function () hs.application.launchOrFocus("Notion") end)
 hs.hotkey.bind({'alt'}, 't', function () hs.application.launchOrFocus("Telegram") end)
 hs.hotkey.bind({'alt'}, 'w', function () hs.application.launchOrFocus("wechat") end)
-hs.hotkey.bind({'alt'}, 'z', function () hs.application.launchOrFocus("warp") end)
+hs.hotkey.bind({'alt'}, 'z', function () hs.application.launchOrFocus("Termius") end)
 
 hs.hotkey.bind({'ctrl', 'alt'}, 'forwarddelete', function () hs.application.launchOrFocus("Activity Monitor") end)

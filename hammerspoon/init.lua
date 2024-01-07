@@ -1,5 +1,7 @@
 require('reload')
+-- require('configs.menu')
 require('autoPlayClickToKeepJamoAlive')
 require('QuickLaunch')
+require('auxiliary.getInputMethodSourceIDAndAppName')
 -- require('window')
 -- require('HoldCmdQ')
