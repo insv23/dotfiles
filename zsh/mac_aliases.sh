@@ -5,4 +5,5 @@ alias bric='brew install --cask'
 alias bru='brew uninstall'
 
 # cursor
-alias cr='open -a cursor'
+# 在 crusor 中打开 command palette 搜索 `install cursor command`
+alias cr='cursor'
