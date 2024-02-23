@@ -2,7 +2,7 @@
   "title": "Esc to ABC input",
   "rules": [
     {
-      "description": "当 esc 键按下，如果当前不是英文输入法，会先模拟 Shift + Ctrl + Space 键以切换为英文输入法，再发送一个 esc 键",
+      "description": "当 esc 键按下，如果当前不是英文输入法，会先模拟 F18 键以切换为英文输入法，再发送一个 esc 键",
       "manipulators": [
         {
           "conditions": [
@@ -23,8 +23,7 @@
           },
           "to": [
             {
-              "key_code": "spacebar",
-              "modifiers" : ["left_control", "left_shift"]
+              "key_code": "f18"
             },
             {
               "key_code": "escape"

@@ -2,7 +2,7 @@
   "title": "CapsLock (⇪) ",
   "rules": [
     {
-      "description": "Tap CapsLock (⇪) → (⇧⌃⎵ if non-abc,) Escape (⎋); Hold CapsLock (⇪) → Hyper Key (⇧⌃⌥⌘)",
+      "description": "Tap CapsLock (⇪) → (f18 to toggle ABC input if non-abc,) Escape (⎋); Hold CapsLock (⇪) → Hyper Key (⇧⌃⌥⌘)",
       "manipulators": [
         {
           "conditions": [
@@ -27,8 +27,7 @@
           ],
           "to_if_alone": [
             {
-              "key_code": "spacebar",
-              "modifiers" : ["left_control", "left_shift"]
+              "key_code": "f18"
             },
             {
               "key_code": "escape"
