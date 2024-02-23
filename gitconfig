@@ -8,3 +8,6 @@
 	pullom = pull origin main
 [core]
 	editor = vim
+[user]
+	name = insv
+	email = insv23@outlook.com
