@@ -2,6 +2,10 @@
 alias ls='ls --color=auto'
 alias grep='grep --color'
 
+# cd folder
+alias ..='cd ..'
+alias ...='cd ../..'
+
 # ls aliases
 alias ll='ls -lah'
 alias la='ls -A'
