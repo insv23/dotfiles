@@ -1,8 +1,8 @@
 {
-  "title": "Tap Shift_L As F18 → Switch Input Source",
+  "title": "Tap Shift_L As F18 → ABC Input Source",
   "rules": [
     {
-      "description": "Tap Shift_L As F18",
+      "description": "Tap Shift_L to ABC input",
       "manipulators": [
         {
           "from": {

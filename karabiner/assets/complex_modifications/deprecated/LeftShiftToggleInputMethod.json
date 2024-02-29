@@ -1,8 +1,8 @@
 {
-  "title": "Toggle Chinese English With left_shift",
+  "title": "Left shift toggle input method",
   "rules": [
     {
-      "description": "Shift to Ctrl+Space (short press)",
+      "description": "Tap left shift to ",
       "manipulators": [
         {
           "type": "basic",
