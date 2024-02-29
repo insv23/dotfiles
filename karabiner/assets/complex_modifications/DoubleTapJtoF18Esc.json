@@ -1,0 +1,44 @@
+{
+  "title": "连续按两次 J 触发 F18 然后 ESC",
+  "rules": [
+    {
+      "description": "连续按两次 J 等于 先按 F18 再按 ESC",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "optional": ["any"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "j",
+              "lazy": true
+            }
+          ],
+          "parameters": {
+            "basic.to_if_alone_timeout_milliseconds": 250,
+            "basic.to_delayed_action_delay_milliseconds": 250
+          },
+          "to_delayed_action": {
+            "to_if_invoked": [
+              {
+                "key_code": "f18"
+              },
+              {
+                "key_code": "escape"
+              }
+            ],
+            "to_if_canceled": [
+              {
+                "key_code": "escape"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
