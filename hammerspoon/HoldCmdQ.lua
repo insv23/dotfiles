@@ -1,7 +1,7 @@
 -- Hold Cmd q to quit App
 
 -- config: number of seconds to hold Command-Q to quit application
-cmdQDelay = 1
+cmdQDelay = 0.5
 
 cmdQTimer = nil
 cmdQAlert = nil
