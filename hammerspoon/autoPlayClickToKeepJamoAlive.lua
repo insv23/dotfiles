@@ -1,6 +1,7 @@
+-- -- ??? : 与 QuickLaunch, hold cmd Q 冲突，只要 他们 启动，该脚本就不正常工作
+
 -- -- 每隔 x 分钟播放指定的音频文件以保证 Jamo 音箱不关机
 -- -- Jamo 音箱大概 29 mins 不出声就关机
--- -- ??? : 与 QuickLaunch 冲突，只要 Quicklaunch 启动，该脚本不正常工作
 local INTERVAL_MINS = 27
 local audioFile = "./audio/mouse-click.mp3"
 local interval_seconds = 60*INTERVAL_MINS
@@ -10,7 +11,7 @@ local timer = require "hs.timer"
 local notify = require "hs.notify"
 local sound = require "hs.sound"
 
--- 创建一个定时器，每隔10秒触发一次
+-- 创建一个定时器，每隔 x 秒触发一次
 local soundTimer = timer.new(interval_seconds, function()
     
     local outputDeviceName = hs.audiodevice.defaultOutputDevice():name()
