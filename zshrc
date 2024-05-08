@@ -35,6 +35,8 @@ eval "$(zoxide init zsh)"
 
 eval "$(atuin init zsh)"
 
+export PATH="$PATH:/opt/nvim-linux64/bin"
+
 # MUST be sourced at the END of the .zshrc file
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
