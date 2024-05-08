@@ -28,6 +28,8 @@
     - ./zsh/install/zoxide.sh
     - ./zsh/install/brew.sh
     - ./zsh/install/lazyvim.sh
+    - ./zsh/install/atuin.sh
+    - ./zsh/install/pyenv.sh
     - git submodule sync --recursive
     - git submodule update --init --recursive
     - >
