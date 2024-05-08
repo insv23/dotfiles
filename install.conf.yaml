@@ -30,7 +30,7 @@
     - ./zsh/install/lazyvim.sh
     - ./zsh/install/atuin.sh
     - ./zsh/install/pyenv.sh
-    - echo "Do you want to install Docker? (y/n)" && read answer && [ "$answer" = "y" ] && ./zsh/install/docker.sh
+    - ./zsh/install/docker.sh
     - git submodule sync --recursive
     - git submodule update --init --recursive
     - >
