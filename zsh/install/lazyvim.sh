@@ -39,7 +39,7 @@ else
 	echo "sed is not installed, installing..."
 
 	if uname -a | grep -q "Darwin"; then
-		brew install gnu-sed
+		brew install gnu-sed -y
 		echo "sed is installed successfully"
 	else
 		echo "The sed package comes pre-built alongside most Linux distributions."
