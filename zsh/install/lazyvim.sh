@@ -24,7 +24,7 @@ else
 		echo "Neovim is installed successfully"
 
 	elif uname -a | grep -q "Ubuntu"; then
-		sudo apt install neovim
+		sudo apt install neovim -y
 		echo "Neovim is installed successfully"
 
 	else
