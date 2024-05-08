@@ -47,3 +47,14 @@ else
 		echo "If you don’t have it installed by default, install it manually: https://www.hostinger.com/tutorials/how-to-use-linux-sed-command-examples/#How_to_Install_the_sed_Command"
 	fi
 fi
+
+# C compiler
+if command -v gcc &>/dev/null; then
+	echo "gcc is installed"
+else
+	if uname -a | grep -q "Ubuntu"; then
+		sudo apt update
+		sudo apt install -y build-essential
+	fi
+fi
+
