@@ -1,5 +1,5 @@
 {
-  "title": "Tap Shift_L As F18 → ABC Input Source",
+  "title": "Tap Shift_L As F17 → Next Input Source",
   "rules": [
     {
       "description": "Tap Shift_L to ABC input",
@@ -18,7 +18,7 @@
           ],
           "to_if_alone": [
             {
-              "key_code": "f18"
+              "key_code": "f17"
             }
           ],
           "to_if_held_down": [
