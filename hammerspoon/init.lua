@@ -1,6 +1,7 @@
 require('reload')
 require('autoPlayClickToKeepJamoAlive')
--- require('HoldCmdQ')
+require('HoldCmdQ')
+require('NotiClipboard')
 -- require('configs.menu')
 -- require('QuickLaunch')
 -- require('auxiliary.getInputMethodSourceIDAndAppName')
