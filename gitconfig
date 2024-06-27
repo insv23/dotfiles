@@ -2,8 +2,19 @@
 	defaultBranch = main
 
 [alias]
+    drop = restore --
+    dropall = restore -- .
+    unadd = reset HEAD
+    uncmt = reset HEAD^
+    cma = commit --amend
+    ck = checkout
+    ckb = checkout -b
+    sw = switch
+    swc = switch -c
 	st = status -sb
 	cmm = commit -m
+    ll = log --oneline
+    llg = log --oneline --grep
 	pushom = push origin main
 	pullom = pull origin main
 [core]
