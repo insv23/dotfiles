@@ -7,10 +7,13 @@
     unadd = reset HEAD
     uncmt = reset HEAD^
     cma = commit --amend
+    br = branch
+    brd = branch -d
     ck = checkout
     ckb = checkout -b
     sw = switch
     swc = switch -c
+    ri = rebase -i
 	st = status -sb
 	cmm = commit -m
     ll = log --oneline
@@ -19,6 +22,7 @@
 	pullom = pull origin main
 [core]
 	editor = vim
+	autocrlf = input
 [user]
 	name = insv
 	email = insv23@outlook.com
