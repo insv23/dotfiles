@@ -1,5 +1,8 @@
 set nocompatible " not vi compatible
 
+" Use vim builtin color
+colo desert 
+
 "------------------
 " Syntax and indent
 "------------------
