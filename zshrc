@@ -8,7 +8,12 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# vim mode
 set -o vi
+
+# 保证 ls 普通文件/目录/可执行文件/链接文件等显示不同的颜色
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
 
 source ~/.zsh/aliases.sh
 source ~/.zsh/mac_aliases.sh
