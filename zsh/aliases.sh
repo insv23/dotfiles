@@ -21,6 +21,8 @@ alias gag='git exec ag'
 alias ginsv='git config user.name "insv";git config user.email "insv23@outlook.com"'
 # cd to git root directory
 alias cdgr='cd "$(git root)"'
+# create .gitignore template
+function gi() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;}
 
 # zshrc
 alias szsh='source ~/.zshrc'
@@ -34,6 +36,15 @@ dfu() {
 		cd ~/.dotfiles && git pull --ff-only && ./install -q
 	)
 }
+
+# python
+alias py='python'
+alias pym='python -m'
+
+# python venv
+alias pymv='python -m venv venv'
+alias pymva='source venv/bin/activate'
+alias pymvd='deactivate'
 
 # pyenv-virtualenv
 alias pyve='pyenv virtualenv'
