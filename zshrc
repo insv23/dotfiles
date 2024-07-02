@@ -7,9 +7,11 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-
-# vim mode
+# vim style 
 set -o vi
+
+# vim as default editor
+export EDITOR='vim'
 
 # 保证 ls 普通文件/目录/可执行文件/链接文件等显示不同的颜色
 export CLICOLOR=1
