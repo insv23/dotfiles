@@ -106,3 +106,8 @@ function dkspp() {
 	docker stop $id
 	docker container prune
 }
+
+# Tmux
+alias tmat='tmux at -t'
+alias tmnew='tmux new -s'
+alias tmkt='tmux kill-session -t'
