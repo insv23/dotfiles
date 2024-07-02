@@ -10,6 +10,7 @@
     ~/.config/atuin: ./atuin
     ~/.config/karabiner/: ./karabiner
     ~/.config/nvim/: ./nvim
+    ~/.config/yazi/: ./yazi
     ~/.gitconfig:
     ~/.hammerspoon:
     ~/.profile:
