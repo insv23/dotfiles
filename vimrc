@@ -1,7 +1,17 @@
 set nocompatible " not vi compatible
 
-" Use vim builtin color
-colo desert 
+" -----------------
+"  Style
+" -----------------
+colo desert " Use vim builtin color theme 'deserh'
+
+" 在插入模式下使用竖线光标
+let &t_SI = "\e[6 q"
+" 在替换模式下使用下划线光标
+let &t_SR = "\e[4 q"
+" 在普通模式下使用块状光标
+let &t_EI = "\e[2 q"
+
 
 "------------------
 " Syntax and indent
