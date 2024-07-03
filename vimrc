@@ -1,7 +1,14 @@
 set nocompatible " not vi compatible
 
-" Use vim builtin color
-colo desert 
+" -----------------
+"  Style
+" -----------------
+" colo desert               " Use vim builtin color theme 'desert'
+
+let &t_SI = "\e[6 q"        " 在插入模式下使用竖线光标
+let &t_SR = "\e[4 q"        " 在替换模式下使用下划线光标
+let &t_EI = "\e[2 q"        " 在普通模式下使用块状光标
+
 
 "------------------
 " Syntax and indent
@@ -22,41 +29,45 @@ set autoindent
 "---------------------
 " Basic editing config
 "---------------------
-set noswapfile " no swap file
-set shortmess+=I " disable startup message
-set nu " number lines
-set rnu " relative line numbering
-set incsearch " incremental search (as string is being typed)
-set hls " highlight search
-set listchars=tab:>>,nbsp:~ " set list to see tabs and non-breakable spaces
-set lbr " line break
-set scrolloff=5 " show lines above and below cursor (when possible)
-set noshowmode " hide mode
+set clipboard=unnamed           " system clipboard
+set noswapfile                  " no swap file
+set shortmess+=I                " disable startup message
+set nu                          " number lines
+set rnu                         " relative line numbering
+set incsearch                   " incremental search (as string is being typed)
+set hls                         " highlight search
+set listchars=tab:>>,nbsp:~     " set list to see tabs and non-breakable spaces
+set lbr                         " line break
+set scrolloff=5                 " show lines above and below cursor (when possible)
+set noshowmode                  " hide mode
 set laststatus=2
-set backspace=indent,eol,start " allow backspacing over everything
+set backspace=indent,eol,start  " allow backspacing over everything
 set timeout timeoutlen=1000 ttimeoutlen=100 " fix slow O inserts
-set lazyredraw " skip redrawing screen in some cases
-set autochdir " automatically set current directory to directory of last opened file
-set hidden " allow auto-hiding of edited buffers
-set history=8192 " more history
-set nojoinspaces " suppress inserting two spaces between sentences
+set lazyredraw                  " skip redrawing screen in some cases
+set autochdir                   " automatically set current directory to directory of last opened file
+set hidden                      " allow auto-hiding of edited buffers
+set history=8192                " more history
+set nojoinspaces                " suppress inserting two spaces between sentences
+
 " use 4 spaces instead of tabs during formatting
 set expandtab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+
 " smart case-sensitive search
 set ignorecase
 set smartcase
+
 " tab completion for files/bufferss
 set wildmode=longest,list
 set wildmenu
-set mouse+=a " enable mouse mode (scrolling, selection, etc)
+set mouse+=a                " enable mouse mode (scrolling, selection, etc)
 if &term =~ '^screen'
     " tmux knows the extended mouse mode
     set ttymouse=xterm2
 endif
-set nofoldenable " disable folding by default
+set nofoldenable             " disable folding by default
 
 "--------------------
 " Misc configurations
