@@ -32,8 +32,6 @@ set autoindent
 set clipboard=unnamed           " system clipboard
 set noswapfile                  " no swap file
 set shortmess+=I                " disable startup message
-set nu                          " number lines
-set rnu                         " relative line numbering
 set incsearch                   " incremental search (as string is being typed)
 set hls                         " highlight search
 set listchars=tab:>>,nbsp:~     " set list to see tabs and non-breakable spaces
@@ -48,6 +46,9 @@ set autochdir                   " automatically set current directory to directo
 set hidden                      " allow auto-hiding of edited buffers
 set history=8192                " more history
 set nojoinspaces                " suppress inserting two spaces between sentences
+
+" enable ssh cilpboard, keybinding: <leader>y
+vnoremap <leader>y :OSCYankVisual<CR>
 
 " use 4 spaces instead of tabs during formatting
 set expandtab
@@ -115,10 +116,22 @@ function ToggleMovementByDisplayLines()
     endif
 endfunction
 
-" toggle relative numbering
-nnoremap <C-n> :set rnu!<CR>
 
-" save read-only files
+" ----- Line Numbers -----
+set nu                          " number lines
+set rnu                         " relative line numbering
+nnoremap <C-n> :call ToggleLineNumbers()<CR>          " toggle line numbers of/off 
+function! ToggleLineNumbers()
+    if(&relativenumber == 1)
+        set norelativenumber
+        set nonumber
+    else
+        set relativenumber
+        set number
+    endif
+endfunction
+
+" add new command 'Sudow' to sudo write cur file
 command -nargs=0 Sudow w !sudo tee % >/dev/null
 
 "---------------------
