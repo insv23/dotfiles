@@ -3,7 +3,7 @@ set nocompatible " not vi compatible
 " -----------------
 "  Style
 " -----------------
-colo desert " Use vim builtin color theme 'deserh'
+"colo desert " Use vim builtin color theme 'desert'
 
 " 在插入模式下使用竖线光标
 let &t_SI = "\e[6 q"
