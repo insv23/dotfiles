@@ -7,8 +7,9 @@
 
 - link:
     ~/.bashrc:
-    ~/.config/atuin: ./atuin
+    ~/.config/atuin/: ./atuin
     ~/.config/karabiner/: ./karabiner
+    ~/.config/kitty/: ./kitty
     ~/.config/nvim/: ./nvim
     ~/.config/yazi/: ./yazi
     ~/.gitconfig:
