@@ -25,8 +25,9 @@ else
 
 	elif uname -m | grep -q "x86_64"; then
 		curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-        sudo rm -rf /opt/nvim
-        sudo tar -C /opt -xzf nvim-linux64.tar.gz
+    sudo rm -rf /opt/nvim
+    sudo tar -C /opt -xzf nvim-linux64.tar.gz
+    rm nvim-linux64.tar.gz
 
 	else
 		echo "Install neovim manually: https://github.com/neovim/neovim/wiki/Installing-Neovim"
