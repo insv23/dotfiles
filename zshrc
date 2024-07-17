@@ -13,9 +13,6 @@ set -o vi
 # vim as default editor
 export EDITOR='vim'
 
-# 保证 ls 普通文件/目录/可执行文件/链接文件等显示不同的颜色
-export CLICOLOR=1
-export LSCOLORS=GxFxCxDxBxegedabagaced
 
 # 设置系统语言环境为美式英语, 字符编码为 UTF-8
 export LANG=en_US.UTF-8
