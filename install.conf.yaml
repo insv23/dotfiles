@@ -37,6 +37,7 @@
     - ./zsh/install/fd.sh
     - ./zsh/install/bat.sh
     - ./zsh/install/git-delta.sh
+    - ./zsh/install/lazy-git.sh
     - git submodule sync --recursive
     - git submodule update --init --recursive
     - >
