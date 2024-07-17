@@ -7,6 +7,7 @@ else
   if uname -a | grep -q "Ubuntu"; then 
     sudo apt update
     sudo apt install fd-find -y
+    ln -s $(which fdfind) ~/.local/bin/fd
   
   elif uname -a | grep -q "Darwin"; then
     brew install fd
