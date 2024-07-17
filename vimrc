@@ -50,6 +50,11 @@ set nojoinspaces                " suppress inserting two spaces between sentence
 " enable ssh cilpboard, keybinding: <leader>y
 vnoremap <leader>y :OSCYankVisual<CR>
 
+nnoremap H 0
+nnoremap L $
+nnoremap <C-e> %    " 跳转到匹配的括号、括弧或引号
+nnoremap yie :%y+<CR>   " 复制整个文件的内容到系统剪贴板
+
 " use 4 spaces instead of tabs during formatting
 set expandtab
 set tabstop=4

@@ -33,6 +33,10 @@
     - ./zsh/install/atuin.sh
     - ./zsh/install/pyenv.sh
     - ./zsh/install/docker.sh
+    - ./zsh/install/fzf.sh
+    - ./zsh/install/fd.sh
+    - ./zsh/install/bat.sh
+    - ./zsh/install/git-delta.sh
     - git submodule sync --recursive
     - git submodule update --init --recursive
     - >
