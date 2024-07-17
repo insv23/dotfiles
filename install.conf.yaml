@@ -26,18 +26,20 @@
 
 - shell:
     - touch ~/.hushlogin
-    - ./zsh/install/bash2zsh.sh
-    - ./zsh/install/zoxide.sh
-    - ./zsh/install/brew.sh
-    - ./zsh/install/lazyvim.sh
+    - ./zsh/install/0.pre.sh
     - ./zsh/install/atuin.sh
-    - ./zsh/install/pyenv.sh
-    - ./zsh/install/docker.sh
-    - ./zsh/install/fzf.sh
-    - ./zsh/install/fd.sh
     - ./zsh/install/bat.sh
+    # - ./zsh/install/caddy.sh
+    - ./zsh/install/docker.sh
+    - ./zsh/install/eza.sh
+    # - ./zsh/install/fail2ban.sh
+    - ./zsh/install/fd.sh
+    - ./zsh/install/fzf.sh
     - ./zsh/install/git-delta.sh
-    - ./zsh/install/lazy-git.sh
+    - ./zsh/install/lazygit.sh
+    - ./zsh/install/lazyvim.sh
+    - ./zsh/install/pyenv.sh
+    - ./zsh/install/zoxide.sh
     - git submodule sync --recursive
     - git submodule update --init --recursive
     - >

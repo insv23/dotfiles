@@ -1,16 +1,5 @@
 #!/bin/zsh
 
-###### Get current platform
-# if uname -a | grep -q "Darwin"; then
-# 	export current_platform="Mac"
-
-# elif uname -a | grep -q "Ubuntu"; then
-# 	export current_platform="Ubuntu"
-
-# else
-# 	export current_platform="Other"
-# fi
-
 
 # neovim
 if command -v nvim &>/dev/null; then
@@ -25,9 +14,9 @@ else
 
 	elif uname -m | grep -q "x86_64"; then
 		curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-    sudo rm -rf /opt/nvim
-    sudo tar -C /opt -xzf nvim-linux64.tar.gz
-    rm nvim-linux64.tar.gz
+        sudo rm -rf /opt/nvim
+        sudo tar -C /opt -xzf nvim-linux64.tar.gz
+        rm nvim-linux64.tar.gz
 
 	else
 		echo "Install neovim manually: https://github.com/neovim/neovim/wiki/Installing-Neovim"
