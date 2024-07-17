@@ -6,7 +6,7 @@ else
   echo "fzf 未安装"
   if uname -a | grep -q "Ubuntu"; then
     sudo apt update
-    sudo apt install fzf
+    sudo apt install fzf -y
   
   elif uname -a | grep -q "Darwin"; then
     brew install fzf

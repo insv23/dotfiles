@@ -6,7 +6,7 @@ else
   echo "fd 未安装"
   if uname -a | grep -q "Ubuntu"; then 
     sudo apt update
-    sudo apt install fd-find
+    sudo apt install fd-find -y
   
   elif uname -a | grep -q "Darwin"; then
     brew install fd
