@@ -39,6 +39,7 @@
     - ./zsh/install/lazygit.sh
     - ./zsh/install/lazyvim.sh
     - ./zsh/install/pyenv.sh
+    - ./zsh/install/yazi.sh
     - ./zsh/install/zoxide.sh
     - git submodule sync --recursive
     - git submodule update --init --recursive

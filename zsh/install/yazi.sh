@@ -42,8 +42,8 @@ install_or_upgrade() {
 
 		if ! brew list $BINARY_NAME &>/dev/null; then
 			echo "正在使用 Homebrew 安装 ${BINARY_NAME}..."
-			brew install $BINARY_NAME
-			# brew install yazi ffmpegthumbnailer unar jq poppler fd ripgrep fzf zoxide font-symbols-only-nerd-font
+			# brew install $BINARY_NAME
+			brew install yazi ffmpegthumbnailer unar jq poppler fd ripgrep fzf zoxide font-symbols-only-nerd-font
 		elif $upgrade; then
 			echo "正在使用 Homebrew 升级 ${BINARY_NAME}..."
 			brew upgrade $BINARY_NAME
