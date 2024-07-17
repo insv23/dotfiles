@@ -19,9 +19,12 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 source ~/.zsh/aliases.sh
-source ~/.zsh/mac_aliases.sh
-source ~/.zsh/macmini.local.zshrc
-# source ~/.zsh/lz-ycy.local.zshrc
+if uname -a | grep -q "Ubuntu"; then 
+  source ~/.zsh/lz-ycy.local.zshrc
+elif uname -a | grep -q "Darwin"; then
+  source ~/.zsh/mac_aliases.sh
+  source ~/.zsh/macmini.local.zshrc
+fi
 # source ~/.zsh/proxy.sh
 
 source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
