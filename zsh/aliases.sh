@@ -14,6 +14,7 @@ alias lla="eza --color=always --long --git --icons=always -a"
 alias cp='cp -i'
 alias mv='mv -i'
 
+
 # git related aliases
 # in `../gitconfig`
 alias gag='git exec ag'
@@ -23,11 +24,22 @@ alias cdgr='cd "$(git root)"'
 # create .gitignore template
 function gi() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;}
 
+
 # zshrc
 alias szsh='source ~/.zshrc'
 
+
+# Homebrew
+alias brs='brew search'
+alias bri='brew install'
+alias bric='brew install --cask'
+alias bro='brew info'
+alias bru='brew uninstall'
+
+
 # nvim
 alias nv='nvim'
+
 
 # Update dotfiles
 dfu() {
@@ -35,6 +47,7 @@ dfu() {
 		cd ~/.dotfiles && git pull --ff-only && ./install -q
 	)
 }
+
 
 # python
 alias py='python'
@@ -57,7 +70,7 @@ mkcd() {
 	if [ ! -n "$1" ]; then
 		echo "Enter a directory name"
 	elif [ -d $1 ]; then
-		echo "\`$1' already exists"
+		echo "'$1' already exists"
 	else
 		mkdir -pv $1 && cd $1
 	fi
@@ -95,6 +108,7 @@ pxyon() {
 	echo -e "\033[32m[√] Proxy On $pxy_ip:$pxy_http_port/$pxy_all_port\033[0m"
 }
 
+
 # docker
 alias dkd='docker compose down'
 alias dku='docker compose up'
@@ -105,6 +119,7 @@ function dkspp() {
 	docker stop $id
 	docker container prune
 }
+
 
 # Tmux
 alias tmat='tmux at -t'

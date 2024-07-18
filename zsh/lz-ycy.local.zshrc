@@ -5,3 +5,6 @@ export NVM_DIR="$HOME/.nvm"
 
 # nvim
 export PATH="$PATH:/opt/nvim-linux64/bin"
+
+# ----- Homebrew(Linux) -----
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

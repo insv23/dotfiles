@@ -1,0 +1,14 @@
+bat
+caddy
+eza
+fail2ban
+fastfetch
+fd
+fzf
+gcc
+git-delta
+gnu-sed
+lazygit
+neovim
+unzip
+yazi
