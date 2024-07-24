@@ -47,11 +47,6 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 
-source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
-source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-
-
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -126,7 +121,20 @@ _fzf_comprun() {
 
 # -- fzf-git --
 # https://github.com/junegunn/fzf-git.sh
-source ~/.zsh/fzf-git.sh/fzf-git.sh
+source ~/.zsh/plugins/fzf-git.sh/fzf-git.sh
+
+
+source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
+
+
+# 按下 下方向键 展示所有可选
+# https://www.notion.so/zsh-53922bbbd4f74a8f961a3010f541845a?pvs=4#8723929e12c1463998b9dded920ab0b1
+source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+
+# 演示: https://asciinema.org/a/37390
+# 使用右方向键接受整个, 可与 vi 联合使用, 逐个字母/单词的接受建议
+source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 
 # MUST be sourced at the END of the .zshrc file
