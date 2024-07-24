@@ -9,11 +9,13 @@
 #export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
 
 if command -v brew &>/dev/null; then
-    echo "\n\nHomebrew is installed\n\n"
+    echo "Homebrew is installed"
+    echo
 else
     echo "Homebrew is not installed, installing..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    echo "Homebrew is installed successfully\n\n"
+    echo "Homebrew is installed successfully"
+    echo
 fi
 
 # Linux brew 需要添加额外的路径指引(已经在 .local.zshrc 中完成, 此处只是说明)
