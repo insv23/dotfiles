@@ -1,6 +1,8 @@
 # mac os
 .DS_Store
 
+.idea
+
 # karabiner
 automatic_backups/
 karabiner.json
