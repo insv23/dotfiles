@@ -127,11 +127,6 @@ source ~/.zsh/plugins/fzf-git.sh/fzf-git.sh
 source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 
 
-# 按下 下方向键 展示所有可选
-# https://www.notion.so/zsh-53922bbbd4f74a8f961a3010f541845a?pvs=4#8723929e12c1463998b9dded920ab0b1
-source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-
-
 # 演示: https://asciinema.org/a/37390
 # 使用右方向键接受整个, 可与 vi 联合使用, 逐个字母/单词的接受建议
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -140,3 +135,9 @@ source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # MUST be sourced at the END of the .zshrc file
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+
+# 必须将 autocomplete 放在 syntax-highlighting 下才能让新建 zsh 不再出现样式警告
+# https://github.com/zsh-users/zsh-syntax-highlighting/issues/951#issuecomment-2089829937
+# 按下 下方向键 展示所有可选
+# https://www.notion.so/zsh-53922bbbd4f74a8f961a3010f541845a?pvs=4#8723929e12c1463998b9dded920ab0b1
+source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
