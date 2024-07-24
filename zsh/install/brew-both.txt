@@ -1,3 +1,4 @@
+atuin
 bat
 caddy
 eza
@@ -10,5 +11,7 @@ git-delta
 gnu-sed
 lazygit
 neovim
+pyenv
 unzip
 yazi
+zoxide

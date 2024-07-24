@@ -26,22 +26,8 @@
 
 - shell:
     - touch ~/.hushlogin
-    - ./zsh/install/0.pre.sh
-    - ./zsh/install/1.brewInstallApps.sh
-    - ./zsh/install/atuin.sh
-    #- ./zsh/install/bat.sh
-    #- ./zsh/install/caddy.sh
-    #- ./zsh/install/docker.sh
-    #- ./zsh/install/eza.sh
-    #- ./zsh/install/fail2ban.sh
-    #- ./zsh/install/fd.sh
-    #- ./zsh/install/fzf.sh
-    #- ./zsh/install/git-delta.sh
-    #- ./zsh/install/lazygit.sh
-    #- ./zsh/install/lazyvim.sh
-    - ./zsh/install/pyenv.sh
-    #- ./zsh/install/yazi.sh
-    - ./zsh/install/zoxide.sh
+    - ./zsh/install/0.pre.sh > /dev/tty
+    - ./zsh/install/1.brewInstallApps.sh > /dev/tty
     - git submodule sync --recursive
     - git submodule update --init --recursive
     - >
