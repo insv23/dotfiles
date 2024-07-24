@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # ----- Brew Install Apps-----
 echo "brew 安装 mac 与 Linux 均使用的 apps..."
 xargs brew install < brew-both.txt
