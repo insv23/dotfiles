@@ -2,15 +2,6 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
-[submodule "tmux/plugins/tmux-net-speed"]
-	path = tmux/plugins/tmux-net-speed
-	url = https://github.com/tmux-plugins/tmux-net-speed.git
-[submodule "tmux/plugins/tmux-sensible"]
-	path = tmux/plugins/tmux-sensible
-	url = https://github.com/tmux-plugins/tmux-sensible.git
-[submodule "tmux/plugins/tpm"]
-	path = tmux/plugins/tpm
-	url = https://github.com/tmux-plugins/tpm.git
 [submodule "vim/pack/vendor/start/nerdtree"]
 	path = vim/pack/vendor/start/nerdtree
 	url = https://github.com/preservim/nerdtree.git
@@ -26,9 +17,6 @@
 [submodule "zsh/plugins/zsh-syntax-highlighting"]
 	path = zsh/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "tmux/plugins/tmux-cpu"]
-	path = tmux/plugins/tmux-cpu
-	url = https://github.com/tmux-plugins/tmux-cpu.git
 [submodule "vim/pack/vendor/start/vim-tmux-clipboard"]
 	path = vim/pack/vendor/start/vim-tmux-clipboard
 	url = https://github.com/roxma/vim-tmux-clipboard.git

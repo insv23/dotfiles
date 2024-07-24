@@ -12,6 +12,7 @@ gnu-sed
 lazygit
 neovim
 pyenv
+tmux
 unzip
 vim
 yazi
