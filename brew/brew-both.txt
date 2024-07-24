@@ -13,5 +13,7 @@ lazygit
 neovim
 pyenv
 unzip
+vim
 yazi
 zoxide
+zsh
