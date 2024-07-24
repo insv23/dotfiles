@@ -4,7 +4,7 @@
 # 在 .ignore 中添加 `tmux/plugins/` 将 tmux 插件全部不 track
 
 # 安装 tpm 并删除其 .git 文件
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone --depth=1 https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm
 
 
 # 利用 tpm 的脚本安装插件

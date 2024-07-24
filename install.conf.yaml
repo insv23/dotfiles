@@ -26,15 +26,39 @@
 
 - shell:
     - touch ~/.hushlogin
-    - ./brew/0.install.sh> /dev/tty
-    - ./brew/1.brewInstallApps.sh> /dev/tty
-    - ./zsh/activate_zsh.sh> /dev/tty
-    - ./tmux/install_plugins.sh> /dev/tty
+    -
+      command: ./brew/0.install.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      quiet: false
+    -
+      command: ./brew/1.brewInstallApps.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      quiet: false
+    -
+      command: ./zsh/activate_zsh.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      quiet: false
+    -
+      command: ./zsh/install_plugins.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      quiet: false
+    -
+      command: ./tmux/install_plugins.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      quiet: false
     - git submodule sync --recursive
     - git submodule update --init --recursive
     - >
       git clean -fdx
       vim/pack/vendor/start/
-      zsh/plugins/
-      tmux/plugins/
   # the following have to run after linking ~/.gitconfig
