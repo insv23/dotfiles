@@ -7,6 +7,34 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+
+
+# ----- 根据主机名选择相应的配置文件 -----
+
+# 获取当前主机名
+current_hostname=$(hostname)
+
+case "$current_hostname" in
+  "mac")
+    source ~/.zsh/macmini.local.zshrc
+    ;;
+  "Babel")
+    source ~/.zsh/Babel.local.zshrc
+    ;;
+  "C20240108106238")
+    source ~/.zsh/lz-ycy.local.zshrc
+    ;;
+  *)
+    # 默认配置，如果没有匹配的主机名
+    echo "No specific configuration for this hostname. Using default."
+    ;;
+esac
+
+
+source ~/.zsh/aliases.sh
+# source ~/.zsh/proxy.sh
+
+
 # vim style 
 set -o vi
 
@@ -18,18 +46,11 @@ export EDITOR='vim'
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-if uname -a | grep -q "Ubuntu"; then 
-  source ~/.zsh/lz-ycy.local.zshrc
-elif uname -a | grep -q "Darwin"; then
-  source ~/.zsh/aliases.mac.sh
-  source ~/.zsh/macmini.local.zshrc
-fi
-source ~/.zsh/aliases.sh
-# source ~/.zsh/proxy.sh
 
 source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
