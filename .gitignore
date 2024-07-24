@@ -10,4 +10,4 @@ lazy-lock.json
 lazyvim.json
 
 # tmux plugins
-tmux/plugins/
+tmux/plugins
