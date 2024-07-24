@@ -11,3 +11,6 @@ lazyvim.json
 
 # tmux plugins
 tmux/plugins
+
+# zsh plugins
+zsh/plugins
