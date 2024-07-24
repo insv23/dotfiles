@@ -8,3 +8,4 @@ git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.zsh/
 git clone --depth=1 https://github.com/marlonrichert/zsh-autocomplete.git ~/.zsh/plugins/zsh-autocomplete
 git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting
 
+git clone --depth=1 https://github.com/junegunn/fzf-git.sh.git ~/.zsh/fzf-git.sh
