@@ -29,6 +29,7 @@
     - ./brew/0.install.sh> /dev/tty
     - ./brew/1.brewInstallApps.sh> /dev/tty
     - ./zsh/activate_zsh.sh> /dev/tty
+    - ./tmux/install_plugins.sh> /dev/tty
     - git submodule sync --recursive
     - git submodule update --init --recursive
     - >
