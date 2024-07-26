@@ -33,4 +33,5 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "/Users/tony/.bun/_bun" ] && source "/Users/tony/.bun/_bun"
 
 
-
+# ---- ChatGPT.nvim key and host ----
+source ~/.openai_api
