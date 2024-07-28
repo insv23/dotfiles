@@ -8,6 +8,13 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
+source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
+
+# 演示: https://asciinema.org/a/37390
+# 使用右方向键接受整个, 可与 vi 联合使用, 逐个字母/单词的接受建议
+source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+
 
 # ----- 根据主机名选择相应的配置文件 -----
 
@@ -57,9 +64,6 @@ eval "$(pyenv virtualenv-init -)"
 # zoxide
 export PATH="$HOME/.local/bin:$PATH"
 eval "$(zoxide init zsh)"
-
-# autin
-eval "$(atuin init zsh)"
 
 # yazi
 function yy() {
@@ -124,14 +128,6 @@ _fzf_comprun() {
 source ~/.zsh/plugins/fzf-git.sh/fzf-git.sh
 
 
-source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
-
-
-# 演示: https://asciinema.org/a/37390
-# 使用右方向键接受整个, 可与 vi 联合使用, 逐个字母/单词的接受建议
-source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-
 # MUST be sourced at the END of the .zshrc file
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -141,3 +137,8 @@ source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # 按下 下方向键 展示所有可选
 # https://www.notion.so/zsh-53922bbbd4f74a8f961a3010f541845a?pvs=4#8723929e12c1463998b9dded920ab0b1
 source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+
+# 放在 fzf 和 auto-complete 下面才能保证 上方向键 和 Ctrl r 使用 atuin 来查找历史命令 
+# autin
+eval "$(atuin init zsh)"
