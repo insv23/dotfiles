@@ -1,3 +1,5 @@
+-- 不要使用这个, 好多软件里都自定义了 alt + 其他键 作为快捷键, 例如 lazyvim
+-- 使用 Raycast 来开启软件
 -- hs.hotkey.bind({'alt'}, '1', function () hs.application.launchOrFocus("Google Chrome") end)
 -- hs.hotkey.bind({'alt'}, '2', function () hs.application.launchOrFocus("Terminal") end)
 
