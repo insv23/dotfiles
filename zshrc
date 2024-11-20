@@ -25,6 +25,9 @@ case "$current_hostname" in
   "mac")
     source ~/.zsh/macmini.local.zshrc
     ;;
+  "mba")
+    source ~/.zsh/mba.local.zshrc
+    ;;
   "Babel")
     source ~/.zsh/Babel.local.zshrc
     ;;
