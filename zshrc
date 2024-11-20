@@ -58,8 +58,8 @@ export LC_ALL=en_US.UTF-8
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
-# Load pyenv-virtualenv automatically
-eval "$(pyenv virtualenv-init -)"
+# Load pyenv-virtualenv automatically(现在不再用 pyenv 提供的虚拟环境管理功能, 而是用Python 自带的 venv)
+# eval "$(pyenv virtualenv-init -)"
 
 # zoxide
 export PATH="$HOME/.local/bin:$PATH"
