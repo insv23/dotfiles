@@ -46,3 +46,11 @@ Here is my install log: [dotfiles | insv の blog](https://blog.insv.xyz/dotfile
     ```
 
 - Run `./install`  (if there are duplicate files or directories, manually delete them before running `./install` again).
+
+- Push commits in a new machine to the remote repository
+
+    ```shell
+    git push --set-upstream origin main
+    ```
+
+    Have some boring 2FA works here.
