@@ -2,7 +2,7 @@
   "title": "Tap Shift_L As F17 → Next Input Source",
   "rules": [
     {
-      "description": "Tap Shift_L to ABC input",
+      "description": "Tap Shift_L to switch Input Source",
       "manipulators": [
         {
           "from": {
