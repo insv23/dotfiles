@@ -22,7 +22,7 @@ source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 current_hostname=$(hostname)
 
 case "$current_hostname" in
-  "mac")
+  "macmini")
     source ~/.zsh/macmini.local.zshrc
     ;;
   "mba")
