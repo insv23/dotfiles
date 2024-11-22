@@ -42,7 +42,6 @@ esac
 
 
 source ~/.zsh/aliases.sh
-# source ~/.zsh/proxy.sh
 
 
 # vim style 
