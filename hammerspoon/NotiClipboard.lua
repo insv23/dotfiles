@@ -8,7 +8,7 @@ local function showClipboardNotification()
         -- 显示通知
         hs.notify.new({
             title = "剪贴板内容已更改",
-            informativeText = currentClipboardContents or "内容为空",
+            informativeText = currentClipboardContents or "非文本内容",
             withdrawAfter = 1
         }):send()
         
