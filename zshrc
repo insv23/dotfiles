@@ -23,20 +23,20 @@ current_hostname=$(hostname)
 
 case "$current_hostname" in
   "macmini")
-    source ~/.zsh/macmini.local.zshrc
+    source ~/.zsh/hosts/macmini.local.zshrc
     ;;
   "mba")
-    source ~/.zsh/mba.local.zshrc
+    source ~/.zsh/hosts/mba.local.zshrc
     ;;
   "Babel")
-    source ~/.zsh/Babel.local.zshrc
+    source ~/.zsh/hosts/Babel.local.zshrc
     ;;
   "C20240108106238")
-    source ~/.zsh/lz-ycy.local.zshrc
+    source ~/.zsh/hosts/lz-ycy.local.zshrc
     ;;
   *)
     # 默认配置，如果没有匹配的主机名
-    echo "No specific configuration for this hostname. Using default."
+    echo "No specific configuration for this hostname. Please create a new one in ~/.dotfiles/zsh/hosts/"
     ;;
 esac
 
