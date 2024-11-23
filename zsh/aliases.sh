@@ -47,17 +47,6 @@ dfu() {
 alias py='python'
 alias pym='python -m'
 
-# python venv
-alias pymv='python -m venv venv'
-alias pymva='source venv/bin/activate'
-alias pymvd='deactivate'
-
-# pyenv-virtualenv
-alias pyve='pyenv virtualenv'
-alias pyvels='pyenv virtualenvs'
-alias pyveon='pyenv activate'
-alias pyveoff='pyenv deactivate'
-alias pyverm='pyenv virtualenv-delete'
 
 # Create a directory and cd into it
 mkcd() {

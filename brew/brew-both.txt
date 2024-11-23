@@ -12,7 +12,6 @@ git-delta
 gnu-sed
 lazygit
 neovim
-pyenv
 tmux
 unzip
 vim
