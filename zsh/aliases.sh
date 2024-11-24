@@ -6,7 +6,8 @@ alias ...='cd ../..'
 alias grep='grep --color'
 
 # ---- Eza (better ls) -----
-alias ls="eza --color=always --long --no-filesize --icons=always --no-time --no-user --no-permissions"
+# alias ls="eza --color=always --long --no-filesize --icons=always -<D-s><D-z>-no-time --no-user --no-permissions"
+alias ls="eza --color=always --long --icons=always"
 alias ll="eza --color=always --long --git --icons=always"
 alias lla="eza --color=always --long --git --icons=always -a"
 
@@ -47,7 +48,6 @@ dfu() {
 # python
 alias py='python'
 alias pym='python -m'
-
 
 # Create a directory and cd into it
 mkcd() {
