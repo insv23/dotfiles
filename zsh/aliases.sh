@@ -18,6 +18,7 @@ alias mv='mv -i'
 # in `../gitconfig`
 alias gag='git exec ag'
 alias ginsv='git config user.name "insv";git config user.email "insv23@outlook.com"'
+alias gginsv='git config --global user.name "insv";git config --global user.email "insv23@outlook.com"'
 # cd to git root directory
 alias cdgr='cd "$(git root)"'
 # create .gitignore template
