@@ -3,4 +3,4 @@
 -- Add any additional keymaps here
 
 -- lua/config/chatgpt-whichkey.lua
-require("config.chatgpt-whichkey")
+-- require("config.chatgpt-whichkey")
