@@ -1,5 +1,6 @@
 return {
   "nvim-neo-tree/neo-tree.nvim",
+  enabled = false,
   config = function()
     require("neo-tree").setup({
       window = {
