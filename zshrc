@@ -15,6 +15,7 @@ source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 
+source ~/.zsh/aliases.sh
 
 # ----- 根据主机名选择相应的配置文件 -----
 
@@ -41,7 +42,6 @@ case "$current_hostname" in
 esac
 
 
-source ~/.zsh/aliases.sh
 
 # kitty 设置窗口标题
 precmd() {
