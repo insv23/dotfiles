@@ -1,4 +1,4 @@
-# Hostname: mac
+# Hostname: macmini
 
 # ----- Cursor -----
 # 在 crusor 中打开 command palette 搜索 `install cursor command`
@@ -33,5 +33,5 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "/Users/tony/.bun/_bun" ] && source "/Users/tony/.bun/_bun"
 
 
-# ---- ChatGPT.nvim key and host ----
-source ~/.openai_api
+# ---- auto proxy ----
+pxyon > /dev/null
