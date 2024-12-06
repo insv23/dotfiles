@@ -24,6 +24,7 @@ alias gginsv='git config --global user.name "insv";git config --global user.emai
 alias cdgr='cd "$(git root)"'
 # create .gitignore template
 function gi() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@; }
+alias lg='lazygit'
 
 # zshrc
 alias szsh='source ~/.zshrc'
@@ -103,6 +104,7 @@ function dkspp() {
   docker stop $id
   docker container prune
 }
+alias ld='lazydocker'
 
 # Tmux
 alias tmat='tmux at -t'
