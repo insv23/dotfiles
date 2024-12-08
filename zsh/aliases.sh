@@ -95,6 +95,7 @@ pxyon() {
 }
 
 # docker
+alias dc='docker compose'
 alias dkd='docker compose down'
 alias dku='docker compose up'
 alias dkud='docker compose up -d'
