@@ -10,8 +10,8 @@ case "$current_hostname" in
   "mba")
     source ~/.zsh/hosts/mba.local.zshrc
     ;;
-  "babel")
-    source ~/.zsh/hosts/babel.local.zshrc
+  "gpu")
+    source ~/.zsh/hosts/gpu.local.zshrc
     ;;
   "C20240108106238")
     source ~/.zsh/hosts/lz-ycy.local.zshrc
