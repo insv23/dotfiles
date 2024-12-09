@@ -8,13 +8,18 @@
 #export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
 #export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
 
-if command -v brew &>/dev/null; then
-    echo "Homebrew is installed"
+BREW_PATH="/home/linuxbrew/.linuxbrew/bin/brew"  # Linux
+if [[ "$(uname)" == "Darwin" ]]; then            # macOS
+    BREW_PATH="/opt/homebrew/bin/brew"
+fi
+
+if [[ -x "$BREW_PATH" ]] && "$BREW_PATH" --version &>/dev/null; then
+    echo "✅ Homebrew is installed and working"
     echo
 else
-    echo "Homebrew is not installed, installing..." # 脚本提示不能以 root 用户进行安装
+    echo "🚀 Homebrew is not installed or not working, installing..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    echo "Homebrew is installed successfully"
+    echo "🎉 Homebrew is installed successfully"
     echo
 fi
 
