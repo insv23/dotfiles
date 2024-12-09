@@ -7,9 +7,9 @@ alias grep='grep --color'
 
 # ---- Eza (better ls) -----
 # alias ls="eza --color=always --long --no-filesize --icons=always -<D-s><D-z>-no-time --no-user --no-permissions"
-alias ls="eza --color=always --long --icons=always"
-alias ll="eza --color=always --long --git --icons=always"
-alias lla="eza --color=always --long --git --icons=always -a"
+alias ls="eza -labgh --icons=always --git"
+alias ll="eza -labgh --icons=always --git"
+alias lla="eza -labgh --icons=always --git"
 
 # Aliases to protect against overwriting
 alias cp='cp -i'
