@@ -27,18 +27,6 @@
 - shell:
     - touch ~/.hushlogin
     -
-      command: ./brew/0.install.sh
-      stdin: true
-      stdout: true
-      stderr: true
-      quiet: false
-    -
-      command: ./brew/1.brewInstallApps.sh
-      stdin: true
-      stdout: true
-      stderr: true
-      quiet: false
-    -
       command: ./zsh/activate_zsh.sh
       stdin: true
       stdout: true
@@ -58,6 +46,18 @@
       quiet: false
     -
       command: ./tmux/install_plugins.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      quiet: false
+    -
+      command: ./brew/0.install.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      quiet: false
+    -
+      command: ./brew/1.brewInstallApps.sh
       stdin: true
       stdout: true
       stderr: true
