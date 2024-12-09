@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # ----- Homebrew -----
 # 如果安装失败, 取消下面的注释, 换清华源
@@ -12,7 +12,7 @@ if command -v brew &>/dev/null; then
     echo "Homebrew is installed"
     echo
 else
-    echo "Homebrew is not installed, installing..."
+    echo "Homebrew is not installed, installing..." # 脚本提示不能以 root 用户进行安装
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     echo "Homebrew is installed successfully"
     echo

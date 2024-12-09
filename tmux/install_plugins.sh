@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # 在 .ignore 中添加 `tmux/plugins/` 将 tmux 插件全部不 track
 

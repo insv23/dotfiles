@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # 在 .ignore 中添加 `zsh/plugins/` 将 zsh 插件全部不 track
 mkdir -p ~/.zsh/plugins/

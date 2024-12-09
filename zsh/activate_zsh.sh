@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # ----- bash to zsh -----
 current_shell=$(which "$SHELL")
