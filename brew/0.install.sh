@@ -9,11 +9,11 @@
 #export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
 
 BREW_PATH="/home/linuxbrew/.linuxbrew/bin/brew"  # Linux
-if [[ "$(uname)" == "Darwin" ]]; then            # macOS
+if [ "$(uname)" = "Darwin" ]; then            # macOS
     BREW_PATH="/opt/homebrew/bin/brew"
 fi
 
-if [[ -x "$BREW_PATH" ]] && "$BREW_PATH" --version &>/dev/null; then
+if [ -x "$BREW_PATH" ] && "$BREW_PATH" --version &>/dev/null; then
     echo "✅ Homebrew is installed and working"
     echo
 else
