@@ -37,7 +37,9 @@ Here is my install log: [dotfiles | insv の blog](https://blog.insv.xyz/dotfile
 - Create a directory, connect it to the remote repository, and then pull.
 
   ```shell
-  mkdir .dotfiles && cd $_
+  mkdir .dotfiles
+  cd .dotfiles
+  git config --global init.defaultBranch main
   git init
   git remote add origin https://github.com/insv23/dotfiles.git
   git pull origin main
