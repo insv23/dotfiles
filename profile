@@ -21,3 +21,6 @@ fi
 
 # 尝试禁用终端消息，同时确保即使操作失败也不会影响整个脚本或会话的执行。
 mesg n 2> /dev/null || true
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
