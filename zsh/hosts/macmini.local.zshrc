@@ -41,3 +41,7 @@ export TERM=xterm-256color
 
 # envman(serviceman)
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+
+# ---- cargo -----
+export PATH="$HOME/.asdf/installs/rust/stable/bin:$PATH"
