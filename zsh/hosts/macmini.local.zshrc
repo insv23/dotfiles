@@ -6,7 +6,7 @@ alias cr='cursor'
 
 
 # ---- Deno -----
-
+            
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
@@ -35,3 +35,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # ---- auto proxy ----
 pxyon > /dev/null
+
+# 设置终端颜色(修复了远程登录该主机时 kcbt 异常导致的命令预测字符无法清除的问题)
+export TERM=xterm-256color
