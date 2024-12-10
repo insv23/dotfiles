@@ -13,3 +13,4 @@ git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.
 git clone --depth=1 https://github.com/junegunn/fzf-git.sh.git ~/.zsh/plugins/fzf-git.sh
 
 echo "✅ zsh 插件安装完成"
+echo

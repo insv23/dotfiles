@@ -13,7 +13,7 @@ if [ "$(uname)" = "Darwin" ]; then            # macOS
     BREW_PATH="/opt/homebrew/bin/brew"
 fi
 
-if [ -x "$BREW_PATH" ] && "$BREW_PATH" --version &>/dev/null; then
+if [ -x "$BREW_PATH" ] && "$BREW_PATH" --version >/dev/null 2>&1; then
     echo "✅ Homebrew is installed and working"
     echo
 else

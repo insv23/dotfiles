@@ -13,3 +13,4 @@ git clone --depth=1 https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm
 ~/.tmux/plugins/tpm/bin/install_plugins
 
 echo " ✅ tmux 插件安装完成"
+echo

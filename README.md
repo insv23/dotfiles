@@ -43,6 +43,9 @@ Here is my install log: [dotfiles | insv の blog](https://blog.insv.xyz/dotfile
   git init
   git remote add origin https://github.com/insv23/dotfiles.git
   git pull origin main
+  ```
+
+  ```shell
   git branch --set-upstream-to=origin/main main
   ```
 
