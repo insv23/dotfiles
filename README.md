@@ -34,26 +34,18 @@ Here is my install log: [dotfiles | insv の blog](https://blog.insv.xyz/dotfile
 
 ## Use on a new machine
 
-- Create a directory, connect it to the remote repository, and then pull.
+- Just clone the repository and run `./install`
 
   ```shell
-  mkdir .dotfiles
+  git clone https://github.com/insv23/dotfiles.git .dotfiles
   cd .dotfiles
-  git config --global init.defaultBranch main
-  git init
-  git remote add origin https://github.com/insv23/dotfiles.git
-  git pull origin main
-  ```
-
-  ```shell
-  git branch --set-upstream-to=origin/main main
   ```
 
 - Run `./install`  
    If some files or directory already exist, manually delete them before running `./install` again. For example,
 
   ```shell
-  rm ~/.profile && rm ~/.bashrc && rm ~/.gitconfig && ./install
+  rm -f ~/.profile ~/.bashrc ~/.gitconfig && ./install
   ```
 
 - Push commits in a new machine to the remote repository
