@@ -15,6 +15,7 @@ lazygit
 neovim
 tmux
 unzip
+uv
 vim
 yazi
 zoxide
