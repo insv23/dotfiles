@@ -46,3 +46,7 @@ export TERM=xterm-256color
 
 # ---- cargo -----
 export PATH="$HOME/.asdf/installs/rust/stable/bin:$PATH"
+
+
+# ---- pipx ----
+export PIPX_HOME=~/.pipx
