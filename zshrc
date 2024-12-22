@@ -35,8 +35,8 @@ precmd() {
 # vim style 
 set -o vi
 
-# vim as default editor
-export EDITOR='vim'
+# default editor
+export EDITOR='nvim'
 
 
 # 设置系统语言环境为美式英语, 字符编码为 UTF-8
