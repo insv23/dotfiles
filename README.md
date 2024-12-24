@@ -34,11 +34,11 @@ Here is my install log: [dotfiles | insv の blog](https://blog.insv.xyz/dotfile
 
 ## Use on a new machine
 
-- 🚫 Linuxbrew does not yet support ARM Linux.
+- 🚫 [Homebrew on Linux](https://docs.brew.sh/Homebrew-on-Linux) does not yet support ARM Linux.
 
-- ⚠️ Linux Homebrew cannot be executed as root user.
+- ⚠️ Homebrew on Linux cannot be installed as root user.
 
-  So you may need to create a new user to install Linux Homebrew:
+  So you may need to create a new user before installing Homebrew on Linux:
 
   ```shell
   NEW_USER_NAME=alex
