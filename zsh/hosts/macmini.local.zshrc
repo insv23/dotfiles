@@ -37,8 +37,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # ---- auto proxy ----
 pxyon > /dev/null
 
-# 设置终端颜色(修复了远程登录该主机时 kcbt 异常导致的命令预测字符无法清除的问题)
-export TERM=xterm-256color
 
 # envman(serviceman)
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

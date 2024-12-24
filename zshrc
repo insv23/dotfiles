@@ -20,6 +20,8 @@ source ~/.zsh/aliases.sh
 
 source ~/.zsh/hosts/local_index.sh
 
+# 设置终端颜色(修复远程登录主机时 kcbt 异常导致的命令预测字符无法清除的问题)
+export TERM=xterm-256color
 
 # kitty 设置窗口标题
 precmd() {
