@@ -4,13 +4,19 @@
 
 ## 特点
 
+- 🚀 基于 [Dotbot](https://github.com/anishathalye/dotbot) 的一键安装
 - 🖥️ 基于主机名的智能配置管理
-- 🔌 无 submodules 依赖地狱，插件管理简单直观
-- 🍺 Linux(x86) 使用 Homebrew，提供与 macOS 一致的包管理体验
-- 🌐 开箱即用的智能代理配置(支持 macOS/WSL/Linux)
-- ⚡ 现代化终端工具链(eza/bat/delta/yazi 等)
-- 🚀 基于 Dotbot 的一键安装
-- 📝 详尽的中文文档和注释
+- 🔧 完整的终端开发环境：
+  - 💻 使用 zsh + [Powerlevel10k](https://github.com/romkatv/powerlevel10k) 打造美观高效的 shell
+  - 📝 集成 [atuin](https://github.com/atuinsh/atuin) 实现智能命令历史搜索与同步
+  - 🔄 通过 [direnv](https://github.com/direnv/direnv) 实现自动化环境变量管理
+  - 📂 搭配 [yazi](https://github.com/sxyazi/yazi) 提供现代化文件管理体验
+  - 🌳 使用 [lazygit](https://github.com/jesseduffield/lazygit) 实现优雅的 Git 操作
+  - ⚡ 基于 [lazyvim](https://github.com/LazyVim/LazyVim) 的强大 Neovim 配置
+- 🔌 告别 submodules 依赖地狱，zsh/tmux/vim 插件管理简单直观
+- 🍺 Linux(x86) 采用 [Homebrew](https://brew.sh/)，享受与 macOS 一致的包管理体验
+- 🌐 开箱即用的智能代理配置（完美支持 macOS/WSL/Linux）
+- ⚙️ 现代化终端工具链集成（eza/bat/delta/yazi 等）
 
 ## 安装指南
 
@@ -52,6 +58,16 @@ git clone https://github.com/your-username/dotfiles.git ~/.dotfiles && cd ~/.dot
 ```bash
 rm -f ~/.profile ~/.bashrc ~/.gitconfig && ./install
 ```
+
+运行完成后，请注销当前用户会话并重新登录，使配置生效。
+
+3. 主机特定配置
+   系统会根据当前主机名自动创建对应的配置文件，例如：`~/.dotfiles/zsh/hosts/macmini.local.zshrc`
+   你可以在这个文件中添加仅适用于当前主机的个性化配置，比如：
+   - 代理设置
+   - 环境变量
+   - 本地工具路径
+   - 特定别名(alias)等
 
 ### 将远程仓库同步到本地
 

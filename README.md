@@ -6,13 +6,19 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 
 ## Features
 
+- 🚀 One-click installation powered by [Dotbot](https://github.com/anishathalye/dotbot)
 - 🖥️ Smart configuration management based on hostname
-- 🔌 No submodules dependency hell, simple and intuitive plugin management
-- 🍺 Homebrew on Linux(x86) for consistent package management experience with macOS
-- 🌐 Out-of-the-box smart proxy configuration (supports macOS/WSL/Linux)
-- ⚡ Modern terminal toolchain (eza/bat/delta/yazi etc.)
-- 🚀 One-click installation with Dotbot
-- 📝 Comprehensive documentation and comments
+- 🔧 Complete terminal development environment:
+  - 💻 Beautiful and efficient shell with zsh + [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
+  - 📝 Smart command history search and sync with [atuin](https://github.com/atuinsh/atuin)
+  - 🔄 Automated environment variable management via [direnv](https://github.com/direnv/direnv)
+  - 📂 Modern file management experience with [yazi](https://github.com/sxyazi/yazi)
+  - 🌳 Elegant Git operations through [lazygit](https://github.com/jesseduffield/lazygit)
+  - ⚡ Powerful Neovim setup based on [lazyvim](https://github.com/LazyVim/LazyVim)
+- 🔌 Say goodbye to submodules dependency hell with simple and intuitive zsh/tmux/vim plugin management
+- 🍺 Consistent package management experience with [Homebrew](https://brew.sh/) on Linux(x86) and macOS
+- 🌐 Out-of-the-box smart proxy configuration (perfect support for macOS/WSL/Linux)
+- ⚙️ Modern terminal toolchain integration (eza/bat/delta/yazi and more)
 
 ## Installation Guide
 
@@ -54,6 +60,19 @@ If some files already exist, remove them first:
 ```bash
 rm -f ~/.profile ~/.bashrc ~/.gitconfig && ./install
 ```
+
+After installation is complete, please log out of the current user session and log back in for the changes to take effect.
+
+3. Host-specific Configuration
+
+   The system will automatically create a configuration file based on your hostname, for example: `~/.dotfiles/zsh/hosts/macmini.local.zshrc`
+
+   You can add host-specific customizations in this file, such as:
+
+   - Proxy settings
+   - Environment variables
+   - Local tool paths
+   - Custom aliases
 
 ### Sync Remote Repository to Local
 
