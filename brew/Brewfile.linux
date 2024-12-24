@@ -1,0 +1,3 @@
+brew "btop"          # 系统资源监控器
+brew "caddy"         # 现代化 Web 服务器
+brew "fail2ban"      # 入侵防御系统 
