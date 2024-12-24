@@ -1,5 +1,4 @@
 ack
-direnv
 ffmpegthumbnailer
 imagemagick
 jq

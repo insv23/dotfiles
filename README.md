@@ -1,75 +1,158 @@
-# How to Use
+# dotfiles
 
-## First install
+[简体中文](README.zh-CN.md)
 
-Here is my install log: [dotfiles | insv の blog](https://blog.insv.xyz/dotfiles), it may help you get started.
+My dotfiles configuration, focused on providing a clean, maintainable, and cross-platform development environment.
 
-- Init script from [Vaelatern/init-dotfiles: Quickly get your dotfiles up and running](https://github.com/Vaelatern/init-dotfiles)
+## Features
 
-  ```shell
-  curl -fsSLO https://raw.githubusercontent.com/Vaelatern/init-dotfiles/master/init_dotfiles.sh
-  chmod +x ./init_dotfiles.sh
-  ./init_dotfiles.sh
+- 🖥️ Smart configuration management based on hostname
+- 🔌 No submodules dependency hell, simple and intuitive plugin management
+- 🍺 Homebrew on Linux(x86) for consistent package management experience with macOS
+- 🌐 Out-of-the-box smart proxy configuration (supports macOS/WSL/Linux)
+- ⚡ Modern terminal toolchain (eza/bat/delta/yazi etc.)
+- 🚀 One-click installation with Dotbot
+- 📝 Comprehensive documentation and comments
+
+## Installation Guide
+
+### Prerequisites
+
+- 🚫 Note: Homebrew is not supported on ARM Linux
+
+- ⛑️ Git and zsh must be pre-installed
+
+  ```bash
+  # Ubuntu example
+  sudo apt update && sudo apt install git zsh -y
   ```
 
-- Modify your config files, for example, `~/.vimrc` , and tweak `.install.conf.yaml`
+- ⚠️ Homebrew cannot be installed as root on Linux
 
-  - Hidden files or directories do **not** require the prefix `.`
-
-    For example, `~/.vim`
-
-    1. `mkdir vim`
-    2. Add an entry in the `.install.conf.yaml` file: `~/.vim:`
-
-  - If you are using git submodules, please make sure to add the submodule to the `gitconfig` file.
-
-    ```shell
-    git submodule add -f <Github URL> <path>
-    git submodule add -f https://github.com/tmux-plugins/tmux-cpu.git tmux/plugins/tmux-cpu
-    ```
-
-- Validate that the configuration is correct by running the `.install.conf.yaml` again
-
-- Commit and push to GitHub
-
-## Use on a new machine
-
-- 🚫 [Homebrew on Linux](https://docs.brew.sh/Homebrew-on-Linux) does not yet support ARM Linux.
-
-- ⚠️ Homebrew on Linux cannot be installed as root user.
-
-  So you may need to create a new user before installing Homebrew on Linux:
-
-  ```shell
+  ```bash
+  # Create a new user if needed
   NEW_USER_NAME=alex
   sudo useradd -m -s /bin/bash -G users,sudo $NEW_USER_NAME && sudo passwd $NEW_USER_NAME
   ```
 
-- ⛑️ git and zsh are required.
+### Quick Start
 
-  For example, install git and zsh on Ubuntu:
+1. Clone the repository
 
-  ```shell
-  sudo apt update && sudo apt install git zsh -y
+```bash
+git clone https://github.com/your-username/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
+```
+
+2. Run the installation script
+
+```bash
+./install
+```
+
+If some files already exist, remove them first:
+
+```bash
+rm -f ~/.profile ~/.bashrc ~/.gitconfig && ./install
+```
+
+### Sync Remote Repository to Local
+
+Execute from **any directory**:
+
+```bash
+dfu
+```
+
+This will overwrite the local repository with the latest state from the remote repository.
+
+## Configuration Details
+
+### Directory Structure
+
+```
+.
+├── brew/           # Homebrew related configuration
+├── kitty/          # Kitty terminal configuration
+├── nvim/           # Neovim configuration
+├── tmux/           # Tmux configuration
+├── vim/            # Vim configuration
+├── yazi/           # Yazi file manager configuration
+└── zsh/            # Zsh configuration
+    └── hosts/      # Host-specific configurations
+```
+
+### Main Features
+
+#### Package Management
+
+- Uses Homebrew as the primary package manager
+- Pre-configured with common development tools
+
+#### Terminal Enhancements
+
+- Modern command-line alternatives
+  - `ls` → `eza`
+  - `cat` → `bat`
+  - `cd` → `zoxide`
+  - `find` → `fd`
+- Git integration
+  - Beautiful diff viewer (delta)
+  - Command aliases
+  - Auto-completion
+
+#### Smart Proxy
+
+- Automatic environment detection
+- Simple toggle commands
+  - `pxyon` - Enable proxy
+  - `pxyoff` - Disable proxy
+- To automatically enable proxy on terminal startup for a specific machine:
+
+  1. Find the corresponding host configuration file: `zsh/hosts/hostname.local.zshrc`
+  2. Add at the end of the file:
+
+  ```bash
+  # ---- auto proxy ----
+  pxyon > /dev/null
   ```
 
-- Just clone the repository and run `./install`
+- If your machine has global proxy enabled by default but you want to automatically disable it for certain project directories, you can use direnv:
 
-  ```shell
-  git clone https://github.com/insv23/dotfiles.git .dotfiles && cd .dotfiles
+  1. Create a `.envrc` file in the directory:
+
+  ```bash
+  source_env ~/.dotfiles/zsh/aliases.sh
+  pxyoff
   ```
 
-- Run `./install`  
-   If some files or directory already exist, manually delete them before running `./install` again. For example,
+  2. Allow direnv to load the configuration:
 
-  ```shell
-  rm -f ~/.profile ~/.bashrc ~/.gitconfig && ./install
+  ```bash
+  direnv allow
   ```
 
-- Push commits in a new machine to the remote repository
+  This will automatically disable the proxy when entering the directory and restore the global proxy settings when leaving.
 
-  ```shell
-  git push --set-upstream origin main
-  ```
+## Common Issues
 
-  Have some boring 2FA works here.
+### Homebrew Installation Fails
+
+- Ensure you're not running as root
+- Check if your system architecture is supported
+- Verify network connectivity
+
+### File Linking Errors
+
+- Check if files already exist at target locations
+- Use `rm -f` to remove existing files
+- Run `./install` again
+
+## Contributing
+
+Issues and Pull Requests are welcome!
+
+## Acknowledgments
+
+- [Dotbot](https://github.com/anishathalye/dotbot)
+- [Homebrew](https://brew.sh/)
+- And all the excellent open-source tools

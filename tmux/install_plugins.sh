@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# 在 .ignore 中添加 `tmux/plugins/` 将 tmux 插件全部不 track
+# 在 .gitignore 中添加 `tmux/plugins/` 将 tmux 插件全部不 track
 echo "🔄 安装 tmux 插件..."
 
 mkdir -p ~/.tmux/plugins/

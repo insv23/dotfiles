@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# 在 .ignore 中添加 `vim/pack/vendor/start/` 将 vim 插件全部不 track
+# 在 .gitignore 中添加 `vim/pack/vendor/start/` 将 vim 插件全部不 track
 
 mkdir -p ~/.vim/pack/vendor/start/
 

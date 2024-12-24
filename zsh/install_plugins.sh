@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# 在 .ignore 中添加 `zsh/plugins/` 将 zsh 插件全部不 track
+# 在 .gitignore 中添加 `zsh/plugins/` 将 zsh 插件全部不 track
 echo "🔄 安装 zsh 插件..."
 
 mkdir -p ~/.zsh/plugins/
