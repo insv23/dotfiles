@@ -1,0 +1,10 @@
+ack
+direnv
+ffmpegthumbnailer
+imagemagick
+jq
+python-argcomplete
+ripgrep
+unar
+wget
+zlib 
