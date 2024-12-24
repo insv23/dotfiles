@@ -34,6 +34,23 @@ Here is my install log: [dotfiles | insv の blog](https://blog.insv.xyz/dotfile
 
 ## Use on a new machine
 
+⛔ **Note:** ARM Linux does not support Homebrew.
+
+- Linux Homebrew cannot be executed as root user.
+  so you may need to create a new user to install Linux Homebrew
+
+  ```shell
+  NEW_USER_NAME=alex
+  sudo useradd -m -s /bin/bash -G users,sudo $NEW_USER_NAME && sudo passwd $NEW_USER_NAME
+  ```
+
+- git and zsh are required
+  for example, install git and zsh on Ubuntu
+
+  ```shell
+  sudo apt update && sudo apt install git zsh -y
+  ```
+
 - Just clone the repository and run `./install`
 
   ```shell
