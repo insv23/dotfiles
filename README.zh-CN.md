@@ -43,23 +43,23 @@
 
 1. 克隆仓库
 
-```bash
-git clone https://github.com/your-username/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
-```
+   ```bash
+   git clone https://github.com/your-username/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
+   ```
 
 2. 运行安装脚本
 
-```bash
-./install
-```
+   ```bash
+   ./install
+   ```
 
-如果某些文件已存在，需要先删除:
+   如果某些文件已存在，需要先删除:
 
-```bash
-rm -f ~/.profile ~/.bashrc ~/.gitconfig && ./install
-```
+   ```bash
+   rm -f ~/.profile ~/.bashrc ~/.gitconfig && ./install
+   ```
 
-运行完成后，请注销当前用户会话并重新登录，使配置生效。
+   运行完成后，注销当前用户会话并重新登录，配置将自动生效。
 
 3. 主机特定配置
    系统会根据当前主机名自动创建对应的配置文件，例如：`~/.dotfiles/zsh/hosts/macmini.local.zshrc`
@@ -77,7 +77,7 @@ rm -f ~/.profile ~/.bashrc ~/.gitconfig && ./install
 dfu
 ```
 
-将会以远程仓库的最新状态覆盖本地仓库
+将会以远程仓库的最新状态覆盖本地 dotfiles 仓库
 
 ## 配置说明
 

@@ -45,23 +45,23 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 
 1. Clone the repository
 
-```bash
-git clone https://github.com/your-username/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
-```
+   ```bash
+   git clone https://github.com/your-username/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
+   ```
 
 2. Run the installation script
 
-```bash
-./install
-```
+   ```bash
+   ./install
+   ```
 
-If some files already exist, remove them first:
+   If some files already exist, remove them first:
 
-```bash
-rm -f ~/.profile ~/.bashrc ~/.gitconfig && ./install
-```
+   ```bash
+   rm -f ~/.profile ~/.bashrc ~/.gitconfig && ./install
+   ```
 
-After installation is complete, please log out of the current user session and log back in for the changes to take effect.
+   After installation, log out of your current user session and log back in for the configuration to take effect automatically.
 
 3. Host-specific Configuration
 
