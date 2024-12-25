@@ -44,7 +44,7 @@
 1. 克隆仓库
 
    ```bash
-   git clone https://github.com/your-username/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
+   git clone https://github.com/insv23/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
    ```
 
 2. 运行安装脚本

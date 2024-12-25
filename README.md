@@ -46,7 +46,7 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 1. Clone the repository
 
    ```bash
-   git clone https://github.com/your-username/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
+   git clone https://github.com/insv23/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
    ```
 
 2. Run the installation script
