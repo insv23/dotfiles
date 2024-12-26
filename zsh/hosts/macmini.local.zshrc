@@ -20,12 +20,6 @@ case ":$PATH:" in
 esac
 
 
-# ---- direnv -----
-
-eval "$(direnv hook zsh)"
-export DIRENV_LOG_FORMAT=""     # 关闭 direnv 加载信息，使其不出现在终端中
-
-
 # ---- bun -----
 
 export BUN_INSTALL="$HOME/.bun"

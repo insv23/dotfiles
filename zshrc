@@ -49,6 +49,10 @@ export LC_ALL=en_US.UTF-8
 # asdf
 source $(brew --prefix asdf)/libexec/asdf.sh
 
+# ---- direnv -----
+eval "$(direnv hook zsh)"
+export DIRENV_LOG_FORMAT=""     # 关闭 direnv 加载信息，使其不出现在终端中
+
 
 # zoxide
 export PATH="$HOME/.local/bin:$PATH"
