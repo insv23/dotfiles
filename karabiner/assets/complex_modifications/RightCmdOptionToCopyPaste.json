@@ -1,0 +1,39 @@
+{
+  "title": "Right Command/Option to Copy/Paste",
+  "rules": [
+    {
+      "description": "Right Command to Cmd+C (Copy)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "right_command"
+          },
+          "to": [
+            {
+              "key_code": "c",
+              "modifiers": ["left_command"]
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Right Option to Cmd+V (Paste)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "right_option"
+          },
+          "to": [
+            {
+              "key_code": "v",
+              "modifiers": ["left_command"]
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}
