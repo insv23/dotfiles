@@ -1,0 +1,37 @@
+# Readline(https://tiswww.case.edu/php/chet/readline/readline.html) 配置文件
+# 参考: https://www.bilibili.com/video/BV14E6WYJEcT
+# Zsh 默认使用自己的 zle (Zsh Line Editor) 作为命令行编辑器，而不是直接依赖 readline 库。
+# 这意味着，.inputrc 文件中的配置通常不会直接影响 Zsh。
+# 即这个文件主要对 bash 起作用, Python, gdb 的 repl 环境也能用
+
+# case insensitive tab completion
+set completion-ignore-case On
+
+# show all available completions
+set show-all-if-ambiguous on
+
+set menu-complete-display-prefix on
+TAB:menu-complete
+
+set mark-symlinked-directories on
+
+# vim mode in bash
+# set show-mode-in-prompt on
+# set vi-ins-mode-string ""
+# set vi-cmd-mode-string ""
+
+# Useful key bindings
+Control-l:clear-screen
+
+# Backspacing until slash or whitespace
+Control-g: unix-filename-rubout
+
+# Alt-Left and Alt-Right go backward and forward by word in bash prompt
+"\e[1;3D": backward-word
+"\e[1;3C": forward-word
+# Alt-h and Alt-l go backward and forward by word in bash prompt
+"\eh": backward-word
+"\el": forward-word
+# Alt-j and Alt-k go backward and forward in history
+Control-p:history-search-backward 
+Control-n:history-search-forward

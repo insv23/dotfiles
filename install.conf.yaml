@@ -14,6 +14,7 @@
     ~/.config/yazi/: ./yazi
     ~/.gitconfig:
     ~/.hammerspoon:
+    ~/.inputrc:
     ~/.profile:
     ~/.p10k.zsh:
     ~/.tmux:
