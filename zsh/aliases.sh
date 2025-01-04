@@ -62,6 +62,7 @@ alias tmat='tmux at -t'
 alias tmnew='tmux new -s'
 alias tmkt='tmux kill-session -t'
 
+
 # yazi
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
@@ -70,4 +71,12 @@ function yy() {
 		cd -- "$cwd"
 	fi
 	rm -f -- "$tmp"
+}
+
+# 创建 ssh 密钥(默认无密码)
+ssh-ck() {
+    if [ ! -z "$1" ]; then
+        user_host=$(whoami)@$(hostname)
+        ssh-keygen -f $HOME/.ssh/$1 -t rsa -N '' -C "$user_host to $1"
+    fi
 }
