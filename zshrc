@@ -8,9 +8,9 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet # 当主题加载时保持安静，不显示警告信息 
 
-
 source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 
+# ---- zsh-autosuggestions ----
 # 演示: https://asciinema.org/a/37390
 # 使用右方向键接受整个, 可与 vi 联合使用, 逐个字母/单词的接受建议
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -20,10 +20,8 @@ source ~/.zsh/aliases.sh
 
 source ~/.zsh/hosts/local_index.sh
 
-# 设置终端颜色(修复远程登录主机时 kcbt 异常导致的命令预测字符无法清除的问题)
-export TERM=xterm-256color
 
-# kitty 设置窗口标题
+# ---- kitty 设置窗口标题 ----
 precmd() {
     if [[ -n "$SSH_CONNECTION" ]]; then
         echo -ne "\033]0;${HOST}:${PWD##*/}\007"
@@ -34,19 +32,10 @@ precmd() {
 
 
 
-# vim style 
+# ---- 终端命令编辑模式 ----
 set -o vi
 
-# default editor
-export EDITOR='nvim'
-
-
-# 设置系统语言环境为美式英语, 字符编码为 UTF-8
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-
-# asdf
+# ---- asdf ----
 source $(brew --prefix asdf)/libexec/asdf.sh
 
 # ---- direnv -----
@@ -54,19 +43,10 @@ eval "$(direnv hook zsh)"
 export DIRENV_LOG_FORMAT=""     # 关闭 direnv 加载信息，使其不出现在终端中
 
 
-# zoxide
+# ---- zoxide ----
 export PATH="$HOME/.local/bin:$PATH"
 eval "$(zoxide init zsh)"
 
-# yazi
-function yy() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
 
 
 # ---- FZF -----
