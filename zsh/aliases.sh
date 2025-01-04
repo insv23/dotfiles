@@ -1,21 +1,11 @@
-# cd folder
-alias ..='cd ..'
-alias ...='cd ../..'
+source ~/.dotfiles/zsh/aliases.network.sh
+source ~/.dotfiles/zsh/aliases.file_dir.sh
 
-# Use colors in coreutils utilities output
+
+# grep
 alias grep='grep --color'
 
-# ---- Eza (better ls) -----
-# alias ls="eza --color=always --long --no-filesize --icons=always -<D-s><D-z>-no-time --no-user --no-permissions"
-alias ls="eza -labgh --icons=always --git"
-alias ll="eza -labgh --icons=always --git"
-alias lla="eza -labgh --icons=always --git"
-
-# Aliases to protect against overwriting
-alias cp='cp -i'
-alias mv='mv -i'
-
-# git related aliases
+# git 
 # in `../gitconfig`
 alias gag='git exec ag'
 alias ginsv='git config user.name "insv";git config user.email "insv23@outlook.com"'
@@ -48,66 +38,36 @@ dfu() {
 
 # python
 alias py='python'
-alias pym='python -m'
+alias pym='py -m'
 
-# Create a directory and cd into it
-mkcd() {
-  if [ ! -n "$1" ]; then
-    echo "Enter a directory name"
-  elif [ -d $1 ]; then
-    echo "'$1' already exists"
-  else
-    mkdir -pv $1 && cd $1
-  fi
-}
 
-# proxy
-# Mac, WSL, Linux
-if uname -a | grep -q "Darwin"; then
-  # if (($(uname) == Darwin)); then // Not Work on Linux: https://blog.insv.xyz/shell-str-compare
-  export pxy_ip=127.0.0.1
-  export pxy_http_port=7890
-  export pxy_all_port=7890
-# elif (($(cat /proc/version | grep -c "WSL") == 1)); then
-elif cat /proc/version | grep -q "WSL"; then
-  export pxy_ip=$(cat /etc/resolv.conf | grep "nameserver" | cut -f 2 -d " ")
-  export pxy_http_port=7890
-  export pxy_all_port=7890
-else
-  # Linux: v2ray
-  export pxy_http_port=20171
-  export pxy_all_port=20170
-  export pxy_http_port=20171
-  export pxy_all_port=20170
-fi
-pxyoff() {
-  unset http_proxy
-  unset https_proxy
-  unset all_proxy
-  echo -e "\033[31m[×] Proxy Off\033[0m"
-}
-pxyon() {
-  export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
-  export http_proxy="http://$pxy_ip:$pxy_http_port"
-  export https_proxy="http://$pxy_ip:$pxy_http_port"
-  export all_proxy="socks5://$pxy_ip:$pxy_all_port"
-  echo -e "\033[32m[√] Proxy On $pxy_ip:$pxy_http_port/$pxy_all_port\033[0m"
-}
-
-# docker
-alias dc='docker compose'
-alias dkd='docker compose down'
-alias dku='docker compose up'
-alias dkud='docker compose up -d'
-alias caddy_reload='z caddy;docker compose exec -w /etc/caddy caddy caddy reload'
-function dkspp() {
-  id=$(docker ps -a | grep $1 | awk '{print $1}')
-  docker stop $id
-  docker container prune
-}
+# ---- Docker ----
 alias ld='lazydocker'
+
+alias dc='docker compose'
+alias dcd='docker compose down'
+alias dcu='docker compose up'
+alias dcud='docker compose up -d'
+
+# 展示所有容器, 第一列是容器名字
+alias dkls='docker container ls --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}"'
+
+# `dksp 字符串`: 停止所有名字中包含指定字符串的 Docker 容器。
+alias dksp='docker ps -a --filter "name=$1" --format "{{.ID}}" | xargs -r docker stop'
+
+
 
 # Tmux
 alias tmat='tmux at -t'
 alias tmnew='tmux new -s'
 alias tmkt='tmux kill-session -t'
+
+# yazi
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
