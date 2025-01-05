@@ -2,7 +2,6 @@
 alias ..='cd ..'
 alias ...='cd ../..'
 
-
 # 交互模式 -i 可以防止在复制过程中意外覆盖文件。
 alias cp='cp -i'
 alias mv='mv -i'
@@ -12,7 +11,17 @@ alias dsize='du -sh * | sort -hr'
 
 # ---- Eza (better ls) -----
 if command -v eza >/dev/null 2>&1; then
-    alias ls='eza \
+  alias ls='eza \
+    --header \
+    --long \
+    --all \
+    --binary \
+    --group \
+    --icons=always \
+    --git'
+
+  # 显示目录大小
+  alias lss='eza \
     --header \
     --long \
     --all \
@@ -23,12 +32,12 @@ if command -v eza >/dev/null 2>&1; then
     --git'
 
 else
-    alias ls='ls --color=auto'
-    alias l='ls -l'
-    alias ll='ls -lahF'
-    alias lls='ls -lahFtr'
-    alias la='ls -A'
-    alias lc='ls -CF'
+  alias ls='ls --color=auto'
+  alias l='ls -l'
+  alias ll='ls -lahF'
+  alias lls='ls -lahFtr'
+  alias la='ls -A'
+  alias lc='ls -CF'
 fi
 
 # 利用 eza 定义一个 tree 命令
@@ -38,13 +47,13 @@ tree() {
   depth=2
   if [ $# -gt 0 ]; then
     case "$1" in
-      *[!0-9]*)
-        echo "Invalid argument: '$1'. Please provide a numeric depth value." >&2
-        return 1
-        ;;
-      *)
-        depth="$1"
-        ;;
+    *[!0-9]*)
+      echo "Invalid argument: '$1'. Please provide a numeric depth value." >&2
+      return 1
+      ;;
+    *)
+      depth="$1"
+      ;;
     esac
   fi
   ls -T -L="$depth"
@@ -60,3 +69,4 @@ mkcd() {
     mkdir -pv $1 && cd $1
   fi
 }
+
