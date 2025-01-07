@@ -42,3 +42,7 @@ export PATH="$HOME/.asdf/installs/rust/stable/bin:$PATH"
 
 # ---- pipx ----
 export PIPX_HOME=~/.pipx
+
+# ---- trash ----
+export PATH="/opt/homebrew/opt/trash/bin:$PATH"
+alias del='trash'
