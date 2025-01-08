@@ -56,7 +56,7 @@ tree() {
       ;;
     esac
   fi
-  ls -T -L="$depth"
+  lss -T -L="$depth"
 }
 
 # Create a directory and cd into it
@@ -69,4 +69,3 @@ mkcd() {
     mkdir -pv $1 && cd $1
   fi
 }
-
