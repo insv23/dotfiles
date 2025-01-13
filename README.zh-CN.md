@@ -49,15 +49,19 @@
 
 2. 运行安装脚本
 
-   ```bash
-   ./install
-   ./run.zsh
-   ```
-
    如果某些文件已存在，需要先删除:
 
    ```bash
    rm -f ~/.profile ~/.bashrc ~/.gitconfig ~/.zshrc && ./install
+   source ~/.zshrc
+   ```
+
+   ```bash
+   ./zsh/install_plugins.sh
+   ./vim/install_plugins.sh
+   ./brew/0.install.sh
+   ./brew/1.brewInstallApps.sh
+   ./tmux/install_plugins.sh
    ```
 
    运行完成后，注销当前用户会话并重新登录，配置将自动生效。

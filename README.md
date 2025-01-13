@@ -51,18 +51,23 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 
 2. Run the installation script
 
-   ```bash
-   ./install
-   ./run.zsh
-   ```
-
    If some files already exist, remove them first:
 
-   ```bash
+   ```zsh
    rm -f ~/.profile ~/.bashrc ~/.gitconfig ~/.zshrc && ./install
+   source ~/.zshrc
    ```
 
+   ```zsh
+   ./zsh/install_plugins.sh
+   ./vim/install_plugins.sh
+   ./brew/0.install.sh
+   ./brew/1.brewInstallApps.sh
+   ./tmux/
+
    After installation, log out of your current user session and log back in for the configuration to take effect automatically.
+
+   ```
 
 3. Host-specific Configuration
 
