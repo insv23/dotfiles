@@ -36,9 +36,9 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 - ⚠️ Homebrew cannot be installed as root on Linux
 
   ```bash
-  # Create a new user if needed
-  NEW_USER_NAME=alex
-  sudo useradd -m -s /bin/bash -G users,sudo $NEW_USER_NAME && sudo passwd $NEW_USER_NAME
+  # Create a new user if needed( zsh must be pre-installed!!)
+  NEW_USER_NAME=tony
+  sudo useradd -m -s /bin/zsh -G users,sudo $NEW_USER_NAME && sudo passwd $NEW_USER_NAME
   ```
 
 ### Quick Start
@@ -53,12 +53,13 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 
    ```bash
    ./install
+   ./run.zsh
    ```
 
    If some files already exist, remove them first:
 
    ```bash
-   rm -f ~/.profile ~/.bashrc ~/.gitconfig && ./install
+   rm -f ~/.profile ~/.bashrc ~/.gitconfig ~/.zshrc && ./install
    ```
 
    After installation, log out of your current user session and log back in for the configuration to take effect automatically.

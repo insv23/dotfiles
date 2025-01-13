@@ -34,9 +34,9 @@
 - ⚠️ Linux 下不能以 root 用户安装 Homebrew
 
   ```bash
-  # 如需要可以创建新用户
-  NEW_USER_NAME=alex
-  sudo useradd -m -s /bin/bash -G users,sudo $NEW_USER_NAME && sudo passwd $NEW_USER_NAME
+  # 如需要可以创建新用户( 需保证已经安装了 zsh)
+  NEW_USER_NAME=tony
+  sudo useradd -m -s /bin/zsh -G users,sudo $NEW_USER_NAME && sudo passwd $NEW_USER_NAME
   ```
 
 ### 快速开始
@@ -51,12 +51,13 @@
 
    ```bash
    ./install
+   ./run.zsh
    ```
 
    如果某些文件已存在，需要先删除:
 
    ```bash
-   rm -f ~/.profile ~/.bashrc ~/.gitconfig && ./install
+   rm -f ~/.profile ~/.bashrc ~/.gitconfig ~/.zshrc && ./install
    ```
 
    运行完成后，注销当前用户会话并重新登录，配置将自动生效。
