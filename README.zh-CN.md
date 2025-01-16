@@ -24,11 +24,11 @@
 
 - 🚫 注意: ARM 架构的 Linux 暂不支持 Homebrew
 
-- ⛑️ 需要预先安装 git 和 zsh
+- ⛑️ 需要预先安装 git, zsh 和 gcc
 
   ```bash
   # Ubuntu 示例
-  sudo apt update && sudo apt install git zsh -y
+  sudo apt update && sudo apt install git zsh build-essential -y
   ```
 
 - ⚠️ Linux 下不能以 root 用户安装 Homebrew

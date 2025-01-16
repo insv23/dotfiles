@@ -26,11 +26,11 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 
 - 🚫 Note: Homebrew is not supported on ARM Linux
 
-- ⛑️ Git and zsh must be pre-installed
+- ⛑️ Git, zsh and gcc must be pre-installed
 
   ```bash
   # Ubuntu example
-  sudo apt update && sudo apt install git zsh -y
+  sudo apt update && sudo apt install git zsh build-essential -y
   ```
 
 - ⚠️ Homebrew cannot be installed as root on Linux
