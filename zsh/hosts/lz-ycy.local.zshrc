@@ -1,12 +1,9 @@
 # Hostname: C20240108106238
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# nvim
-export PATH="$PATH:/opt/nvim-linux64/bin"
-
 # ----- Homebrew(Linux) -----
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# 通过 ssh 连接到该机器后，自动进入 tmux
+if [[ -z "$TMUX" && -n "$SSH_CONNECTION" ]]; then
+    tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
+fi
