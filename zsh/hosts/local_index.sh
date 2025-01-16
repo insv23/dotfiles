@@ -54,6 +54,11 @@ handle_special_hostname() {
     return 0 # 成功加载，返回 0
     ;;
   *)
+  autodl-container-*)
+    . "$DOTFILES_ZSH_HOSTS/autodl.local.zshrc"
+    return 0 # 成功加载，返回 0
+    ;;
+  *)
     return 1 # 不是特殊主机名，返回 1
     ;;
   esac
