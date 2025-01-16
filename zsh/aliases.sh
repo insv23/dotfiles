@@ -40,6 +40,8 @@ dfu() {
 alias py='python'
 alias pym='py -m'
 
+# ---- caddy ----
+alias caddy_edit_format_reload='sudo -E nvim /etc/caddy/Caddyfile && sudo caddy fmt --overwrite /etc/caddy/Caddyfile && sudo systemctl reload caddy'
 
 # ---- Docker ----
 alias ld='lazydocker'
