@@ -1,10 +1,6 @@
 # ----- Homebrew(Linux) -----
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# 通过 ssh 连接到该机器后，自动进入 tmux
-if [[ -z "$TMUX" && -n "$SSH_CONNECTION" ]]; then
-    tmux new-session -A -s ssh_tmux
-fi
 
 # 忽略不安全的补全
 # A 用户安装 homebrew 时会创建相关文件, B 用户无需再安装，只需直接使用 A 创建的就好
