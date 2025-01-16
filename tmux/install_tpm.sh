@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # 在 .gitignore 中添加 `tmux/plugins/` 将 tmux 插件全部不 track
-echo "🔄 安装 tmux 插件..."
+echo "🔄 安装 tmux tpm..."
 
 mkdir -p ~/.tmux/plugins/
 
@@ -9,8 +9,6 @@ mkdir -p ~/.tmux/plugins/
 git clone --depth=1 https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm
 
 
-# 利用 tpm 的脚本安装插件
-~/.tmux/plugins/tpm/bin/install_plugins
-
-echo " ✅ tmux 插件安装完成"
+echo "✅ tmux tpm 安装完成"
+echo "打开 tmux, 使用 `prefix shift i` 让 tpm 安装 tmux 插件"
 echo

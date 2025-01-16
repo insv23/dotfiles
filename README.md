@@ -63,7 +63,7 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
    ./vim/install_plugins.sh
    ./brew/0.install.sh
    ./brew/1.brewInstallApps.sh
-   ./tmux/
+   ./tmux/install_tpm.sh
 
    After installation, log out of your current user session and log back in for the configuration to take effect automatically.
 
