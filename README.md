@@ -64,10 +64,11 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
    ./brew/0.install.sh
    ./brew/1.brewInstallApps.sh
    ./tmux/install_tpm.sh
+   sudo ./brew/2.ubuntuInstall.sh
+   ```
 
    After installation, log out of your current user session and log back in for the configuration to take effect automatically.
 
-   ```
 
 3. Host-specific Configuration
 

@@ -62,6 +62,7 @@
    ./brew/0.install.sh
    ./brew/1.brewInstallApps.sh
    ./tmux/install_tpm.sh
+   sudo ./brew/2.ubuntuInstall.sh
    ```
 
    运行完成后，注销当前用户会话并重新登录，配置将自动生效。
