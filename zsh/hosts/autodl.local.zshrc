@@ -16,3 +16,11 @@ export HF_ENDPOINT=https://hf-mirror.com
 export UV_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 
 alias pxy='source /etc/network_turbo'
+
+
+# autodl 的机器的 hostname 是 autodl-container-cedc49a0d5-528adbab 这种很长的
+# 无法自己改 hostname
+# p10k 显示时替换主机名为 4090x8
+typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%B%n@4090x8'
+typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%n@4090x8'
+typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n@4090x8'
