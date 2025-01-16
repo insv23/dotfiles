@@ -1,6 +1,7 @@
 asdf
 atuin
 bat
+btop
 direnv
 eza
 fastfetch

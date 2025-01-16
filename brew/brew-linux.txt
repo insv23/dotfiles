@@ -1,2 +1,0 @@
-btop
-fail2ban 
