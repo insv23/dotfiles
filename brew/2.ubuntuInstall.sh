@@ -1,15 +1,24 @@
 #!/bin/zsh
 
-# 检查软件是否已安装
-caddy_installed=$(which caddy 2>/dev/null)
-docker_installed=$(which docker 2>/dev/null)
-fail2ban_installed=$(which fail2ban-server 2>/dev/null)
-
 # 交互式选择安装
 echo "请选择要安装的软件（可多选，用空格分隔）："
-echo "1. Caddy $(if [ -n "$caddy_installed" ]; then echo "(已安装: $caddy_installed)"; fi)"
-echo "2. Docker $(if [ -n "$docker_installed" ]; then echo "(已安装: $docker_installed)"; fi)"
-echo "3. Fail2Ban $(if [ -n "$fail2ban_installed" ]; then echo "(已安装: $fail2ban_installed)"; fi)"
+echo ""
+echo "1. Caddy"
+if command -v caddy >/dev/null 2>&1; then
+    echo "   └── 已安装: $(which caddy)"
+fi
+echo ""
+echo "2. Docker"
+if command -v docker >/dev/null 2>&1; then
+    echo "   └── 已安装: $(which docker)"
+fi
+echo ""
+echo "3. Fail2Ban"
+if command -v fail2ban-server >/dev/null 2>&1; then
+    echo "   └── 已安装: $(which fail2ban-server)"
+fi
+echo ""
+
 vared -p "请输入选择（例如：1 2）：" -c choices  # 使用 zsh 的 vared 命令
 
 # 将用户输入转换为数组
