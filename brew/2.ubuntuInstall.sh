@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 # 检查软件是否已安装
 caddy_installed=$(which caddy 2>/dev/null)
