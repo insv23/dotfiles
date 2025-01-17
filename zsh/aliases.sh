@@ -16,7 +16,8 @@ alias cdgr='cd "$(git root)"'
 function gi() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@; }
 alias lg='lazygit'
 
-# zshrc
+# zsh
+alias rezsh='exec zsh' # 用一个新的 Zsh 实例替换当前的 Zsh 进程，相当于“重启”了 Zsh。
 alias szsh='source ~/.zshrc'
 
 # Homebrew
