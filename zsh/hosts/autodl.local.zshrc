@@ -20,3 +20,6 @@ alias pxy='source /etc/network_turbo'
 typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%B%n@4090x8'
 typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%n@4090x8'
 typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n@4090x8'
+
+# 当前用户使用 root 用户安装的 miniconda
+export PATH="/root/miniconda3/bin:$PATH"
