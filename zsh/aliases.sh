@@ -61,13 +61,23 @@ alias dksp='docker ps -a --filter "name=$1" --format "{{.ID}}" | xargs -r docker
 
 
 # Tmux
-alias tmat='tmux at -t'
-alias tmnew='tmux new -s'
+alias tmat='tmux new-session -A -s'   # new-session：创建一个新的 tmux 会话。
+                                      # -A：如果指定名称的会话已经存在，则附加到该会话（而不是创建新会话）。
+                                      # -s：指定会话的名称。
 alias tmkt='tmux kill-session -t'
 
 
 # yazi
 function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"
 	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
