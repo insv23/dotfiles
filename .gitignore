@@ -19,3 +19,6 @@ zsh/plugins
 
 # vim plugins
 vim/pack/vendor/start
+
+# envrc
+.envrc
