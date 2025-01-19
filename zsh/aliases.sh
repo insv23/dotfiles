@@ -55,8 +55,6 @@ alias dcud='docker compose up -d'
 # 展示所有容器, 第一列是容器名字
 alias dcls='docker container ls --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}"'
 
-# `dksp 字符串`: 停止所有名字中包含指定字符串的 Docker 容器。
-alias dcsp='docker ps -a --filter "name=$1" --format "{{.ID}}" | xargs -r docker stop'
 
 
 
