@@ -8,7 +8,14 @@ alias pingt='ping 119.29.29.29' # 腾讯
 
 # 查看本机 IP
 # 有代理时是代理 IP, 没有代理时则是本机真实 IP
-alias ip='curl ipinfo.io'
+alias myip='curl cip.cc'
+
+# ---- socks proxy ----
+# 需要先安装好 proxychains4
+# 并使用 `sudo -E nvim /etc/proxychains.conf` 在最后添加
+# socks5  运行socks服务的IP socks服务端口 用户  密码
+# 中间使用 tab 或 空格 分割
+alias pc='proxychains'
 
 # ---- proxy ----
 # macOS, WSL 使用 Clash/Mihomo Party
@@ -45,4 +52,15 @@ pxyoff() {
   unset https_proxy
   unset all_proxy
   echo -e "\033[31m[×] Proxy Off\033[0m"
+}
+
+# 使用自己设定的 socks 代理
+# 在用户家目录下添加 .socks 文件用来保存 socks 配置，其中只有一行:
+# socks5://用户名:密码@IP:socks端口
+pxyss() {
+  local proxy_server=$(cat ~/.socks)
+  export http_proxy="$proxy_server"
+  export https_proxy="$proxy_server"
+  export all_proxy="$proxy_server"
+  echo "Proxy set to: $proxy_server"
 }
