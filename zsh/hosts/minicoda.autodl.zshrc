@@ -1,7 +1,11 @@
 # >>> conda initialize >>>
 # 当前用户使用 root 用户安装的 miniconda
-# 但只在特定目录下通过 direnv 激活使用，禁止全局用
+# 但只在特定目录下通过 direnv 激活使用，禁止全局用:
 # echo 'source ~/.dotfiles/zsh/hosts/minicoda.autodl.zshrc' > .envrc; direnv allow
+# 创建虚拟环境:
+# conda create -n <环境名称> python=<Python版本>
+# 激活虚拟环境:
+# echo 'conda activate <环境名称>' >> .envrc; direnv allow
 
 
 # !! Contents within this block are managed by 'conda init' !!
