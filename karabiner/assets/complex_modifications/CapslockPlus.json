@@ -2,6 +2,33 @@
   "title": "CapsLock (⇪) ",
   "rules": [
     {
+        "description": "Tap CapsLock (⇪) → Escape (⎋); Hold CapsLock (⇪) → Hyper Key (⇧⌃⌥⌘)",
+        "manipulators": [
+          {
+            "from": {
+              "key_code": "caps_lock"
+            },
+            "to": [
+              {
+                "key_code": "left_shift",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_option"
+                ],
+                "lazy": true
+              }
+            ],
+            "to_if_alone": [
+              {
+                "key_code": "escape"
+              }
+            ],
+            "type": "basic"
+          }
+        ]
+      },
+    {
       "description": "Tap CapsLock (⇪) → (f18 to toggle ABC input if non-abc,) Escape (⎋); Hold CapsLock (⇪) → Hyper Key (⇧⌃⌥⌘)",
       "manipulators": [
         {
