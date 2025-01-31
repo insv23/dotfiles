@@ -58,9 +58,28 @@ pxyoff() {
 # 在用户家目录下添加 .socks 文件用来保存 socks 配置，其中只有一行:
 # socks5://用户名:密码@IP:socks端口
 pxyss() {
+  if [ ! -f ~/.socks ]; then
+    echo "Error: ~/.socks file not found."
+    return 1
+  fi
   local proxy_server=$(cat ~/.socks)
   export http_proxy="$proxy_server"
   export https_proxy="$proxy_server"
   export all_proxy="$proxy_server"
-  echo "Proxy set to: $proxy_server"
+  echo -e "\033[32m[√] Proxy On socks5\033[0m"
+}
+
+# 使用自己设定的 http 代理
+# 在用户家目录下添加 .http 文件用来保存 http 配置，其中只有一行:
+# http://用户名:密码@IP:socks端口
+pxyhp() {
+  if [ ! -f ~/.http ]; then
+    echo "Error: ~/.http file not found."
+    return 1
+  fi
+  local proxy_server=$(cat ~/.http)
+  export http_proxy="$proxy_server"
+  export https_proxy="$proxy_server"
+  export all_proxy="$proxy_server"
+  echo -e "\033[32m[√] Proxy On http\033[0m"
 }
