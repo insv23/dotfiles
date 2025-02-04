@@ -7,8 +7,8 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # 但会有警告, 使用此命令忽略警告
 compinit -u
 
+# export HF_ENDPOINT=https://hf-mirror.com # 不使用镜像，而是 pxy 后直接下载似乎也行
 export MODEL_CACHE=/root/autodl-tmp/.cache/modelscope/hub/
-export HF_ENDPOINT=https://hf-mirror.com
 export UV_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 
 alias pxy='source /etc/network_turbo'
