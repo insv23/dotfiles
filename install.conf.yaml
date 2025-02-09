@@ -6,6 +6,8 @@
 - clean: ["~"]
 
 - link:
+    ~/.aider.model.metadata.json: ./aider/aider.model.metadata.json
+    ~/.aider.conf.yml: ./aider/aider.conf.yml
     ~/.bashrc:
     ~/.config/atuin/: ./atuin
     ~/.config/karabiner/: ./karabiner
