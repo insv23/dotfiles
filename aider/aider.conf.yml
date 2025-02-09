@@ -22,38 +22,11 @@
 # model: openai/gemini-2.0-pro-exp-02-05
 model: gemini/gemini-2.0-pro-exp-02-05
 
-## Use claude-3-opus-20240229 model for the main chat
-#opus: false
+## Specify the model to use for commit messages and chat history summarization (default depends on --model)
+weak-model: gemini/gemini-2.0-flash-exp
 
-## Use claude-3-5-sonnet-20241022 model for the main chat
-#sonnet: false
-
-## Use claude-3-5-haiku-20241022 model for the main chat
-#haiku: false
-
-## Use gpt-4-0613 model for the main chat
-#4: false
-
-## Use gpt-4o model for the main chat
-#4o: false
-
-## Use gpt-4o-mini model for the main chat
-#mini: false
-
-## Use gpt-4-1106-preview model for the main chat
-#4-turbo: false
-
-## Use gpt-3.5-turbo model for the main chat
-#35turbo: false
-
-## Use deepseek/deepseek-chat model for the main chat
-#deepseek: false
-
-## Use o1-mini model for the main chat
-#o1-mini: false
-
-## Use o1-preview model for the main chat
-#o1-preview: false
+## Specify the model to use for editor tasks (default depends on --model)
+# editor-model: openai/claude-3-5-sonnet-20240620
 
 ########################
 # API Keys and settings:
@@ -67,23 +40,10 @@ model: gemini/gemini-2.0-pro-exp-02-05
 ## Specify the api base url
 #openai-api-base: xxx
 
-## (deprecated, use --set-env OPENAI_API_TYPE=<value>)
-#openai-api-type: xxx
-
-## (deprecated, use --set-env OPENAI_API_VERSION=<value>)
-#openai-api-version: xxx
-
-## (deprecated, use --set-env OPENAI_API_DEPLOYMENT_ID=<value>)
-#openai-api-deployment-id: xxx
-
-## (deprecated, use --set-env OPENAI_ORGANIZATION=<value>)
-#openai-organization-id: xxx
-
 ## Set an environment variable (to control API settings, can be used multiple times)
-#set-env: xxx
 ## Specify multiple values like this:
-set-env:
-  # - OLLAMA_API_BASE=https://kiwi-real-officially.ngrok-free.app
+# set-env:
+# - OLLAMA_API_BASE=
 
 ## Set an API key for a provider (eg: --api-key provider=<key> sets PROVIDER_API_KEY=<key>)
 #api-key: xxx
@@ -124,12 +84,6 @@ set-env:
 
 ## Use architect edit format for the main chat
 #architect: false
-
-## Specify the model to use for commit messages and chat history summarization (default depends on --model)
-#weak-model: xxx
-
-## Specify the model to use for editor tasks (default depends on --model)
-editor-model: openai/claude-3-5-sonnet-20240620
 
 ## Specify the edit format for the editor model (default: depends on editor model)
 #editor-edit-format: xxx
