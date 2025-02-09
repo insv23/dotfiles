@@ -21,6 +21,7 @@ alias lg='lazygit'
 # zsh
 alias rezsh='exec zsh' # 用一个新的 Zsh 实例替换当前的 Zsh 进程，相当于“重启”了 Zsh。
 alias szsh='source ~/.zshrc'
+alias e=exit
 
 # Homebrew
 alias brs='brew search'
