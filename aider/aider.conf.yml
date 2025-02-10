@@ -27,7 +27,7 @@ weak-model: gemini/gemini-2.0-flash-exp
 
 ## Specify the model to use for editor tasks (default depends on --model)
 # editor-model: openai/claude-3-5-sonnet-20240620
-editor-model: gemini/gemini-2.0-flash-exp
+# editor-model: gemini/gemini-2.0-flash-exp
 
 ########################
 # API Keys and settings:
@@ -230,15 +230,13 @@ auto-commits: True
 # Fixing and committing:
 
 ## Lint and fix provided files, or dirty files if none provided
-#lint: false
+# lint: true (要为 true 需要设置下面的 lint-cmd)
 
 ## Specify lint commands to run for different languages, eg: "python: flake8 --select=..." (can be used multiple times)
 #lint-cmd: xxx
 ## Specify multiple values like this:
-#lint-cmd:
-#  - xxx
-#  - yyy
-#  - zzz
+# lint-cmd:
+#   - "eslint --config eslint.config.mjs ."
 
 ## Enable/disable automatic linting after changes (default: True)
 #auto-lint: true
