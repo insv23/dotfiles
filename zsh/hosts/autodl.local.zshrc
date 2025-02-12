@@ -23,3 +23,7 @@ typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n@4090x8'
 
 # For 'cargo install'
 export PATH="$HOME/.asdf/installs/rust/stable/bin:$PATH"
+
+# 由于这台机器上的 cuda 的 nvcc 不在 PATH 中，所以需要额外指定这个
+export PATH=/usr/local/cuda-11.8/bin:$PATH
+export CUDACXX=/usr/local/cuda-11.8/bin/nvcc
