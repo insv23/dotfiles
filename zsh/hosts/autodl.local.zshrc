@@ -20,6 +20,8 @@ alias pxy='source /etc/network_turbo'
 typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%B%n@4090x8'
 typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%n@4090x8'
 typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n@4090x8'
+# kitty 的 tab 标题也替换为 4090x8
+typeset -x HOST=4090x8
 
 # For 'cargo install'
 export PATH="$HOME/.asdf/installs/rust/stable/bin:$PATH"
