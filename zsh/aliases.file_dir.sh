@@ -69,3 +69,17 @@ mkcd() {
     mkdir -pv $1 && cd $1
   fi
 }
+
+# Create a directory and copy directory name
+mc() {
+    mkdir "$1" && echo "$1" | pbcopy
+}
+
+# Create a directory, move files into it, rename mp4 file, copy directory name, rsync to server (only for bilibili folder)
+mk() {
+    mkdir "$1" && \
+    mv /Users/tony/Downloads/* "$_" && \
+    find "$_" -name "*.mp4" -exec mv {} "$_/1.mp4" \; && \
+    rsync -avP "$1" 4090x8:~/bili/ && \
+    echo "$1" | pbcopy
+}
