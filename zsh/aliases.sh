@@ -94,3 +94,6 @@ ssh-ck() {
         ssh-keygen -f $HOME/.ssh/$1 -t rsa -N '' -C "$user_host to $1"
     fi
 }
+
+# kitty kitten: ssh
+alias s="kitten ssh"
