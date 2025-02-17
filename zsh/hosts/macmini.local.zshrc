@@ -43,22 +43,35 @@ export PATH="$HOME/.asdf/installs/rust/stable/bin:$PATH"
 
 
 mk() {
-    # 切换到 bilibili 目录，失败则报错退出
-    cd ~/Documents/bilibili || { echo "Error: Could not change directory to ~/Documents/bilibili"; return 1; }
-    # 创建一个以输入参数命名的文件夹
-    mkdir "$1" && \
-    # 将下载目录下的所有文件移动到新创建的文件夹中
-    mv /Users/tony/Downloads/* "$_" && \
-    # 查找新文件夹中的 mp4 文件，并将它们重命名为 1.mp4
-    find "$_" -name "*.mp4" -exec mv {} "$_/1.mp4" \; && \
-    # 如果使用 rsync 将该文件夹同步到远程服务器成功，则执行 then 部分
-    if rsync -avP "$1" 4090x8:~/bili/; then
-        # 使用 curl 发送包含文件夹名的成功消息到 ntfy 服务器
-        curl -d "$1" "ntfy.sh/${NTFY_TOPIC}_bili_upload_succ"
-    else
-        # 使用 curl 发送包含错误信息的失败消息到 ntfy 服务器
-        curl -d "Sync failed: $1" "ntfy.sh/${NTFY_TOPIC}_bili_upload_fail"
-        # 返回错误代码1，表示脚本执行失败
+    # 检查下载目录是否存在 mp4 文件
+    mp4_file=$(find ~/Downloads -maxdepth 1 -name "*.mp4" -print -quit)
+    if [ -z "$mp4_file" ]; then
+        echo "Error: No mp4 files found in ~/Downloads"
         return 1
     fi
+    
+    # 切换到 bilibili 目录
+    cd ~/Documents/bilibili || { echo "Error: Could not change directory to ~/Documents/bilibili"; return 1; }
+    
+    # 创建目标目录(如果不存在)
+    mkdir -p "$1"
+    
+    # 获取原文件名并显示移动信息
+    original_name=$(basename "$mp4_file")
+    echo "Moving '$original_name' to '$1/1.mp4'"
+    
+    # 移动所有文件，并特别处理 mp4 文件
+    mv ~/Downloads/* "$1/" && \
+    mv "$1"/*.mp4 "$1/1.mp4" || { echo "Error: Failed to move files"; return 1; }
+    
+    # 尝试同步到远程服务器
+    if rsync -avP "$1" 4090x8:~/bili/; then
+        curl -d "$1" "ntfy.sh/${NTFY_TOPIC}_bili_upload_succ"
+    else
+        curl -d "Sync failed: $1" "ntfy.sh/${NTFY_TOPIC}_bili_upload_fail"
+        return 1
+    fi
+    
+    # 返回下载目录
+    cd ~/Downloads || { echo "Error: Could not change directory to ~/Downloads"; return 1; }
 }
