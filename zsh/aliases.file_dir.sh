@@ -10,35 +10,25 @@ alias mv='mv -i'
 alias dsize='du -sh * | sort -hr'
 
 # ---- Eza (better ls) -----
-if command -v eza >/dev/null 2>&1; then
-  alias ls='eza \
-    --header \
-    --long \
-    --all \
-    --binary \
-    --group \
-    --icons=always \
-    --git'
+alias ll='eza \
+  --header \
+  --long \
+  --all \
+  --binary \
+  --group \
+  --icons=always \
+  --git'
 
-  # 显示目录大小
-  alias lss='eza \
-    --header \
-    --long \
-    --all \
-    --binary \
-    --group \
-    --icons=always \
-    --total-size \
-    --git'
-
-else
-  alias ls='ls --color=auto'
-  alias l='ls -l'
-  alias ll='ls -lahF'
-  alias lls='ls -lahFtr'
-  alias la='ls -A'
-  alias lc='ls -CF'
-fi
+# 显示目录大小
+alias lls='eza \
+  --header \
+  --long \
+  --all \
+  --binary \
+  --group \
+  --icons=always \
+  --total-size \
+  --git'
 
 # 利用 eza 定义一个 tree 命令
 # 不带任何数字, `tree` 默认展开 2 层
