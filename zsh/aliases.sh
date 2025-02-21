@@ -95,5 +95,16 @@ ssh-ck() {
     fi
 }
 
-# kitty kitten: ssh
+# kitty `kitten ssh``
+## 目前我体会到的唯一优势是: 新建 Kitty window, 会是服务器的；普通 ssh 是本地的终端
+## 但没有断开自动重连能力，所以还是更倾向使用下面的 autossh
 alias s="kitten ssh"
+
+# audossh
+# 断开将自动重连: 每 5 秒发送一次心跳，最多允许 100 次重试
+function a() {
+   autossh -M 0 \
+       -o "ServerAliveInterval 5" \
+       -o "ServerAliveCountMax 100" \
+       "$@"
+}
