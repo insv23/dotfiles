@@ -71,7 +71,7 @@ pxyss() {
 
 # 使用自己设定的 http 代理
 # 在用户家目录下添加 .http 文件用来保存 http 配置，其中只有一行:
-# http://用户名:密码@IP:socks端口
+# http://用户名:密码@IP:http端口
 pxyhp() {
   if [ ! -f ~/.http ]; then
     echo "Error: ~/.http file not found."
