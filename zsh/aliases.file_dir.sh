@@ -71,3 +71,17 @@ mc() {
 # ds : delete space
 alias ds='rename "s/\[.*?\]//g; s/[^A-Za-z0-9.]+//g"'
 
+# 复制文件名到剪贴板，不要扩展名
+# cn: copy name
+cn() {
+  local filename=$(basename "$1")
+  [[ "$filename" =~ \. ]] && echo "$filename" | sed "s/\.[^.]*$//" | pbcopy || echo "$filename" | pbcopy
+}
+
+complete -f -o bashdefault cn
+
+# 上面两个组合使用
+# 1. macmini 上下载视频(mp4)和封面图到 downloads 目录下
+# 2. 然后使用 ds *.mp4 将 mp4 的名字修整
+# 3. 然后使用 cn *.mp4 将休整后的 mp4 的名字复制到剪贴板
+# 4. 使用 mk 序号.刚刚复制的名字 执行翻译工作流
