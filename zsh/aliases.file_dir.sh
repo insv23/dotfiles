@@ -64,3 +64,10 @@ mkcd() {
 mc() {
     mkdir "$1" && echo "$1" | pbcopy
 }
+
+# 下载的 Youtube 文件名有空格和其它字符，去掉这些字符, 只保留字母数字
+# 例如: 'This Neovim ＂Plugin＂ Replaces 40 Others [qyB-sAvW2lI].mp4'
+# 变为 'ThisNeovimPluginReplaces40Others.mp4'
+# ds : delete space
+alias ds='rename "s/\[.*?\]//g; s/[^A-Za-z0-9.]+//g"'
+
