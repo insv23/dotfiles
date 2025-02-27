@@ -3,12 +3,11 @@
 -- Add any additional options here
 vim.opt.winbar = "%=%m %f"
 
-
-vim.opt.clipboard = ""                  -- 这个就叫无名寄存器
--- vim.opt.clipboard = "unnamedplus"    -- 默认使用 + 寄存器（通常是 Ctrl+C 复制，Ctrl+V 粘贴）。
+-- vim.opt.clipboard = ""                  -- 这个就叫无名寄存器
+vim.opt.clipboard = "unnamedplus" -- 默认使用 + 寄存器（通常是 Ctrl+C 复制，Ctrl+V 粘贴）。
 -- vim.opt.clipboard = "unnamed"        -- 默认使用 * 寄存器（通常是鼠标中键粘贴，在 Windows 和 macOS 上通常等同于系统剪贴板）。
--- 
--- 冗长的试错总结:
+--
+-- 冗长的试错总结:(已经解决了 Kitty → SSH → tmux → Neovim 远程nvim 拷贝不会到本地剪贴板的问题)
 -- ① 推荐默认使用无名寄存器。
 -- 每个 nvim 维持自己的无名寄存器。即多个 tmux window 的不同 nvim 无法共享无名寄存器，1 号寄存器，还有自定义的寄存器
 -- 不用 unnamedplus 和 unnamed 的原因是它们可能会导致 OSC52 相关错误。(终端模拟器、tmux、nvim 这些东西串在一起搞不清是哪个地方挂了)
@@ -23,3 +22,10 @@ vim.opt.clipboard = ""                  -- 这个就叫无名寄存器
 -- 在 vscode 内使用 tmux 来让某个程序能"持久运行"
 --
 -- ④ 少折腾命令行内的内容，完全是在不停踩坑。更烦人的是昨天能跑，今天就跑不了。
+--
+-- 问题② 解决记录
+-- 2025-02-27
+-- Claude 3.7 一发入魂
+-- 提示我需要在 tmux.conf 中配置下面两列:
+-- set -g allow-passthrough on
+-- set -s set-clipboard on
