@@ -29,3 +29,10 @@ export PATH="$HOME/.asdf/installs/rust/stable/bin:$PATH"
 # 由于这台机器上的 cuda 的 nvcc 不在 PATH 中，所以需要额外指定这个
 export PATH=/usr/local/cuda-11.8/bin:$PATH
 export CUDACXX=/usr/local/cuda-11.8/bin/nvcc
+
+# bili translate
+# 将指定文件进行翻译(需要在 ~/VideoSubAI 目录执行, 并激活对应环境)
+# 使用方法: bake ./demo/inpu.mp4 en
+bake() {
+  python video_to_baked_bilingual_srt.py "$1" "$2"
+}
