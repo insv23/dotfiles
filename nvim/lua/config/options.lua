@@ -3,9 +3,9 @@
 -- Add any additional options here
 vim.opt.winbar = "%=%m %f"
 
--- vim.opt.clipboard = ""                  -- 这个就叫无名寄存器
-vim.opt.clipboard = "unnamedplus" -- 默认使用 + 寄存器（通常是 Ctrl+C 复制，Ctrl+V 粘贴）。
--- vim.opt.clipboard = "unnamed"        -- 默认使用 * 寄存器（通常是鼠标中键粘贴，在 Windows 和 macOS 上通常等同于系统剪贴板）。
+-- vim.opt.clipboard = ""           -- 这个就叫无名寄存器
+vim.opt.clipboard = "unnamedplus"   -- 默认使用 + 寄存器（通常是 Ctrl+C 复制，Ctrl+V 粘贴）。
+-- vim.opt.clipboard = "unnamed"    -- 默认使用 * 寄存器（通常是鼠标中键粘贴，在 Windows 和 macOS 上通常等同于系统剪贴板）。
 --
 -- 冗长的试错总结:(已经解决了 Kitty → SSH → tmux → Neovim 远程nvim 拷贝不会到本地剪贴板的问题)
 -- ① 推荐默认使用无名寄存器。
@@ -29,3 +29,8 @@ vim.opt.clipboard = "unnamedplus" -- 默认使用 + 寄存器（通常是 Ctrl+C
 -- 提示我需要在 tmux.conf 中配置下面两列:
 -- set -g allow-passthrough on
 -- set -s set-clipboard on
+
+-- 禁用 LazyVim 的保存时自动格式化功能
+-- 虽然好像使用的 conform 进行格式化，但也只是 `空格cf` 这个生效
+-- 在 conform.lua 中禁止自动格式化没用
+vim.g.autoformat = false
