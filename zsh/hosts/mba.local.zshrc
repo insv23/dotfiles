@@ -4,6 +4,14 @@ export PATH="/Users/tony/.codeium/windsurf/bin:$PATH"
 # ---- auto proxy ----
 pxyon > /dev/null
 
+# pnpm
+export PNPM_HOME="/Users/tony/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
 
 # ---- bili translate ----
 # 上传当前视频到指定目录
