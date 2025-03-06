@@ -8,6 +8,7 @@ fastfetch
 fd
 fzf
 gcc
+git
 git-delta
 git-lfs
 gnu-sed
