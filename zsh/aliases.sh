@@ -89,11 +89,17 @@ function y() {
 
 # 创建 ssh 密钥(默认无密码)
 ssh-ck() {
-    if [ ! -z "$1" ]; then
-        user_host=$(whoami)@$(hostname)
-        ssh-keygen -f $HOME/.ssh/$1 -t rsa -N '' -C "$user_host to $1"
+    if [ -z "$1" ]; then
+        echo "Usage:"
+        echo "  ssh-ck server-<server_name>   # Generate key for connecting to a specific server"
+        echo "  ssh-ck github-<github_account> # Generate key for connecting to a GitHub account"
+        return 1  # Exit with an error code to indicate incorrect usage
     fi
+
+    user_host=$(whoami)@$(hostname)
+    ssh-keygen -f "$HOME/.ssh/$1" -t rsa -N '' -C "$user_host to $1"
 }
+
 
 # kitty `kitten ssh``
 ## 目前我体会到的唯一优势是: 新建 Kitty window, 会是服务器的；普通 ssh 是本地的终端
