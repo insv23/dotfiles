@@ -24,6 +24,7 @@
 	editor = vim
 	autocrlf = input
     pager = delta
+	excludesfile = ~/.dotfiles/gitignore_global
 [user]
 	name = insv
 	email = insv23@outlook.com
