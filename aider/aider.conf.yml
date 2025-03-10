@@ -84,13 +84,13 @@ weak-model: gemini/gemini-2.0-flash-exp
 #edit-format: xxx
 
 ## Use architect edit format for the main chat
-#architect: false
+architect: true
 
 ## Specify the edit format for the editor model (default: depends on editor model)
 #editor-edit-format: xxx
 
 ## Only work with models that have meta-data available (default: True)
-#show-model-warnings: true
+show-model-warnings: false
 
 ## Soft limit on tokens for chat history, after which summarization begins. If unspecified, defaults to the model's max_chat_history_tokens.
 #max-chat-history-tokens: xxx
