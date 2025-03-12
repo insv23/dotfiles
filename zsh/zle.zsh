@@ -7,6 +7,7 @@ export KEYTIMEOUT=1 # 设置为 0.1 秒(默认是 0.4 秒)
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M viins '^v' edit-command-line
+bindkey -M vicmd '^v' edit-command-line  # 添加 normal 模式下的绑定
 
 # 删除光标左侧的一个目录层级, 相当于 bash 的 unix-filename-rubout
 # 效果和 ctrl w 差不多，但这个删除的会多一点
