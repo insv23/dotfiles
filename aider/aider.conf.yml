@@ -28,7 +28,7 @@ weak-model: openai/gemini-2.0-flash
 
 ## Specify the model to use for editor tasks (default depends on --model)
 # editor-model: openai/claude-3-5-sonnet-20240620
-# editor-model: gemini/gemini-2.0-flash-exp
+editor-model: openai/gemini-2.0-flash
 
 ########################
 # API Keys and settings:
