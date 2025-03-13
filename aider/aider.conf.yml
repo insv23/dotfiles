@@ -20,10 +20,11 @@
 ## Specify the model to use for the main chat
 # model: ollama_chat/deepseek-r1:70b
 # model: openai/gemini-2.0-pro-exp-02-05
-model: gemini/gemini-2.0-pro-exp-02-05
+# model: gemini/gemini-2.0-pro-exp-02-05
+# 每次启动 Aider 时手动指定
 
 ## Specify the model to use for commit messages and chat history summarization (default depends on --model)
-weak-model: gemini/gemini-2.0-flash-exp
+weak-model: openai/gemini-2.0-flash
 
 ## Specify the model to use for editor tasks (default depends on --model)
 # editor-model: openai/claude-3-5-sonnet-20240620
