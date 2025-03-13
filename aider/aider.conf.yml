@@ -135,7 +135,7 @@ show-model-warnings: false
 # Output settings:
 
 ## Use colors suitable for a dark terminal background (default: False)
-dark-mode: true
+# dark-mode: true
 ## Use colors suitable for a light terminal background (default: False)
 #light-mode: false
 
