@@ -9,7 +9,6 @@ karabiner.json
 
 # nvim
 lazy-lock.json
-lazyvim.json
 
 # tmux plugins
 tmux/plugins
