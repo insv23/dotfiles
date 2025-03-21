@@ -10,5 +10,5 @@ git clone --depth=1 https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm
 
 
 echo "✅ tmux tpm 安装完成"
-echo "打开 tmux, 使用 `prefix shift i` 让 tpm 安装 tmux 插件"
+echo "使用 ~/.tmux/plugins/tpm/bin/install_plugins 安装 tmux 插件, 挂上 pxy 代理"
 echo
