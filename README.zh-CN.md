@@ -28,7 +28,7 @@
 
   ```bash
   # Ubuntu 示例
-  sudo apt update && sudo apt install git zsh build-essential -y
+  sudo apt update && sudo apt install git zsh python3 build-essential -y
   ```
 
 - ⚠️ Linux 下不能以 root 用户安装 Homebrew

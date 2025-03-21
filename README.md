@@ -30,7 +30,7 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 
   ```bash
   # Ubuntu example
-  sudo apt update && sudo apt install git zsh build-essential -y
+  sudo apt update && sudo apt install git zsh python3 build-essential -y
   ```
 
 - ⚠️ Homebrew cannot be installed as root on Linux
