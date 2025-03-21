@@ -68,9 +68,6 @@ precmd() {
 }
 
 
-# ---- asdf ----
-source $(brew --prefix asdf)/libexec/asdf.sh
-
 # ---- autin ----
 # 放在 fzf 和 auto-complete 下面才能保证 上方向键 和 Ctrl r 使用 atuin 来查找历史命令 
 eval "$(atuin init zsh)"

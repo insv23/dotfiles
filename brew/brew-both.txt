@@ -1,4 +1,3 @@
-asdf
 atuin
 bat
 btop

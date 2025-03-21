@@ -16,6 +16,9 @@ pxyon > /dev/null
 
 
 # ------------------ asdf 管理 ---------------------------
+# 一堆小毛病，不推荐继续用了
+source $(brew --prefix asdf)/libexec/asdf.sh
+
 # ---- cargo 安装的包-----
 export PATH="$HOME/.asdf/installs/rust/stable/bin:$PATH"
 
