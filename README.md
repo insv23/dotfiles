@@ -26,7 +26,7 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 
 - 🚫 Note: Homebrew is not supported on ARM Linux
 
-- ⛑️ Git, zsh and gcc must be pre-installed
+- ⛑️ Git, zsh, python and gcc must be pre-installed
 
   ```bash
   # Ubuntu example

@@ -24,7 +24,7 @@
 
 - 🚫 注意: ARM 架构的 Linux 暂不支持 Homebrew
 
-- ⛑️ 需要预先安装 git, zsh 和 gcc
+- ⛑️ 需要预先安装 git, zsh, python 和 gcc
 
   ```bash
   # Ubuntu 示例
