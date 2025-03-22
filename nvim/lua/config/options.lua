@@ -30,7 +30,8 @@ vim.opt.clipboard = "unnamedplus"   -- 默认使用 + 寄存器（通常是 Ctrl
 -- set -g allow-passthrough on
 -- set -s set-clipboard on
 -- 🔥2025-03-22
--- 远程 Linux 机器上需要有 xclip
+-- 远程 Linux 机器上需要有 xclip 和 xsel
+-- sudo apt update && sudo apt install -y xsel xclip
 
 -- 禁用 LazyVim 的保存时自动格式化功能
 -- 虽然好像使用的 conform 进行格式化，但也只是 `空格cf` 这个生效
