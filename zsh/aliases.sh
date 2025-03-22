@@ -114,3 +114,6 @@ function a() {
        -o "ServerAliveCountMax 100" \
        "$@"
 }
+
+alias zj='zellij'
+
