@@ -35,12 +35,33 @@ alias nv='nvim'
 
 # Update dotfiles
 dfu() {
-  (
-    cd ~/.dotfiles && \
-    git pull --ff-only && \
-    echo "dotfiles 已成功更新！正在重新加载 shell..." && \
-    exec zsh
-  ) || echo "更新 dotfiles 或重新加载 shell 时出错。请检查网络连接和 git 仓库状态。"
+  # 1. 记录当前工作目录
+  local current_dir=$(pwd)
+
+  # 2. 切换到 ~/.dotfiles 目录
+  cd ~/.dotfiles || {
+    echo "错误：无法进入 ~/.dotfiles 目录。" >&2
+    return 1
+  }
+
+  # 3. 执行 git pull --ff-only
+  git pull --ff-only || {
+    echo "错误：git pull --ff-only 执行失败。" >&2
+    cd "$current_dir"  # 失败时返回之前目录
+    return 1
+  }
+
+  # 4. 执行 ./install (假设 install 脚本在 ~/.dotfiles 目录下)
+  ./install || {
+    echo "错误：./install 执行失败。" >&2
+    cd "$current_dir" # 失败时返回之前目录
+    return 1
+  }
+
+  # 5. 成功提示、返回原目录并重新加载 shell
+  echo "dotfiles 已成功更新！正在重新加载 shell..."
+  cd "$current_dir"
+  exec zsh
 }
 
 # python
