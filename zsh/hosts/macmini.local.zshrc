@@ -15,36 +15,6 @@ pxyon > /dev/null
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
 
-# ------------------ asdf 管理 ---------------------------
-# 一堆小毛病，不推荐继续用了
-source $(brew --prefix asdf)/libexec/asdf.sh
-
-# ---- cargo 安装的包-----
-export PATH="$HOME/.asdf/installs/rust/stable/bin:$PATH"
-
-# ---- pnpm -----
-# export PNPM_HOME="/Users/tony/Library/pnpm"
-# case ":$PATH:" in
-#   *":$PNPM_HOME:"*) ;;
-#   *) export PATH="$PNPM_HOME:$PATH" ;;
-# esac
-
-
-# ---- bun -----
-# export BUN_INSTALL="$HOME/.bun"
-# export PATH="$BUN_INSTALL/bin:$PATH"
-# # bun completions
-# [ -s "/Users/tony/.bun/_bun" ] && source "/Users/tony/.bun/_bun"
-
-# ---- Deno -----
-# 暂时还没装
-# export DENO_INSTALL="$HOME/.deno"
-# export PATH="$DENO_INSTALL/bin:$PATH"
-
-# ------------------ asdf end ---------------------------
-
-
-
 mk() {
     # 检查下载目录是否存在 mp4 文件
     mp4_file=$(find ~/Downloads -maxdepth 1 -name "*.mp4" -print -quit)
