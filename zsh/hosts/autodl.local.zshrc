@@ -11,7 +11,12 @@ compinit -u
 export MODEL_CACHE=/root/autodl-tmp/.cache/modelscope/hub/
 export UV_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 
+# ---- 代理 ----
 alias pxy='source /etc/network_turbo'
+# 在 .dotfiles 中使用 direnv 自动挂代理
+# "cd ~/.dotfiles && echo 'source /etc/network_turbo' > .envrc && direnv allow"
+
+
 
 
 # autodl 的机器的 hostname 是 autodl-container-cedc49a0d5-528adbab 这种很长的
