@@ -20,6 +20,7 @@ alias lg='lazygit'
 
 # zsh
 alias rezsh='exec zsh' # 用一个新的 Zsh 实例替换当前的 Zsh 进程，相当于“重启”了 Zsh。
+alias re='exec zsh'
 alias szsh='source ~/.zshrc'
 alias e=exit
 
@@ -111,6 +112,7 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+
 # 创建 ssh 密钥(默认无密码)
 ssh-ck () {
 	if [ -z "$1" ]
@@ -145,20 +147,64 @@ ssh-ck () {
 }
 
 
-# kitty `kitten ssh``
+# kitty `kitten ssh`
 ## 目前我体会到的唯一优势是: 新建 Kitty window, 会是服务器的；普通 ssh 是本地的终端
 ## 但没有断开自动重连能力，所以还是更倾向使用下面的 autossh
-alias s="kitten ssh"
+# alias s="kitten ssh"
 
-# audossh
+
+# ---- audossh ----
 # 断开将自动重连: 每 5 秒发送一次心跳，最多允许 100 次重试
-function a() {
+
+# 使用密码连接
+# 密码存储在环境变量中: export SSH_PW_主机名='密码'
+function ap() {
+  local host="$1"
+  local password_var="SSH_PW_${host}"
+  local password
+
+  if [ -z "$host" ]; then
+    echo "使用密码连接，密码存储在环境变量中: export SSH_PW_主机名='密码'"
+    echo "用法: ap 主机"
+    echo "主机需要在 ~/.ssh/config 中配置"
+    return 1
+  fi
+
+  # 使用关联数组 (hash) 模拟间接引用
+  typeset -A var_map
+  var_map[$password_var]="${(P)password_var}"  # 使用 (P) 参数展开标志
+  password=${var_map[$password_var]}
+
+  if [ -z "$password" ]; then
+    echo "错误：未找到 ${password_var} 环境变量，请先设置该变量。"
+    return 1
+  fi
+
+  sshpass -p "$password" \
+  autossh -M 0 \
+      -o "ServerAliveInterval 5" \
+      -o "ServerAliveCountMax 100" \
+      "$host"
+}
+
+# 使用密钥对连接
+function ak() {
+  # 检查是否提供了参数
+  if [ $# -eq 0 ]; then
+    echo "使用密钥对连接"
+    echo "用法：ak 主机"
+    echo "主机需要在 ~/.ssh/config 中配置，且需配置 key"
+    return 1
+  fi
+
    autossh -M 0 \
        -o "ServerAliveInterval 5" \
        -o "ServerAliveCountMax 100" \
        "$@"
 }
 
+
+# ---- zellij ----
 alias zj='zellij ls'
 alias zja='zellij attach --create' # 如果已有 session, 就 attach 上; 如果没有则创建
 alias zjd='zellij delete-session --force'
