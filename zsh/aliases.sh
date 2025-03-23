@@ -36,8 +36,11 @@ alias nv='nvim'
 # Update dotfiles
 dfu() {
   (
-    cd ~/.dotfiles && git pull --ff-only
-  )
+    cd ~/.dotfiles && \
+    git pull --ff-only && \
+    echo "dotfiles 已成功更新！正在重新加载 shell..." && \
+    exec zsh
+  ) || echo "更新 dotfiles 或重新加载 shell 时出错。请检查网络连接和 git 仓库状态。"
 }
 
 # python
