@@ -3,6 +3,11 @@
 //
 
 keybinds clear-defaults=true {
+    normal {
+        unbind "Ctrl d"
+        unbind "Ctrl s"
+        unbind "Ctrl q"
+    }
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
     }
@@ -332,7 +337,7 @@ load_plugins {
 //   - true (default)
 //   - false
 // 
-// mouse_mode false
+mouse_mode true
  
 // Toggle having pane frames around the panes
 // Options:

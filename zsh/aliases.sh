@@ -115,5 +115,7 @@ function a() {
        "$@"
 }
 
-alias zj='zellij'
+alias zj='zellij ls'
+alias zja='zellij attach --create' # 如果已有 session, 就 attach 上; 如果没有则创建
+alias zjd='zellij delete-session --force'
 
