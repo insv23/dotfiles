@@ -2,7 +2,7 @@ source ~/.dotfiles/zsh/aliases.network.sh
 source ~/.dotfiles/zsh/aliases.file_dir.sh
 
 # PATH 分行显示
-alias echo_path='echo $PATH | tr ":" "\n"'
+alias echopath='echo $PATH | tr ":" "\n"'
 
 # grep
 alias grep='grep --color'
