@@ -61,7 +61,7 @@ source ~/.dotfiles/zsh/zle.zsh
 # ---- kitty 设置窗口标题 ----
 precmd() {
     if [[ -n "$SSH_CONNECTION" ]]; then
-        echo -ne "\033]0;${HOST}:${PWD##*/}\007"
+        echo -ne "\033]0;${HOST}\007"
     else
         echo -ne "\033]0;${PWD##*/}\007"
     fi
