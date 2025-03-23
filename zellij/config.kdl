@@ -4,7 +4,7 @@
 
 keybinds clear-defaults=true {
     normal {
-        unbind "Ctrl d"
+        bind "Ctrl d" { Detach; }
         unbind "Ctrl s"
         unbind "Ctrl q"
     }
