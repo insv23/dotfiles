@@ -153,10 +153,7 @@ ssh-ck () {
 # alias s="kitten ssh"
 
 
-# ---- audossh ----
-# 断开将自动重连: 每 5 秒发送一次心跳，最多允许 100 次重试
-
-# 使用密码连接
+# 使用密码连接(不会自动重连)
 # 密码存储在环境变量中: export SSH_PW_主机名='密码'
 function ap() {
   local host="$1"
@@ -180,13 +177,11 @@ function ap() {
     return 1
   fi
 
-  sshpass -p "$password" \
-  autossh -M 0 \
-      -o "ServerAliveInterval 5" \
-      -o "ServerAliveCountMax 100" \
-      "$host"
+  sshpass -p "$password" ssh "$host"
 }
 
+
+# ---- audossh ----
 # 使用密钥对连接
 function ak() {
   # 检查是否提供了参数
@@ -197,9 +192,10 @@ function ak() {
     return 1
   fi
 
+   # 断开将自动重连: 每 30 秒发送一次心跳，最多允许 3 次重试
    autossh -M 0 \
-       -o "ServerAliveInterval 5" \
-       -o "ServerAliveCountMax 100" \
+       -o "ServerAliveInterval 30" \
+       -o "ServerAliveCountMax 3" \
        "$@"
 }
 
