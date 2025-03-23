@@ -88,16 +88,36 @@ function y() {
 }
 
 # 创建 ssh 密钥(默认无密码)
-ssh-ck() {
-    if [ -z "$1" ]; then
-        echo "Usage:"
-        echo "  ssh-ck server-<server_name>   # Generate key for connecting to a specific server"
-        echo "  ssh-ck github-<github_account> # Generate key for connecting to a GitHub account"
-        return 1  # Exit with an error code to indicate incorrect usage
-    fi
+ssh-ck () {
+	if [ -z "$1" ]
+	then
+		echo "用法："
+		echo "  ssh-ck server_<服务器名称>@<服务器用户>   # 生成连接到特定服务器的密钥"
+		echo "  ssh-ck github_<GitHub账户>             # 生成连接到GitHub账户的密钥"
+		return 1
+	fi
+	user_host=$(whoami)@$(hostname)
+	key_name="$HOME/.ssh/$1"
+	ssh-keygen -f "$key_name" -t rsa -N '' -C "$user_host to $1"
 
-    user_host=$(whoami)@$(hostname)
-    ssh-keygen -f "$HOME/.ssh/$1" -t rsa -N '' -C "$user_host to $1"
+	# 使用 pbcopy 复制公钥到剪贴板 (仅限 macOS)
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		pbcopy < "$key_name.pub"
+		echo "公钥已复制到剪贴板。"
+	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		# Linux 下尝试使用 xclip 或 xsel (需要安装)
+		if command -v xclip >/dev/null 2>&1; then
+			xclip -selection clipboard < "$key_name.pub"
+			echo "公钥已复制到剪贴板 (使用 xclip)。"
+		elif command -v xsel >/dev/null 2>&1; then
+			xsel --clipboard --input < "$key_name.pub"
+			echo "公钥已复制到剪贴板 (使用 xsel)。"
+		else
+			echo "无法复制公钥到剪贴板。请手动复制 $key_name.pub 的内容。"
+		fi
+	else
+		echo "无法复制公钥到剪贴板。请手动复制 $key_name.pub 的内容。"
+	fi
 }
 
 
