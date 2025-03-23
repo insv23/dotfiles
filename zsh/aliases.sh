@@ -153,6 +153,7 @@ ssh-ck () {
 # alias s="kitten ssh"
 
 
+# !!! ap 和 ak 这两个命令，在新设备第一次连接时不能用，需要先用 ssh 连接上一次后才能用
 # 使用密码连接(不会自动重连)
 # 密码存储在环境变量中: export SSH_PW_主机名='密码'
 function ap() {
