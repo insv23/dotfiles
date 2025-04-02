@@ -21,3 +21,6 @@ vim/pack/vendor/start
 
 # envrc
 .envrc
+
+# 以 .secret 结尾的文件不被 git  track
+*.secret
