@@ -92,6 +92,8 @@
    - [uv](https://docs.astral.sh/uv/getting-started/installation/)
    ```bash
    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+   # 位于 `~/.local/bin`, zshenv 文件已经添加该路径
    ```
 
    - [node/nvm](https://nodejs.org/en/download)
