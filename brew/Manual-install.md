@@ -14,6 +14,19 @@ rustup --version
 cargo --version
 ```
 
+## [node/nvm](https://nodejs.org/en/download)
+不推荐使用 `brew install node@22`，因为需要手动加 PATH\
+`echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/node@22/bin:$PATH"' >> ~/.zshrc`
+
+```bash
+1. curl 安装 nvm
+2. rezsh
+3. nvm install 版本
+4. 测试
+node -v
+npm -v
+```
+
 # brew 已经安装了，但如果要手动安装可以参考
 
 ## [uv](https://docs.astral.sh/uv/getting-started/installation/) 
@@ -24,13 +37,4 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # 位于 `~/.local/bin`, zshenv 文件已经添加该路径
 ```
 
-## [node/nvm](https://nodejs.org/en/download)
-(brew-both.txt 已经添加 node@22，无需手动安装)
-```bash
-1. curl 安装 nvm
-2. rezsh
-3. nvm install 版本
-4. 测试
-node -v
-npm -v
-```
+
