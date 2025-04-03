@@ -66,6 +66,7 @@
    ./vim/install_plugins.sh
    ./brew/0.install.sh
    ./brew/1.brewInstallApps.sh
+   (⬇️ Ubuntu 系统交互式安装 Caddy/Docker 等)
    sudo ./brew/2.ubuntuInstall.sh
    ./tmux/install_tpm.sh (deprecated, 使用 zellij 替代)
    ```
