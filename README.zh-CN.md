@@ -84,12 +84,12 @@
      rustup --version
      cargo --version
      ```
-     - zellij
+     - zellij (brew 安装好像也行?)
      ```bash
      cargo install --locked zellij
      ```
 
-   - [uv](https://docs.astral.sh/uv/getting-started/installation/)
+   - [uv](https://docs.astral.sh/uv/getting-started/installation/) (mac 通过 brew 安装)
    ```bash
    curl -LsSf https://astral.sh/uv/install.sh | sh
 
