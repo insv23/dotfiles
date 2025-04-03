@@ -15,4 +15,6 @@ export EDITOR='nvim'
 # 存放用户自己安装的、不属于系统级的可执行文件
 # 例如当你编写了一些自己使用的脚本（例如 Python、Bash 脚本）或从源代码编译了一些程序时，可以将它们的可执行文件放在 $HOME/.local/bin 目录 # 中。这样，你可以方便地在终端中直接使用这些脚本或程序，而无需输入它们的完整路径。
 export PATH="$HOME/.local/bin:$PATH"
+
+# Rust/Cargo
 . "$HOME/.cargo/env"
