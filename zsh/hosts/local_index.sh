@@ -13,22 +13,8 @@ create_host_config() {
 
   if [ ! -f "$target_file" ]; then
     echo "File $target_file does not exist. Creating..."
-
-    uname_s=$(uname -s)
-    uname_m=$(uname -m)
-    if [ "$uname_s" = "Linux" ] && [ "$uname_m" = "x86_64" ]; then
-      example_file="$DOTFILES_ZSH_HOSTS/linux_amd64.local.zshrc.example"
-      if [ -f "$example_file" ]; then
-        cp "$example_file" "$target_file"
-        echo "Copied $example_file to $target_file"
-      else
-        echo "Example file $example_file not found. Creating an empty file."
-        touch "$target_file"
-      fi
-    else
-      touch "$target_file"
-      echo "Created empty file: $target_file"
-    fi
+    touch "$target_file"
+    echo "Created empty file: $target_file"
   fi
 }
 
