@@ -49,10 +49,10 @@ handle_special_hostname() {
   hostname="$1"
 
   case "$hostname" in
-  "C20240108106238")
-    . "$DOTFILES_ZSH_HOSTS/lz-ycy.local.zshrc"
-    return 0 # 成功加载，返回 0
-    ;;
+  # "C20240108106238")
+  #   . "$DOTFILES_ZSH_HOSTS/lz-ycy.local.zshrc"
+  #   return 0 # 成功加载，返回 0
+  #   ;;
   autodl-container-*)
     . "$DOTFILES_ZSH_HOSTS/autodl.local.zshrc"
     return 0 # 成功加载，返回 0
