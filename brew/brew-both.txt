@@ -17,4 +17,5 @@ neovim
 unzip
 vim
 yazi
-zoxide 
+zellij
+zoxide

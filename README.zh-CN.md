@@ -84,7 +84,7 @@
      rustup --version
      cargo --version
      ```
-     - zellij (brew 安装好像也行?)
+     - zellij (mac 与 x86 linux 均默认通过 brew 安装，如果是 arm Linux, 可以使用 cargo 安装)
      ```bash
      cargo install --locked zellij
      ```
