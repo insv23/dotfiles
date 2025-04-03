@@ -35,8 +35,13 @@
 
   ```bash
   # 如需要可以创建新用户( 需保证已经安装了 zsh)
-  NEW_USER_NAME=tony
+  NEW_USER_NAME=alex
   sudo useradd -m -s /bin/zsh -G users,sudo $NEW_USER_NAME && sudo passwd $NEW_USER_NAME
+  ```
+
+  切换到新用户 `alex`
+  ```bash
+  su - alex
   ```
 
 ### 快速开始
