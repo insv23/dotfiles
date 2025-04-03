@@ -9,6 +9,14 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# bun completions
+[ -s "/Users/tony/.bun/_bun" ] && source "/Users/tony/.bun/_bun"
+# bun end
+
 
 # ---- bili translate ----
 # 上传当前视频到指定目录
