@@ -31,6 +31,9 @@ cargo --version
     npm -v
     ```
 
+## Todo
+- bun 与 pnpm (配置文件参考 mba.loca)
+
 # brew 已经安装了，但如果要手动安装可以参考
 
 ## [uv](https://docs.astral.sh/uv/getting-started/installation/) 
