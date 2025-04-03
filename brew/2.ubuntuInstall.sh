@@ -37,27 +37,8 @@ fi
 
 # ---- docker ----
 if [[ " ${selected[@]} " =~ " 2 " ]]; then
-    echo "🔻正在安装 Docker..."
-    sudo apt-get update
-    sudo apt-get install -y ca-certificates curl
-    sudo install -m 0755 -d /etc/apt/keyrings
-    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-    sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-    echo \
-      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-      $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-    sudo apt-get update
-
-    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-    # 将当前用户添加到 docker 组来避免使用 docker 时必须加上 sudo
-    sudo usermod -aG docker $USER
-
-    # 重新加载用户组使其生效
-    exec zsh  # 使用 exec zsh 代替 newgrp
-    echo "✅Docker 安装完成"
+    echo "❓自动安装有问题，参考下列文档手动安装:"
+    echo "https://github.com/insv23/dotfiles/blob/main/brew/UbuntuDocker.md"
 fi
 
 # ---- fail2ban ----
