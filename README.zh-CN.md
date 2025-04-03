@@ -77,6 +77,9 @@
      ```bash
      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
+     # zshenv 中已经添加了相关 PATH
+     # 使用 rezsh 后才生效
+     
      # 测试
      rustup --version
      cargo --version
