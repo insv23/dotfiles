@@ -1,5 +1,5 @@
 # Hostname: macmini
-source ~/.dotfiles/zsh/hosts/macmini.local.zshrc.secret
+source ~/.dotfiles/zsh/hosts/macmini.local.secret.zshrc
 
 # ----- Cursor -----
 # 在 crusor 中打开 command palette 搜索 `install cursor command`
