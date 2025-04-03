@@ -14,7 +14,9 @@ gnu-sed
 lazydocker
 lazygit
 neovim
+node@22
 unzip
+uv
 vim
 yazi
 zellij

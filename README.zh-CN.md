@@ -71,42 +71,10 @@
    ./tmux/install_tpm.sh (deprecated, 使用 zellij 替代)
    ```
 
-   其他通过 sh 脚本安装的(即不要太依赖 Linuxbrew, 它偶尔有小坑...)
-
-   - [rust/cargo](https://rustup.rs/)
-     ```bash
-     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-     # zshenv 中已经添加了相关 PATH
-     # 使用 rezsh 后才生效
-     
-     # 测试
-     rustup --version
-     cargo --version
-     ```
-     - zellij (mac 与 x86 linux 均默认通过 brew 安装，如果是 arm Linux, 可以使用 cargo 安装)
-     ```bash
-     cargo install --locked zellij
-     ```
-
-   - [uv](https://docs.astral.sh/uv/getting-started/installation/) (mac 通过 brew 安装)
-   ```bash
-   curl -LsSf https://astral.sh/uv/install.sh | sh
-
-   # 位于 `~/.local/bin`, zshenv 文件已经添加该路径
-   ```
-
-   - [node/nvm](https://nodejs.org/en/download)
-   ```bash
-   1. curl 安装 nvm
-   2. rezsh
-   3. nvm install 版本
-   4. 测试
-   node -v
-   npm -v
-   ```
-
    运行完成后，注销当前用户会话并重新登录，配置将自动生效。
+  
+3. 部分需要手动安装的，参考[手动安装指南](./brew/Manual-install.md)
+
 
 4. 主机特定配置
    系统会根据当前主机名自动创建对应的配置文件，例如：`~/.dotfiles/zsh/hosts/macmini.local.zshrc`

@@ -5,6 +5,5 @@ jq
 python-argcomplete
 ripgrep
 unar
-uv
 wget
 zlib 
