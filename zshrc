@@ -78,3 +78,7 @@ export DIRENV_LOG_FORMAT=""     # 关闭 direnv 加载信息，使其不出现�
 
 # ---- zoxide ----
 eval "$(zoxide init zsh)"
+
+# ---- nvm/node ---
+# nvim 依赖 nodejs
+source ~/.dotfiles/zsh/nvm.zshrc

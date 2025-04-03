@@ -18,14 +18,18 @@ cargo --version
 不推荐使用 `brew install node@22`，因为需要手动加 PATH\
 `echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/node@22/bin:$PATH"' >> ~/.zshrc`
 
-```bash
-1. curl 安装 nvm
-2. rezsh
-3. nvm install 版本
-4. 测试
-node -v
-npm -v
-```
+
+1. curl 安装 nvm\
+2. 将其自动追加到 zshrc 尾部的内容通过 lazygit 丢掉(已经通过在总的 zshrc 中 `source ~/.dotfiles/zsh/nvm.zshrc` 激活了)
+3. rezsh
+4. nvm install 版本
+5. 测试
+    ```bash
+    which nvm
+    which node
+    node -v
+    npm -v
+    ```
 
 # brew 已经安装了，但如果要手动安装可以参考
 
