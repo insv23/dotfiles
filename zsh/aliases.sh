@@ -167,18 +167,27 @@ function a() {
   if [ -z "$host" ]; then
     echo "用法: a 主机"
     echo "主机需要在 ~/.ssh/config 中配置"
+    echo "根据主机 config 中是否有 IdentityFile 来判断是用密钥还是密码登录，如有则使用密钥登录，否则使用密码登录"
     return 1
   fi
 
-  # 检查主机是否在 ssh config 中配置
-  if ! grep -q "^Host[[:space:]]\\+${host}\$" ~/.ssh/config; then
+  # 检查主机是否在 ssh config 中配置，并且获取该主机的配置块
+  local host_config
+  host_config=$(awk "/^Host[[:space:]]+${host}\$/{p=1;print;next} p&&/^Host[[:space:]]+/{p=0;exit} p{print}" ~/.ssh/config)
+  
+  if [ -z "$host_config" ]; then
     echo "错误：主机 $host 未在 ~/.ssh/config 中配置"
     echo "请先在 ~/.ssh/config 中添加配置"
     return 1
   fi
 
-  # 从 ssh config 获取实际的 hostname
-  hostname=$(ssh -G "$host" | awk '/^hostname / {print $2}')
+  # 从配置块中提取 HostName
+  hostname=$(echo "$host_config" | awk '/^[[:space:]]*HostName[[:space:]]+/ {print $2}')
+  
+  if [ -z "$hostname" ]; then
+    echo "错误：无法从配置中获取 HostName"
+    return 1
+  fi
 
   # 检查是否是首次连接
   if ! ssh-keygen -F "$hostname" >/dev/null 2>&1; then
@@ -187,17 +196,18 @@ function a() {
     return 1
   fi
 
-  # 先尝试使用密钥对连接
-  
-  if autossh -M 0 \
+  # 检查特定主机的配置块中是否有 IdentityFile
+  if echo "$host_config" | grep -q "^[[:space:]]*IdentityFile"; then
+    # 有 IdentityFile，使用 autossh 登录
+    autossh -M 0 \
       -o "ServerAliveInterval 30" \
       -o "ServerAliveCountMax 3" \
       -o "BatchMode=yes" \
-      "$host" 2>/dev/null; then
-    return 0
+      "$host"
+    return $? # 这里会直接返回并退出函数，不会执行后面的代码
   fi
 
-  # 密钥连接失败，尝试密码连接
+  # 没有 IdentityFile，使用密码登录
   typeset -A var_map
   var_map[$password_var]="${(P)password_var}"
   password=${var_map[$password_var]}
@@ -205,8 +215,7 @@ function a() {
   if [ -z "$password" ]; then
     echo "未找到 ${password_var} 环境变量。"
     echo -n "请输入 ${host} 的密码: "
-    # read -s input_password  # -s 参数使输入不显示在屏幕上
-    read input_password  # -s 参数使输入不显示在屏幕上
+    read input_password
     echo  # 换行
     
     if [ -z "$input_password" ]; then
@@ -220,12 +229,11 @@ function a() {
     # 更新当前环境变量，这样就不用退出重进
     export "${password_var}=${input_password}"
     
-    # 重新尝试密码连接
-    # 注意: 如果 使用 sshpass 为 autossh 传递密码，只能在第一次才能正常传递，断开后再连就不会再传了，所以只能使用 sshpass + ssh 的方式
+    # 尝试密码连接
     sshpass -p "$input_password" ssh "$host"
-    return $? # 将 ssh 命令的执行结果（成功或失败）作为函数的返回值
+    return $?
   fi
 
-  # 尝试密码连接
+  # 使用已存在的密码连接
   sshpass -p "$password" ssh "$host"
 }
