@@ -84,16 +84,20 @@ alias dcud='docker compose up -d'
 alias dcls='docker container ls --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}"'
 
 
-
-
-# Tmux
+# ---- Tmux ----
 alias tmat='tmux new-session -A -s'   # new-session：创建一个新的 tmux 会话。
                                       # -A：如果指定名称的会话已经存在，则附加到该会话（而不是创建新会话）。
                                       # -s：指定会话的名称。
 alias tmkt='tmux kill-session -t'
 
 
-# yazi
+# ---- zellij ----
+alias zj='zellij ls'
+alias zja='zellij attach --create' # 如果已有 session, 就 attach 上; 如果没有则创建
+alias zjd='zellij delete-session --force'
+
+
+# ---- yazi ----
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"
@@ -153,56 +157,75 @@ ssh-ck () {
 # alias s="kitten ssh"
 
 
-# !!! ap 和 ak 这两个命令，在新设备第一次连接时不能用，需要先用 ssh 连接上一次后才能用
-# 使用密码连接(不会自动重连)
-# 密码存储在环境变量中: export SSH_PW_主机名='密码'
-function ap() {
+# SSH connect: try key first, then password from env var
+function a() {
   local host="$1"
   local password_var="SSH_PW_${host}"
   local password
+  local hostname
 
   if [ -z "$host" ]; then
-    echo "使用密码连接，密码存储在环境变量中: export SSH_PW_主机名='密码'"
-    echo "用法: ap 主机"
+    echo "用法: a 主机"
     echo "主机需要在 ~/.ssh/config 中配置"
     return 1
   fi
 
-  # 使用关联数组 (hash) 模拟间接引用
+  # 检查主机是否在 ssh config 中配置
+  if ! grep -q "^Host[[:space:]]\\+${host}\$" ~/.ssh/config; then
+    echo "错误：主机 $host 未在 ~/.ssh/config 中配置"
+    echo "请先在 ~/.ssh/config 中添加配置"
+    return 1
+  fi
+
+  # 从 ssh config 获取实际的 hostname
+  hostname=$(ssh -G "$host" | awk '/^hostname / {print $2}')
+
+  # 检查是否是首次连接
+  if ! ssh-keygen -F "$hostname" >/dev/null 2>&1; then
+    echo "注意: 在新设备第一次连接时不能用，需要先用 ssh 连接上一次后才能用"
+    echo "请先使用: ssh $host"
+    return 1
+  fi
+
+  # 先尝试使用密钥对连接
+  
+  if autossh -M 0 \
+      -o "ServerAliveInterval 30" \
+      -o "ServerAliveCountMax 3" \
+      -o "BatchMode=yes" \
+      "$host" 2>/dev/null; then
+    return 0
+  fi
+
+  # 密钥连接失败，尝试密码连接
   typeset -A var_map
-  var_map[$password_var]="${(P)password_var}"  # 使用 (P) 参数展开标志
+  var_map[$password_var]="${(P)password_var}"
   password=${var_map[$password_var]}
 
   if [ -z "$password" ]; then
-    echo "错误：未找到 ${password_var} 环境变量，请先设置该变量。"
-    return 1
+    echo "未找到 ${password_var} 环境变量。"
+    echo -n "请输入 ${host} 的密码: "
+    # read -s input_password  # -s 参数使输入不显示在屏幕上
+    read input_password  # -s 参数使输入不显示在屏幕上
+    echo  # 换行
+    
+    if [ -z "$input_password" ]; then
+      echo "错误：密码不能为空"
+      return 1
+    fi
+    
+    # 将密码保存到环境变量中，存储在 ~/.envrc 中
+    echo "export ${password_var}=\"${input_password}\"" >> ~/.envrc && cd ~ && direnv allow
+    
+    # 更新当前环境变量，这样就不用退出重进
+    export "${password_var}=${input_password}"
+    
+    # 重新尝试密码连接
+    # 注意: 如果 使用 sshpass 为 autossh 传递密码，只能在第一次才能正常传递，断开后再连就不会再传了，所以只能使用 sshpass + ssh 的方式
+    sshpass -p "$input_password" ssh "$host"
+    return $? # 将 ssh 命令的执行结果（成功或失败）作为函数的返回值
   fi
 
+  # 尝试密码连接
   sshpass -p "$password" ssh "$host"
 }
-
-
-# ---- audossh ----
-# 使用密钥对连接
-function ak() {
-  # 检查是否提供了参数
-  if [ $# -eq 0 ]; then
-    echo "使用密钥对连接"
-    echo "用法：ak 主机"
-    echo "主机需要在 ~/.ssh/config 中配置，且需配置 key"
-    return 1
-  fi
-
-   # 断开将自动重连: 每 30 秒发送一次心跳，最多允许 3 次重试
-   autossh -M 0 \
-       -o "ServerAliveInterval 30" \
-       -o "ServerAliveCountMax 3" \
-       "$@"
-}
-
-
-# ---- zellij ----
-alias zj='zellij ls'
-alias zja='zellij attach --create' # 如果已有 session, 就 attach 上; 如果没有则创建
-alias zjd='zellij delete-session --force'
-
