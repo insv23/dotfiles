@@ -15,7 +15,12 @@ pxyon > /dev/null
 # envman(serviceman)
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
-# nvm
+# ----- nvm -----
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# ===== pay-respects(theFuck 替代品) configuration =====
+# 默认快捷键为 f
+eval "$(pay-respects zsh --alias)"
+# pay-respects end
