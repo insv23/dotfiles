@@ -19,8 +19,8 @@ cargo --version
 `echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/node@22/bin:$PATH"' >> ~/.zshrc`
 
 
-1. curl 安装 nvm\
-2. 将其自动追加到 zshrc 尾部的内容通过 lazygit 丢掉(已经通过在总的 zshrc 中 `source ~/.dotfiles/zsh/nvm.zshrc` 激活了)
+1. curl 安装 nvm
+2. 将其自动追加到 zshrc 尾部的内容通过 lazygit 丢掉，已经通过在**总的 zshrc**(因为 Neovim 某些插件需要有 nodejs 才能正常运行) 中 `source ~/.dotfiles/zsh/nvm.zshrc` 激活了
 3. rezsh
 4. nvm install 版本
 5. 测试
