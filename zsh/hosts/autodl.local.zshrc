@@ -36,3 +36,8 @@ export CUDACXX=/usr/local/cuda-11.8/bin/nvcc
 bake() {
   python video_to_baked_bilingual_srt.py "$1" "$2"
 }
+
+# VS Code remote command
+# 在普通终端中也能直接使用 code . 或 code file_name 命令用本地 VS Code 打开远程文件
+# 详情见 vscode-remote 文件
+alias code='~/.dotfiles/zsh/vscode-remote'
