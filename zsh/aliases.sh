@@ -163,6 +163,7 @@ function a() {
   local password_var="SSH_PW_${host}"
   local password
   local hostname
+  local port
 
   if [ -z "$host" ]; then
     echo "用法: a 主机"
@@ -181,8 +182,9 @@ function a() {
     return 1
   fi
 
-  # 从配置块中提取 HostName
+  # 从配置块中提取 HostName 和 Port
   hostname=$(echo "$host_config" | awk '/^[[:space:]]*HostName[[:space:]]+/ {print $2}')
+  port=$(echo "$host_config" | awk '/^[[:space:]]*Port[[:space:]]+/ {print $2}')
   
   if [ -z "$hostname" ]; then
     echo "错误：无法从配置中获取 HostName"
@@ -190,7 +192,14 @@ function a() {
   fi
 
   # 检查是否是首次连接
-  if ! ssh-keygen -F "$hostname" >/dev/null 2>&1; then
+  local known_host_pattern
+  if [ -n "$port" ] && [ "$port" != "22" ]; then
+    known_host_pattern="[$hostname]:$port"
+  else
+    known_host_pattern="$hostname"
+  fi
+
+  if ! ssh-keygen -F "$known_host_pattern" >/dev/null 2>&1; then
     echo "注意: 在新设备第一次连接时不能用，需要先用 ssh 连接上一次后才能用"
     echo "请先使用: ssh $host"
     return 1
@@ -204,7 +213,7 @@ function a() {
       -o "ServerAliveCountMax 3" \
       -o "BatchMode=yes" \
       "$host"
-    return $? # 这里会直接返回并退出函数，不会执行后面的代码
+    return $?
   fi
 
   # 没有 IdentityFile，使用密码登录
