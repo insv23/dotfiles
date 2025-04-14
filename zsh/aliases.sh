@@ -246,3 +246,9 @@ function a() {
   # 使用已存在的密码连接
   sshpass -p "$password" ssh "$host"
 }
+
+
+# VS Code remote command
+# 在普通终端中直接使用 rcode . 或 rcode file_name 命令用本地 VS Code 打开远程文件
+# 详情见 vscode-remote 文件
+alias rcode='~/.dotfiles/zsh/vscode-remote'
