@@ -74,13 +74,29 @@ precmd() {
 # 放在 fzf 和 auto-complete 下面才能保证 上方向键 和 Ctrl r 使用 atuin 来查找历史命令 
 eval "$(atuin init zsh)"
 
+
 # ---- direnv -----
 eval "$(direnv hook zsh)"
 export DIRENV_LOG_FORMAT=""     # 关闭 direnv 加载信息，使其不出现在终端中
 
+
 # ---- zoxide ----
 eval "$(zoxide init zsh)"
+
 
 # ---- nvm/node ---
 # nvim 依赖 nodejs
 source ~/.dotfiles/zsh/nvm.zshrc
+
+
+# ---- uv run 自动补全----
+# https://github.com/astral-sh/uv/issues/8432#issuecomment-2867318195
+# Fix completions for uv run.
+_uv_run_mod() {
+    if [[ "$words[2]" == "run" && "$words[CURRENT]" != -* ]]; then
+        _arguments '*:filename:_files'
+    else
+        _uv "$@"
+    fi
+}
+compdef _uv_run_mod uv
