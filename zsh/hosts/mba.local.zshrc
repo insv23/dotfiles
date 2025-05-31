@@ -24,3 +24,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # 默认快捷键为 f
 eval "$(pay-respects zsh --alias)"
 # pay-respects end
+
+# ----- Cursor -----
+# 在 crusor 中打开 command palette 搜索 `install cursor command`
+alias cr='cursor'
