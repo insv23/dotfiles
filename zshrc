@@ -34,9 +34,11 @@ source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # 必须将 autocomplete 放在 syntax-highlighting 下才能让新建 zsh 不再出现样式警告
 # 参考: https://github.com/zsh-users/zsh-syntax-highlighting/issues/951#issuecomment-2089829937
 # 按下 下方向键 展示所有可选
-# cd 的自动补全效果一般，按下 tab 就把第一个补上了... 因此更推荐使用 z 直接跳转 或 yazi
 # https://www.notion.so/zsh-53922bbbd4f74a8f961a3010f541845a?pvs=4#8723929e12c1463998b9dded920ab0b1
-source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# cd 的自动补全效果一般，按下 tab 就把第一个补上了... 因此更推荐使用 z 直接跳转 或 yazi
+# 2025-05-31 已弃用: 
+# 按下 down arrow key 这个操作我始终想不起来，只会用 tab, 而它直接补全了第一个，让很多软件都几乎无法使用
+# source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 
 
