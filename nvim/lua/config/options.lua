@@ -3,8 +3,11 @@
 -- Add any additional options here
 vim.opt.winbar = "%=%m %f"
 
--- vim.opt.clipboard = ""           -- 这个就叫无名寄存器
-vim.opt.clipboard = "unnamedplus"   -- 默认使用 + 寄存器（通常是 Ctrl+C 复制，Ctrl+V 粘贴）。
+-- 2025-06-10 最终结论: 不要再试图同步 vim 剪贴板了，OSC52 全是天坑
+-- 正经编辑还是用 vscode
+-- 简单复制使用 cat 然后选中
+vim.opt.clipboard = ""           -- 这个就叫无名寄存器
+-- vim.opt.clipboard = "unnamedplus"   -- 默认使用 + 寄存器（通常是 Ctrl+C 复制，Ctrl+V 粘贴）。
 -- vim.opt.clipboard = "unnamed"    -- 默认使用 * 寄存器（通常是鼠标中键粘贴，在 Windows 和 macOS 上通常等同于系统剪贴板）。
 --
 -- 冗长的试错总结:(已经解决了 Kitty → SSH → tmux → Neovim 远程nvim 拷贝不会到本地剪贴板的问题)
