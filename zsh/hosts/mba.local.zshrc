@@ -1,5 +1,5 @@
 # ---- auto proxy ----
-pxyon > /dev/null
+# pxyon > /dev/null
 
 # ===== pnpm configuration =====
 # 这个一般都是在本地机器上使用，应该都是 mac，所以统一使用 brew: https://pnpm.io/installation#using-homebrew

@@ -100,3 +100,5 @@ _uv_run_mod() {
     fi
 }
 compdef _uv_run_mod uv
+# bun completions
+[ -s "/Users/tony/.bun/_bun" ] && source "/Users/tony/.bun/_bun"
