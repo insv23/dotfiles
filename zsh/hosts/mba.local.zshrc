@@ -24,3 +24,8 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # 默认快捷键为 f
 eval "$(pay-respects zsh --alias)"
 # pay-respects end
+
+# ===== Claude Code =====
+alias cc="claude"
+alias ccd="claude --dangerously-skip-permissions"
+alias cc-upgrade="npm i -g @anthropic-ai/claude-code"
