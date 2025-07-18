@@ -30,3 +30,8 @@ alias cc="claude"
 alias ccd="claude --dangerously-skip-permissions"
 alias cc-upgrade="npm i -g @anthropic-ai/claude-code"
 alias ccdo="claude --dangerously-skip-permissions --model opus"
+
+# ===== kiro =====
+# 这个是 kiro 的 shell 集成，用于在 kiro 中使用 zsh
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+# kiro end

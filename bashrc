@@ -102,3 +102,8 @@ fi
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 . "$HOME/.cargo/env"
+
+# ===== kiro =====
+# 这个是 kiro 的 shell 集成，用于在 kiro 中使用 bash
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path bash)"
+# kiro end
