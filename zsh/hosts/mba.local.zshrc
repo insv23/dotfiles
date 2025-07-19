@@ -26,10 +26,8 @@ eval "$(pay-respects zsh --alias)"
 # pay-respects end
 
 # ===== Claude Code =====
-alias cc="claude"
-alias ccd="claude --dangerously-skip-permissions"
+alias cc="npm i -g @anthropic-ai/claude-code && claude --dangerously-skip-permissions --model opus"
 alias cc-upgrade="npm i -g @anthropic-ai/claude-code"
-alias ccdo="claude --dangerously-skip-permissions --model opus"
 
 # ===== kiro =====
 # 这个是 kiro 的 shell 集成，用于在 kiro 中使用 zsh
