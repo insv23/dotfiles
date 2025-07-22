@@ -20,11 +20,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 # bun end
 
-# ===== pay-respects(theFuck 替代品) configuration =====
-# 默认快捷键为 f
-eval "$(pay-respects zsh --alias)"
-# pay-respects end
-
 # ===== Claude Code =====
 alias cc="npm i -g @anthropic-ai/claude-code && claude --dangerously-skip-permissions"
 alias cco="npm i -g @anthropic-ai/claude-code && claude --dangerously-skip-permissions --model opus"
