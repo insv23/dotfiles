@@ -1,0 +1,8 @@
+{
+  "env": {},
+  "permissions": {
+    "allow": [],
+    "deny": []
+  },
+  "defaultMode": "plan"
+}
