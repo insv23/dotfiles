@@ -1,8 +1,29 @@
 {
-  "env": {},
-  "permissions": {
-    "allow": [],
-    "deny": []
-  },
-  "defaultMode": "plan"
+	"env": {},
+	"permissions": {
+		"allow": [],
+		"deny": []
+	},
+	"hooks": {
+		"Stop": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "afplay ~/music/notification-sound.mp3"
+					}
+				]
+			}
+		],
+		"Notification": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "afplay ~/music/notification-sound.mp3"
+					}
+				]
+			}
+		]
+	}
 }
