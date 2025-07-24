@@ -154,98 +154,104 @@ ssh-ck () {
 # kitty `kitten ssh`
 ## 目前我体会到的唯一优势是: 新建 Kitty window, 会是服务器的；普通 ssh 是本地的终端
 ## 但没有断开自动重连能力，所以还是更倾向使用下面的 autossh
-# alias s="kitten ssh"
+# 自动重连只是重连上了，并没有恢复原有的服务，所以还是需要使用 `zja 名称` 恢复
+# 意外发现 kitten ssh 能记住密码(虽然不知道多久)，但 4090 和 macmini 两个连接都无需再输入密码
+# 现在的工作流是:
+# 1. 使用 `k 主机名` 登录。有 key 的自动登录，没有 key 的输入密码
+# 2. 需要持久的任务 + 连接易断开的任务，使用 zja 创建/重新进入到持久会话
+# 3. 意外断开后，使用 上方向键 输入上一条 `k 主机名` 命令再次登录
+alias k="kitten ssh"
 
 
 # SSH connect: try key first, then password from env var
-function a() {
-  local host="$1"
-  local password_var="SSH_PW_${host}"
-  local password
-  local hostname
-  local port
+# function a() {
+#   local host="$1"
+#   local password_var="SSH_PW_${host}"
+#   local password
+#   local hostname
+#   local port
 
-  if [ -z "$host" ]; then
-    echo "用法: a 主机"
-    echo "主机需要在 ~/.ssh/config 中配置"
-    echo "根据主机 config 中是否有 IdentityFile 来判断是用密钥还是密码登录，如有则使用密钥登录，否则使用密码登录"
-    return 1
-  fi
+#   if [ -z "$host" ]; then
+#     echo "用法: a 主机"
+#     echo "主机需要在 ~/.ssh/config 中配置"
+#     echo "根据主机 config 中是否有 IdentityFile 来判断是用密钥还是密码登录，如有则使用密钥登录，否则使用密码登录"
+#     return 1
+#   fi
 
-  # 检查主机是否在 ssh config 中配置，并且获取该主机的配置块
-  local host_config
-  host_config=$(awk "/^Host[[:space:]]+${host}\$/{p=1;print;next} p&&/^Host[[:space:]]+/{p=0;exit} p{print}" ~/.ssh/config)
+#   # 检查主机是否在 ssh config 中配置，并且获取该主机的配置块
+#   local host_config
+#   host_config=$(awk "/^Host[[:space:]]+${host}\$/{p=1;print;next} p&&/^Host[[:space:]]+/{p=0;exit} p{print}" ~/.ssh/config)
   
-  if [ -z "$host_config" ]; then
-    echo "错误：主机 $host 未在 ~/.ssh/config 中配置"
-    echo "请先在 ~/.ssh/config 中添加配置"
-    return 1
-  fi
+#   if [ -z "$host_config" ]; then
+#     echo "错误：主机 $host 未在 ~/.ssh/config 中配置"
+#     echo "请先在 ~/.ssh/config 中添加配置"
+#     return 1
+#   fi
 
-  # 从配置块中提取 HostName 和 Port
-  hostname=$(echo "$host_config" | awk '/^[[:space:]]*HostName[[:space:]]+/ {print $2}')
-  port=$(echo "$host_config" | awk '/^[[:space:]]*Port[[:space:]]+/ {print $2}')
+#   # 从配置块中提取 HostName 和 Port
+#   hostname=$(echo "$host_config" | awk '/^[[:space:]]*HostName[[:space:]]+/ {print $2}')
+#   port=$(echo "$host_config" | awk '/^[[:space:]]*Port[[:space:]]+/ {print $2}')
   
-  if [ -z "$hostname" ]; then
-    echo "错误：无法从配置中获取 HostName"
-    return 1
-  fi
+#   if [ -z "$hostname" ]; then
+#     echo "错误：无法从配置中获取 HostName"
+#     return 1
+#   fi
 
-  # 检查是否是首次连接
-  local known_host_pattern
-  if [ -n "$port" ] && [ "$port" != "22" ]; then
-    known_host_pattern="[$hostname]:$port"
-  else
-    known_host_pattern="$hostname"
-  fi
+#   # 检查是否是首次连接
+#   local known_host_pattern
+#   if [ -n "$port" ] && [ "$port" != "22" ]; then
+#     known_host_pattern="[$hostname]:$port"
+#   else
+#     known_host_pattern="$hostname"
+#   fi
 
-  if ! ssh-keygen -F "$known_host_pattern" >/dev/null 2>&1; then
-    echo "注意: 在新设备第一次连接时不能用，需要先用 ssh 连接上一次后才能用"
-    echo "请先使用: ssh $host"
-    return 1
-  fi
+#   if ! ssh-keygen -F "$known_host_pattern" >/dev/null 2>&1; then
+#     echo "注意: 在新设备第一次连接时不能用，需要先用 ssh 连接上一次后才能用"
+#     echo "请先使用: ssh $host"
+#     return 1
+#   fi
 
-  # 检查特定主机的配置块中是否有 IdentityFile
-  if echo "$host_config" | grep -q "^[[:space:]]*IdentityFile"; then
-    # 有 IdentityFile，使用 autossh 登录
-    autossh -M 0 \
-      -o "ServerAliveInterval 30" \
-      -o "ServerAliveCountMax 3" \
-      -o "BatchMode=yes" \
-      "$host"
-    return $?
-  fi
+#   # 检查特定主机的配置块中是否有 IdentityFile
+#   if echo "$host_config" | grep -q "^[[:space:]]*IdentityFile"; then
+#     # 有 IdentityFile，使用 autossh 登录
+#     autossh -M 0 \
+#       -o "ServerAliveInterval 30" \
+#       -o "ServerAliveCountMax 3" \
+#       -o "BatchMode=yes" \
+#       "$host"
+#     return $?
+#   fi
 
-  # 没有 IdentityFile，使用密码登录
-  typeset -A var_map
-  var_map[$password_var]="${(P)password_var}"
-  password=${var_map[$password_var]}
+#   # 没有 IdentityFile，使用密码登录
+#   typeset -A var_map
+#   var_map[$password_var]="${(P)password_var}"
+#   password=${var_map[$password_var]}
 
-  if [ -z "$password" ]; then
-    echo "未找到 ${password_var} 环境变量。"
-    echo -n "请输入 ${host} 的密码: "
-    read input_password
-    echo  # 换行
+#   if [ -z "$password" ]; then
+#     echo "未找到 ${password_var} 环境变量。"
+#     echo -n "请输入 ${host} 的密码: "
+#     read input_password
+#     echo  # 换行
     
-    if [ -z "$input_password" ]; then
-      echo "错误：密码不能为空"
-      return 1
-    fi
+#     if [ -z "$input_password" ]; then
+#       echo "错误：密码不能为空"
+#       return 1
+#     fi
     
-    # 将密码保存到环境变量中，存储在 ~/.envrc 中
-    echo "export ${password_var}=\"${input_password}\"" >> ~/.envrc && cd ~ && direnv allow
+#     # 将密码保存到环境变量中，存储在 ~/.envrc 中
+#     echo "export ${password_var}=\"${input_password}\"" >> ~/.envrc && cd ~ && direnv allow
     
-    # 更新当前环境变量，这样就不用退出重进
-    export "${password_var}=${input_password}"
+#     # 更新当前环境变量，这样就不用退出重进
+#     export "${password_var}=${input_password}"
     
-    # 尝试密码连接
-    sshpass -p "$input_password" ssh "$host"
-    return $?
-  fi
+#     # 尝试密码连接
+#     sshpass -p "$input_password" ssh "$host"
+#     return $?
+#   fi
 
-  # 使用已存在的密码连接
-  sshpass -p "$password" ssh "$host"
-}
+#   # 使用已存在的密码连接
+#   sshpass -p "$password" ssh "$host"
+# }
 
 # ----- Cursor -----
 # 在 crusor 中打开 command palette 搜索 `install cursor command`
