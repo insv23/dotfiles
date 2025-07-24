@@ -1,7 +1,11 @@
 {
 	"env": {},
 	"permissions": {
-		"allow": [],
+		"allow": [
+			"Bash(find:*)",
+			"Bash(grep:*)",
+      		"Bash(ls:*)"
+		],
 		"deny": []
 	},
 	"hooks": {
