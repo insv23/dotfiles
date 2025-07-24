@@ -21,7 +21,7 @@ bark_send() {
   
   local title="$1"
   local body="$2"
-  local sound="${3:-glass}"
+  local sound="${3:-glass}" # Sound 参数是 iOS 专用的，默认是 "default"
   local group="${4:-$(hostname -s)}"
   
   # 转义特殊字符
@@ -67,33 +67,51 @@ bark_precmd() {
   done
   
   # 格式化时间
-  local time_str
-  if [[ $duration -ge 60 ]]; then
+  local duration_time_str
+  if [[ $duration -ge 86400 ]]; then
+    # 超过1天：显示 x天y小时z分w秒
+    local days=$((duration / 86400))
+    local hours=$(((duration % 86400) / 3600))
+    local mins=$(((duration % 3600) / 60))
+    local secs=$((duration % 60))
+    duration_time_str="${days}天"
+    [[ $hours -gt 0 ]] && duration_time_str="${duration_time_str}${hours}小时"
+    [[ $mins -gt 0 ]] && duration_time_str="${duration_time_str}${mins}分"
+    [[ $secs -gt 0 ]] && duration_time_str="${duration_time_str}${secs}秒"
+  elif [[ $duration -ge 3600 ]]; then
+    # 1小时-1天：显示 x小时y分z秒
+    local hours=$((duration / 3600))
+    local mins=$(((duration % 3600) / 60))
+    local secs=$((duration % 60))
+    duration_time_str="${hours}小时"
+    [[ $mins -gt 0 ]] && duration_time_str="${duration_time_str}${mins}分"
+    [[ $secs -gt 0 ]] && duration_time_str="${duration_time_str}${secs}秒"
+  elif [[ $duration -ge 60 ]]; then
+    # 1分钟-1小时：显示 x分y秒
     local mins=$((duration / 60))
     local secs=$((duration % 60))
-    time_str="${mins}分${secs}秒"
+    duration_time_str="${mins}分"
+    [[ $secs -gt 0 ]] && duration_time_str="${duration_time_str}${secs}秒"
   else
-    time_str="${duration}秒"
+    # 少于1分钟：显示 x秒
+    duration_time_str="${duration}秒"
   fi
   
   # 构建通知
-  local title status_msg sound group
+  local title sound group host
+  host="[$(hostname -s)]"
+  
   if [[ $exit_code -eq 0 ]]; then
-    title="✅ 命令完成"
-    status_msg="成功"
+    title="${host}✅ 命令完成"
     sound="glass"
     group="$(hostname -s)"
   else
-    title="❌ 命令失败"
-    status_msg="失败 (退出码: $exit_code)"
+    title="${host}❌ 命令失败"
     sound="alarm"
     group="$(hostname -s)-failed"
   fi
   
-  # 添加主机名
-  local host="[$(hostname -s)] "
-  
-  local body="${host}命令: ${BARK_CMD_STRING}\n时间: ${time_str}\n状态: ${status_msg}"
+  local body="命令: ${BARK_CMD_STRING}\n持续时间: ${duration_time_str}\n发送时间: $(date '+%H:%M:%S')"
   
   bark_send "$title" "$body" "$sound" "$group"
 }
@@ -163,7 +181,8 @@ bark_test() {
   fi
   
   echo "📱 发送测试通知..."
-  bark_send "🧪 Bark 测试" "这是一条测试通知\n主机: $(hostname -s)\n时间: $(date '+%H:%M:%S')" "bell" "$(hostname -s)-test"
+  local host="[$(hostname -s)]"
+  bark_send "${host}🧪 Bark 测试" "命令: bark_test\n持续时间: 0秒\n发送时间: $(date '+%H:%M:%S')" "bell" "$(hostname -s)-test"
   echo "如果配置正确，你应该会收到通知"
 }
 
