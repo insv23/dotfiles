@@ -254,6 +254,45 @@ alias k="kitten ssh"
 #   sshpass -p "$password" ssh "$host"
 # }
 
+
+# Enhanced sleepto for immediate execution
+function sleepto() {
+    if [ -z "$1" ]; then
+        echo "用法: sleepto HH:MM && command"
+        echo "示例: sleepto 14:30 && echo 'Time reached!'"
+        return 1
+    fi
+    
+    local target_time="$1"
+    
+    # Validate time format
+    if ! echo "$target_time" | grep -qE '^[0-2][0-9]:[0-5][0-9]$'; then
+        echo "错误: 时间格式应为 HH:MM (24小时制)"
+        return 1
+    fi
+    
+    local current_epoch=$(date +%s)
+    local target_epoch=$(date -j -f "%H:%M" "$target_time" "+%s" 2>/dev/null)
+    
+    if [ $? -ne 0 ]; then
+        echo "错误: 无效的时间格式"
+        return 1
+    fi
+    
+    # If target time is earlier than current time, assume it's for tomorrow
+    if [ $target_epoch -le $current_epoch ]; then
+        target_epoch=$((target_epoch + 86400))  # Add 24 hours
+        echo "目标时间已过，将在明天 $target_time 执行"
+    else
+        echo "将在今天 $target_time 执行"
+    fi
+    
+    local sleep_seconds=$((target_epoch - current_epoch))
+    
+    echo "等待 $sleep_seconds 秒 ($(($sleep_seconds / 3600))h $(($sleep_seconds % 3600 / 60))m $(($sleep_seconds % 60))s)"
+    sleep $sleep_seconds
+}
+
 # ----- Cursor -----
 # 在 crusor 中打开 command palette 搜索 `install cursor command`
 alias cr='cursor'
