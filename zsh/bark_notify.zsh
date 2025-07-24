@@ -14,6 +14,7 @@ typeset -g BARK_CMD_STRING
 # 发送 Bark 通知
 bark_send() {
   # 检查 key 是否存在
+  # 如果没有配置 BARK_KEY，通知功能会自动禁用，不会影响正常的命令执行，也不会产生任何输出或错误信息。
   if [[ -z "$BARK_KEY" ]]; then
     return 1
   fi
