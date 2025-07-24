@@ -1,5 +1,6 @@
 source ~/.dotfiles/zsh/aliases.network.sh
 source ~/.dotfiles/zsh/aliases.file_dir.sh
+source ~/.dotfiles/zsh/bark_notify.zsh
 
 # PATH 分行显示
 alias echopath='echo $PATH | tr ":" "\n"'

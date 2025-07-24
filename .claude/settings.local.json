@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "WebFetch(domain:sw.kovidgoyal.net)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:bark.day.app)"
+    ],
+    "deny": []
+  }
+}
