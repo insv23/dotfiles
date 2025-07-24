@@ -24,8 +24,3 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 alias cc="npm i -g @anthropic-ai/claude-code && claude --dangerously-skip-permissions"
 alias cco="npm i -g @anthropic-ai/claude-code && claude --dangerously-skip-permissions --model opus"
 alias cc-upgrade="npm i -g @anthropic-ai/claude-code"
-
-# ===== kiro =====
-# 这个是 kiro 的 shell 集成，用于在 kiro 中使用 zsh
-[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
-# kiro end
