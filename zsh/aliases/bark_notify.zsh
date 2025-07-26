@@ -5,7 +5,7 @@ BARK_THRESHOLD="${BARK_THRESHOLD:-10}"  # 可通过环境变量覆盖
 BARK_ENABLED="${BARK_ENABLED:-true}"    # 可通过环境变量控制
 
 # 忽略的命令列表
-BARK_IGNORE_CMDS=(ssh kitten k autossh vi vim nvim nv zja y)
+BARK_IGNORE_CMDS=(ssh kitten k autossh vi vim nvim nv zja  y)
 
 # 记录命令信息
 typeset -g BARK_CMD_START
