@@ -21,6 +21,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # bun end
 
 # ===== Claude Code =====
-alias cc="npm i -g @anthropic-ai/claude-code && claude --dangerously-skip-permissions"
-alias cco="npm i -g @anthropic-ai/claude-code && claude --dangerously-skip-permissions --model opus"
+alias cc="claude --dangerously-skip-permissions"
+alias cco="claude --dangerously-skip-permissions --model opus"
 alias cc-upgrade="npm i -g @anthropic-ai/claude-code"
