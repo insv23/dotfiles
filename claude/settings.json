@@ -1,33 +1,36 @@
 {
-	"env": {},
-	"permissions": {
-		"allow": [
-			"Bash(find:*)",
-			"Bash(grep:*)",
-      		"Bash(ls:*)"
-		],
-		"deny": []
-	},
-	"hooks": {
-		"Stop": [
-			{
-				"hooks": [
-					{
-						"type": "command",
-						"command": "afplay ~/music/notification-sound.mp3"
-					}
-				]
-			}
-		],
-		"Notification": [
-			{
-				"hooks": [
-					{
-						"type": "command",
-						"command": "afplay ~/music/notification-sound.mp3"
-					}
-				]
-			}
-		]
-	}
+  "env": {},
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay ~/music/notification-sound.mp3"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay ~/music/notification-sound.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  "feedbackSurveyState": {
+    "lastShownTime": 1753957818842
+  }
 }

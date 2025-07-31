@@ -1,0 +1,13 @@
+{
+    "workbench.colorCustomizations": {
+        "statusBarItem.warningBackground": "#D6C1E5",
+        "statusBarItem.warningForeground": "#000000",
+        "statusBarItem.warningHoverBackground": "#D6C1E5",
+        "statusBarItem.warningHoverForeground": "#00000090",
+        "statusBarItem.remoteBackground": "#D6C1E5",
+        "statusBarItem.remoteForeground": "#000000",
+        "statusBarItem.remoteHoverBackground": "#D6C1E5",
+        "statusBarItem.remoteHoverForeground": "#00000090"
+    },
+    "window.title": ".dotfiles"
+}
