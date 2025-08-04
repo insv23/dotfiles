@@ -14,7 +14,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay ~/music/notification-sound.mp3"
+            "command": "afplay ~/music/item-get.mp3"
           }
         ]
       }
@@ -24,13 +24,13 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay ~/music/notification-sound.mp3"
+            "command": "afplay ~/music/korok-appears.mp3"
           }
         ]
       }
     ]
   },
   "feedbackSurveyState": {
-    "lastShownTime": 1754295206805
+    "lastShownTime": 1754317738224
   }
 }
