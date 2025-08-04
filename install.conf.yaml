@@ -9,6 +9,7 @@
     ~/.aider.model.metadata.json: ./aider/aider.model.metadata.json
     ~/.aider.conf.yml: ./aider/aider.conf.yml
     ~/.bashrc:
+    ~/.claude/agents/: ./claude/agents
     ~/.claude/CLAUDE.md: ./claude/CLAUDE.md
     ~/.claude/commands/: ./claude/commands
     ~/.claude/settings.json: ./claude/settings.json
