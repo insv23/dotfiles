@@ -1,1 +1,0 @@
-Use "ClaudePoint MCP" to create a checkpoint
