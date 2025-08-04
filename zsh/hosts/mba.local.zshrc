@@ -24,3 +24,8 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 alias cc="claude --dangerously-skip-permissions"
 alias cco="claude --dangerously-skip-permissions --model opus"
 alias cc-upgrade="npm i -g @anthropic-ai/claude-code"
+
+# ===== aichat =====
+# https://github.com/sigoden/aichat
+alias ai="aichat"
+alias aie="aichat -e"
