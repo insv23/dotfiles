@@ -25,6 +25,13 @@ alias cc="claude --dangerously-skip-permissions"
 alias cco="claude --dangerously-skip-permissions --model opus"
 alias cc-upgrade="npm i -g @anthropic-ai/claude-code"
 
+# ===== xlaude =====
+alias xl="xlaude"
+alias xll="xlaude list"
+alias xlc="xlaude create"
+alias xld="xlaude delete"
+alias xln="xlaude new --with code"
+
 # ===== aichat =====
 # https://github.com/sigoden/aichat
 alias ai="aichat"
