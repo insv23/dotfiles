@@ -24,3 +24,5 @@ vim/pack/vendor/start
 
 # 以 .secret.zshrc 结尾的文件不被 git  track
 *.secret.zshrc
+
+.vscode/settings.json
