@@ -4,6 +4,7 @@ source ~/.dotfiles/zsh/aliases/bark_notify.zsh
 source ~/.dotfiles/zsh/aliases/ssh.sh
 source ~/.dotfiles/zsh/aliases/vscode-backup.sh
 source ~/.dotfiles/zsh/aliases/ffmpeg.sh
+source ~/.dotfiles/zsh/aliases/code-remote.sh
 
 # PATH 分行显示
 alias echopath='echo $PATH | tr ":" "\n"'
