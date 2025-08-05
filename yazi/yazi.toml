@@ -1,7 +1,78 @@
 # https://yazi-rs.github.io/docs/configuration/yazi/
 # https://github.com/sxyazi/yazi/blob/main/yazi-config/preset/yazi-default.toml
 
+# Yazi 配置文件说明
+# =================
+# 
+# Yazi 界面布局（三列模式）：
+# - 左列：父目录内容
+# - 中列：当前目录内容（焦点所在）
+# - 右列：预览区域（文件内容或子目录列表）
+# 
+# 按键操作：
+# - Enter：打开中列选中的文件/目录（默认使用第一个匹配的 opener）
+# - Shift+Enter 或 O：交互式选择 opener
+# 
+# 文件打开流程：
+# 1. 按键触发 open 命令
+# 2. 根据 [open] rules 匹配文件类型
+# 3. 使用匹配规则中 use 数组的第一个 opener
+# 4. 执行对应 [opener] 中定义的命令
+
 [manager]
-ratio          = [ 1, 3, 3 ]
+ratio          = [ 1, 3, 3 ]  # 三列宽度比例：父目录:当前目录:预览
 sort_by        = "natural"
 linemode       = "size"
+
+[opener]
+# VSCode opener - 智能判断环境并选择合适的编辑器
+# 
+# 工作原理：
+# 1. 本地环境（无 SSH）：使用 VSCode
+# 2. VSCode Remote SSH 终端：使用 VSCode（支持远程开发）
+# 3. 普通 SSH 连接：使用终端编辑器（vim 或 $EDITOR）
+# 
+# 环境检测依据：
+# - $SSH_CLIENT / $SSH_TTY：检测是否在 SSH 会话中
+# - $VSCODE_INJECTION=1：检测是否在 VSCode Remote SSH 终端中
+vscode = [
+    { run = '''sh -c '
+        if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ]; then
+            # 本地环境
+            code "$@"
+        elif [ "$VSCODE_INJECTION" = "1" ]; then
+            # VSCode Remote SSH 终端
+            code "$@"
+        else
+            # 普通 SSH，使用默认编辑器
+            ${EDITOR:-vim} "$@"
+        fi
+    ' sh "$@"''', block = false, for = "unix" },
+]
+
+# 传统编辑器配置（保持默认行为）
+edit = [
+    { run = '$EDITOR "$@"', block = true, for = "unix" },
+    { run = "%EDITOR% %*",  block = true, for = "windows" },
+]
+
+# 系统默认打开方式
+open = [
+    { run = 'xdg-open "$@"', desc = "Open", for = "linux" },
+    { run = 'open "$@"', desc = "Open", for = "macos" },
+]
+
+[open]
+# 文件打开规则
+# use 数组中的顺序决定了优先级，第一个为默认选项
+rules = [
+    # 文本文件和代码文件 - 优先使用 VSCode
+    { mime = "text/*", use = [ "vscode", "edit", "open" ] },
+    { name = "*.{js,ts,jsx,tsx,json,md,yml,yaml,toml,rs,go,py}", use = [ "vscode", "edit", "open" ] },
+    
+    # 目录 - 使用 VSCode 打开项目
+    { mime = "inode/directory", use = [ "vscode", "open" ] },
+    
+    # 其他文件 - 使用系统默认程序
+    { name = "*", use = "open" },
+]
