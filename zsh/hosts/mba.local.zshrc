@@ -34,7 +34,5 @@ alias xlc="xlaude create"
 alias xld="xlaude delete"
 alias xln="xlaude new --with code"
 
-# ===== aichat =====
-# https://github.com/sigoden/aichat
-alias ai="aichat"
-alias aie="aichat -e"
+# ===== tmuxai =====
+alias ti="tmuxai"
