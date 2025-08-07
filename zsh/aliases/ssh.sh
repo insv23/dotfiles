@@ -142,16 +142,34 @@ kls() {
 
 # 创建 ssh 密钥(默认无密码)
 ssh-ck () {
+	key_type="rsa"
+	
+	while getopts "t:" opt; do
+		case $opt in
+			t)
+				key_type="$OPTARG"
+				;;
+			\?)
+				echo "无效选项: -$OPTARG" >&2
+				return 1
+				;;
+		esac
+	done
+	shift $((OPTIND-1))
+	
 	if [ -z "$1" ]
 	then
 		echo "用法："
-		echo "  ssh-ck server_<服务器名称>@<服务器用户>   # 生成连接到特定服务器的密钥"
-		echo "  ssh-ck github_<GitHub账户>             # 生成连接到GitHub账户的密钥"
+		echo "  ssh-ck [-t key_type] server_<服务器名称>@<服务器用户>   # 生成连接到特定服务器的密钥"
+		echo "  ssh-ck [-t key_type] github_<GitHub账户>             # 生成连接到GitHub账户的密钥"
+		echo ""
+		echo "选项："
+		echo "  -t key_type    指定密钥类型 (默认: rsa，支持: rsa, ed25519, ecdsa)"
 		return 1
 	fi
 	user_host=$(whoami)@$(hostname)
 	key_name="$HOME/.ssh/$1"
-	ssh-keygen -f "$key_name" -t rsa -N '' -C "$user_host to $1"
+	ssh-keygen -f "$key_name" -t "$key_type" -N '' -C "$user_host to $1"
 
 	# 使用 pbcopy 复制公钥到剪贴板 (仅限 macOS)
 	if [[ "$OSTYPE" == "darwin"* ]]; then
