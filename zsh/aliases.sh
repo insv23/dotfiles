@@ -94,6 +94,7 @@ alias tmat='tmux new-session -A -s'   # new-session：创建一个新的 tmux �
                                       # -A：如果指定名称的会话已经存在，则附加到该会话（而不是创建新会话）。
                                       # -s：指定会话的名称。
 alias tmkt='tmux kill-session -t'
+alias tmls='tmux ls'
 
 
 # ---- zellij ----
