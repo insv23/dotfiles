@@ -25,7 +25,6 @@ alias claude="/Users/tony/.claude/local/claude"
 alias cc="claude --dangerously-skip-permissions"
 alias ccc="claude --dangerously-skip-permissions --continue"
 alias cco="claude --dangerously-skip-permissions --model opus"
-alias cc-upgrade="npm i -g @anthropic-ai/claude-code"
 
 # ===== xlaude =====
 alias xl="xlaude"
@@ -33,6 +32,3 @@ alias xll="xlaude list"
 alias xlc="xlaude create"
 alias xld="xlaude delete"
 alias xln="xlaude new --with code"
-
-# ===== tmuxai =====
-alias ti="tmuxai"
