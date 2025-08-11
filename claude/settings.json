@@ -30,11 +30,8 @@
       }
     ]
   },
-  "feedbackSurveyState": {
-    "lastShownTime": 1754317738224
-  },
   "statusLine": {
     "type": "command",
-    "command": "input=$(cat); printf '\\033[01;36m%s\\033[00m' \"$(echo \"$input\" | jq -r '.model.display_name')\""
+    "command": "bun x ccusage statusline"
   }
 }
