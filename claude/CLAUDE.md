@@ -1,2 +1,0 @@
-- Always use descriptive variable names
-- 完整改完一个文件后再返回，这样的 diff 视图才有意义。
