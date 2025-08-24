@@ -5,7 +5,8 @@
       "WebFetch(domain:sw.kovidgoyal.net)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:bark.day.app)",
-      "WebFetch(domain:docs.anthropic.com)"
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebSearch"
     ],
     "deny": []
   }

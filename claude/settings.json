@@ -4,27 +4,32 @@
     "allow": [
       "Bash(find:*)",
       "Bash(grep:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Read",
+      "WebFetch",
+      "WebSearch",
+      "mcp__*"
     ],
     "deny": []
   },
+  "model": "opus",
   "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "afplay ~/music/item-get.mp3"
-          }
-        ]
-      }
-    ],
     "Notification": [
       {
         "hooks": [
           {
             "type": "command",
             "command": "afplay ~/music/korok-appears.mp3"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay ~/music/item-get.mp3"
           }
         ]
       }
