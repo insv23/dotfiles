@@ -85,7 +85,6 @@ eval "$(zoxide init zsh)"
 
 
 # ---- nvm/node ---
-# nvim 依赖 nodejs
 source ~/.dotfiles/zsh/nvm.zshrc
 
 
