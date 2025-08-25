@@ -6,6 +6,7 @@ source ~/.dotfiles/zsh/aliases/vscode-backup.sh
 source ~/.dotfiles/zsh/aliases/ffmpeg.sh
 source ~/.dotfiles/zsh/aliases/code-remote.sh
 source ~/.dotfiles/zsh/aliases/run_log.sh
+source ~/.dotfiles/zsh/aliases/tts.sh
 
 # PATH 分行显示
 alias echopath='echo $PATH | tr ":" "\n"'
