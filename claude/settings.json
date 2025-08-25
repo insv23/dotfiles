@@ -12,14 +12,13 @@
     ],
     "deny": []
   },
-  "model": "opus",
   "hooks": {
     "Notification": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "afplay ~/music/korok-appears.mp3"
+            "command": "afplay ~/music/wait_input.mp3"
           }
         ]
       }
@@ -29,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay ~/music/item-get.mp3"
+            "command": "afplay ~/music/output_end.mp3"
           }
         ]
       }
