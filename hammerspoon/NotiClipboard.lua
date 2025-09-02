@@ -5,7 +5,7 @@ local previousClipboardContents = hs.pasteboard.getContents()
 local function showClipboardNotification()
     local currentClipboardContents = hs.pasteboard.getContents()
     if currentClipboardContents ~= previousClipboardContents then
-        -- 显示通知
+        -- 显示通知(右上角弹窗)
         hs.notify.new({
             title = "剪贴板内容已更改",
             informativeText = currentClipboardContents or "非文本内容",
