@@ -1,13 +1,14 @@
--- 紧凑右侧剪贴板提醒（支持图片）- 使用 hs.pasteboard.watcher
+-- 剪贴板提醒（支持图片）- 使用 hs.pasteboard.watcher
 -- 参考: [hs.pasteboard.watcher.new()](hammerspoon/AlertClipboard.lua:22) 文档用法（自动启动或手动 :start()）
 
 -- alert.show 参数
 -- hs.alert.show(str, [style], [screen], [seconds]) -> uuid
-local duration = 0.8
+local text_duration_seconds_seconds = 2.5
+local img_duration_seconds = 0.8
 
--- 提示样式：更小且固定在屏幕右侧
+-- 提示样式
 -- https://github.com/Hammerspoon/hammerspoon/blob/master/extensions/alert/alert.lua#L17
-local alertStyleRightSmall = {
+local alertStyle = {
   atScreenEdge  = 2,                       -- 0: screen center (default); 1: top edge; 2: bottom edge . Note when atScreenEdge>0, the latest alert will overlay above the previous ones if multiple alerts visible on same edge; and when atScreenEdge=0, latest alert will show below previous visible ones without overlap.
   textSize      = 12,                      -- 字体更小
   radius        = 8,                       -- 圆角更小
@@ -144,14 +145,14 @@ alertClipboardPBWatcher = hs.pasteboard.watcher.new(function(text)
   if img then
     -- 复制了图片：按最大宽高等比缩放后展示
     local scaled = clampImage(img, ImageClampConfig) -- [lua.clampImage()](hammerspoon/AlertClipboard.lua:1)
-    hs.alert.showWithImage("", scaled or img, alertStyleRightSmall, hs.screen.mainScreen(), duration)
+    hs.alert.showWithImage("", scaled or img, alertStyle, hs.screen.mainScreen(), img_duration_seconds)
     return
   end
 
   -- 非图片：使用回调 text 或兜底读取文本；应用行宽与行数折叠策略
   local msg = text or hs.pasteboard.getContents() or "已复制非文本内容"
   local display = formatLongText(msg, LongTextConfig) -- [lua.formatLongText()](hammerspoon/AlertClipboard.lua:1)
-  hs.alert.show(display, alertStyleRightSmall, hs.screen.mainScreen(), duration)
+  hs.alert.show(display, alertStyle, hs.screen.mainScreen(), text_duration_seconds)
 end)
 
 -- 显式启动（部分版本 new() 已自动 start，这里兼容性起见手动再启动一次）
