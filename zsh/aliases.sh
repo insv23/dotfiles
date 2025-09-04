@@ -36,7 +36,8 @@ alias brs='brew search'
 alias bri='brew install'
 alias bric='brew install --cask'
 alias bro='brew info'
-alias bru='brew uninstall'
+alias brup='brew upgrade'
+alias brui='brew uninstall'
 
 # nvim
 alias nv='nvim'
