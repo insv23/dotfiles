@@ -1,6 +1,9 @@
 # 每次启动 Zsh 进程时，都会加载（读取并执行）此文件，无论是登录shell、交互式 shell，还是非交互式 shell（例如运行脚本时）。
 # 由于其通用性，`.zshenv` 只应包含环境变量定义。
 
+# 一些不该暴露到 key, 例如 ai api key
+source ~/.dotfiles/zsh/zshenv.secret
+
 # Linux Homebrew
 # -x 选项用于测试一个路径是否是可执行文件
 if [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
