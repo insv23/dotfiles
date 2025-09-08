@@ -31,3 +31,9 @@ eval "$(pay-respects zsh --alias)"
 # ===== llvm configuration =====
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 # llvm end
+
+
+alias down="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.download.cli"
+alias info="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.download.ytdlp_extractor"
+alias burn="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.embed.burning"
+alias mvb="mv ~/Documents/biliV5/* /Volumes/Fassssst/biliV5/"
