@@ -20,15 +20,19 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 # bun end
 
-# ===== Claude Code =====
-alias claude="/Users/tony/.claude/local/claude"
-alias cc="claude --dangerously-skip-permissions"
-alias ccc="claude --dangerously-skip-permissions --continue"
-alias cco="claude --dangerously-skip-permissions --model opus"
+# # ===== Claude Code =====
+# alias claude="/Users/tony/.claude/local/claude"
+# alias cc="claude --dangerously-skip-permissions"
+# alias ccc="claude --dangerously-skip-permissions --continue"
+# alias cco="claude --dangerously-skip-permissions --model opus"
 
-# ===== xlaude =====
-alias xl="xlaude"
-alias xll="xlaude list"
-alias xlc="xlaude create"
-alias xld="xlaude delete"
-alias xln="xlaude new --with code"
+# # ===== xlaude =====
+# alias xl="xlaude"
+# alias xll="xlaude list"
+# alias xlc="xlaude create"
+# alias xld="xlaude delete"
+# alias xln="xlaude new --with code"
+
+alias down="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.download.cli"
+alias info="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.download.ytdlp_extractor"
+alias burn="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.embed.burning"
