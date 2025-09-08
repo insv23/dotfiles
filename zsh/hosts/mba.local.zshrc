@@ -1,3 +1,6 @@
+# 一些不该暴露到 key, 例如 ai api key
+source ~/.dotfiles/zsh/hosts/mba.zshenv.secret
+
 # ---- auto proxy ----
 # pxyon > /dev/null
 
