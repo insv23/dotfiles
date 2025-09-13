@@ -23,11 +23,6 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# ===== pay-respects(theFuck 替代品) configuration =====
-# 默认快捷键为 f
-eval "$(pay-respects zsh --alias)"
-# pay-respects end
-
 # ===== llvm configuration =====
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 # llvm end
