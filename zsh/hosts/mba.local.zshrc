@@ -47,9 +47,6 @@ alias whis="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.transcr
 function ccglm() {
     ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic \
     ANTHROPIC_AUTH_TOKEN=$GLM_API_TOKEN \
-    ANTHROPIC_DEFAULT_OPUS_MODEL=glm-4.5 \
-    ANTHROPIC_DEFAULT_SONNET_MODEL=glm-4.5 \
-    ANTHROPIC_DEFAULT_HAIKU_MODEL=glm-4.5-air \
     ANTHROPIC_MODEL=glm-4.5 \
     DISABLE_AUTOUPDATER=1 \
     claude $@
