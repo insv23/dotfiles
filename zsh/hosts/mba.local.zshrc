@@ -51,3 +51,10 @@ function ccglm() {
     DISABLE_AUTOUPDATER=1 \
     claude $@
 }
+
+# carapace 名字自动补全: 内置了上百个常见 CLI 的补全（git、docker、kubectl、gh、ffmpeg、aws…）
+# 可使用 `carapace --list` 查看可补全命令列表
+# 配置样式: https://carapace-sh.github.io/carapace-bin/style.html
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)
