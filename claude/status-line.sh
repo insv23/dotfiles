@@ -25,5 +25,6 @@ block_cost=$(echo "$cost_info" | sed -E 's/.*\/ ([^ ]+ block \([^)]+\)).*/\1/')
 # Line 2: $session_cost session | $today_cost today
 # Line 3: $block_cost
 echo "$model_name | 🧠 $context_info"
-echo "$session_cost session | $today_cost today"
-echo "$block_cost"
+# echo "$session_cost session | $today_cost today"
+# echo "$block_cost"
+echo "$session_cost session
