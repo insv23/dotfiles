@@ -36,6 +36,6 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash ~/.dotfiles/claude/status-line.sh"
+    "command": "~/.dotfiles/claude/statusline.py"
   }
 }
