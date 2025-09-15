@@ -58,3 +58,12 @@ function ccglm() {
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 source <(carapace _carapace)
+
+# 查看应用程序的 Bundle ID，全称是 Bundle Identifier
+id() {
+  if [ -z "$1" ]; then
+    echo "用法: id <应用名>"
+    return 1
+  fi
+  osascript -e "id of app \"$1\""
+}
