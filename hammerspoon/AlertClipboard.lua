@@ -40,7 +40,7 @@ local Config = {
   -- 提示样式（详见 Hammerspoon alert 模块）
   -- atScreenEdge: 0=屏幕中心；1=顶部；2=底部
   alertStyle = {
-    atScreenEdge = 2,
+    atScreenEdge = 1,
     textSize     = 12, -- 更小的字体
     radius       = 8,  -- 更小的圆角
     strokeWidth  = 1,  -- 细边
@@ -62,8 +62,8 @@ local Config = {
 
   -- 图片尺寸限制（按最大宽高等比缩放）
   imageClamp = {
-    maxWidth  = 600, -- 最大宽度
-    maxHeight = 400, -- 最大高度
+    maxWidth  = 300, -- 最大宽度
+    maxHeight = 200, -- 最大高度
   },
 }
 -- ========== 结束：全局配置 ==========
