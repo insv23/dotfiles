@@ -32,4 +32,16 @@ alias down="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.downloa
 alias info="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.download.ytdlp_extractor"
 alias burn="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.embed.burning"
 alias whis="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.transcribe.mlx_whisper_cli"
-alias mvb="find ~/Documents/biliV5 -mindepth 1 -maxdepth 1 -type d -exec mv {} /Volumes/Fassssst/biliV5/ \;"
+mvb() {
+  local src=~/Documents/biliV5
+  local dest=/Volumes/Fassssst/biliV5
+
+  find "$src" -mindepth 1 -maxdepth 1 -type d -print0 |
+    while IFS= read -r -d '' dir; do
+      if [[ -n "$(find "$dir" -maxdepth 1 -type f -name 'final_*.mp4' -print -quit)" ]]; then
+        mv "$dir" "$dest"/
+      else
+        printf 'skip (no final_*.mp4): %s\n' "$dir"
+      fi
+    done
+}
