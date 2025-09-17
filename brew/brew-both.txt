@@ -18,5 +18,4 @@ unzip
 uv
 vim
 yazi
-zellij
 zoxide

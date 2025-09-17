@@ -68,7 +68,7 @@
    ./brew/1.brewInstallApps.sh
    (⬇️ Ubuntu 系统交互式安装 Caddy/Docker 等)
    sudo ./brew/2.ubuntuInstall.sh
-   ./tmux/install_tpm.sh (deprecated, 使用 zellij 替代)
+   ./tmux/install_tpm.sh
    ```
 
    运行完成后，注销当前用户会话并重新登录，配置将自动生效。
