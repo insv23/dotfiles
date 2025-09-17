@@ -6,4 +6,5 @@ python-argcomplete
 ripgrep
 unar
 wget
+yazi
 zlib 
