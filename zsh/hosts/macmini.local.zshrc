@@ -28,10 +28,33 @@ export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 # llvm end
 
 
-alias down="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.download.cli"
-alias info="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.download.ytdlp_extractor"
-alias burn="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.embed.burning"
-alias whis="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.transcribe.mlx_whisper_cli"
+down() {
+  local oldpwd=$PWD
+  cd ~/code/Python/bilingual_subtitle_machine
+  uv run -m src.download.cli
+  cd "$oldpwd"
+}
+
+info() {
+  local oldpwd=$PWD
+  cd ~/code/Python/bilingual_subtitle_machine
+  uv run -m src.download.ytdlp_extractor
+  cd "$oldpwd"
+}
+
+burn() {
+  local oldpwd=$PWD
+  cd ~/code/Python/bilingual_subtitle_machine
+  uv run -m src.embed.burning
+  cd "$oldpwd"
+}
+
+whis() {
+  local oldpwd=$PWD
+  cd ~/code/Python/bilingual_subtitle_machine
+  uv run -m src.transcribe.mlx_whisper_cli
+  cd "$oldpwd"
+}
 mvb() {
   local src=~/Documents/biliV5
   local dest=/Volumes/Fassssst/biliV5
