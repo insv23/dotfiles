@@ -49,6 +49,13 @@ burn() {
   cd "$oldpwd"
 }
 
+tran() {
+  local oldpwd=$PWD
+  cd ~/code/Python/bilingual_subtitle_machine
+  uv run -m src.translate.cli
+  cd "$oldpwd"
+}
+
 whis() {
   local oldpwd=$PWD
   cd ~/code/Python/bilingual_subtitle_machine
