@@ -62,6 +62,14 @@ whis() {
   uv run -m src.transcribe.mlx_whisper_cli
   cd "$oldpwd"
 }
+
+noad() {
+  local oldpwd=$PWD
+  cd ~/code/Python/bilingual_subtitle_machine
+  uv run -m src.edit.cli
+  cd "$oldpwd"
+}
+
 mvb() {
   local src=~/Documents/biliV5
   local dest=/Volumes/Fassssst/biliV5
