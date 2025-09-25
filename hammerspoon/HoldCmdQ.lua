@@ -39,7 +39,7 @@ function startCmdQ()
     hs.alert("已屏蔽 Cmd+Q：" .. app:name(), 0.8)
     return
   end
-  cmdQTimer = hs.timer.doAfter(cmdQDelay, function() app:terminate(); cmdQCleanup() end)
+  cmdQTimer = hs.timer.doAfter(cmdQDelay, function() app:kill(); cmdQCleanup() end)
   cmdQAlert = hs.alert("hold to quit " .. app:name(), true)
 end
 
