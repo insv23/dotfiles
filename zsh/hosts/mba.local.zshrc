@@ -52,6 +52,20 @@ function ccglm() {
     claude $@
 }
 
+# 以官方API 3折计费，支持缓存命中
+# https://doc.302.ai/349734723e0
+# claude-3-5-haiku-20241022
+# claude-sonnet-4-20250514
+# claude-opus-4-20250514
+# 价格：原模型价格的3折
+function cc302() {
+    ANTHROPIC_BASE_URL=https://api.302.ai/cc \
+    ANTHROPIC_AUTH_TOKEN=$CC_302_API_KEY \
+    ANTHROPIC_MODEL=claude-sonnet-4-20250514 \
+    DISABLE_AUTOUPDATER=1 \
+    claude $@
+}
+
 # carapace 名字自动补全: 内置了上百个常见 CLI 的补全（git、docker、kubectl、gh、ffmpeg、aws…）
 # 可使用 `carapace --list` 查看可补全命令列表
 # 配置样式: https://carapace-sh.github.io/carapace-bin/style.html
