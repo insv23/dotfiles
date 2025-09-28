@@ -58,6 +58,54 @@ install_homebrew() {
     fi
 }
 
+# 配置 Homebrew 自动更新（macOS 使用 brew-autoupdate；Linux 使用 cron）
+# Configure Homebrew auto-update (macOS via brew-autoupdate; Linux via cron)
+setup_brew_autoupdate() {
+    local brew_path="$1"
+
+    if [ "$OS_TYPE" = "Darwin" ]; then
+        echo "⚙️  Checking Homebrew autoupdate status on macOS..."
+        status_output="$("$brew_path" autoupdate status 2>&1 || true)"
+        if printf "%s" "$status_output" | grep -qi "installed and running"; then
+            echo "✅ Homebrew autoupdate is already running. Skipping."
+            return 0
+        fi
+
+        echo "⚙️  Enabling Homebrew autoupdate on macOS..."
+        # 安装并启动 autoupdate，每 86400 秒（24 小时）执行一次
+        "$brew_path" tap domt4/autoupdate >/dev/null 2>&1 || true
+        if "$brew_path" autoupdate start 86400 >/dev/null 2>&1; then
+            echo "Homebrew will now automatically update every 24 hours."
+        else
+            echo "ℹ️  Attempted to start Homebrew autoupdate (check manually with: brew autoupdate status)"
+        fi
+    else
+        echo "⚙️  Enabling Homebrew autoupdate on Linux via cron..."
+        if command -v crontab >/dev/null 2>&1; then
+            CRON_LINE="30 3 * * * /bin/bash -lc 'eval \"\$("$LINUX_BREW_PATH" shellenv)\" && brew update'"
+
+            # 如果已存在我们的标识性注释，则认为任务已添加
+            if crontab -l 2>/dev/null | grep -F "Linux Homebrew 每天 03:30 自动更新一次Homebrew 自身和索引" >/dev/null 2>&1; then
+                echo "✅ Cron entry for Homebrew update already present."
+            else
+                # 保留已有任务并追加我们的任务
+                (crontab -l 2>/dev/null; \
+                  echo "# Linux Homebrew 每天 03:30 自动更新一次Homebrew 自身和索引"; \
+                  echo "$CRON_LINE") | crontab -
+                if [ "$?" -eq 0 ]; then
+                    echo "✅ Added cron job: daily 03:30 Homebrew update"
+                else
+                    echo "❌ Failed to add cron job for Homebrew update"
+                fi
+            fi
+        else
+            echo "❌ 'crontab' not found. Please install cron or set up updates manually."
+            echo "   Hint: crontab -e → add:"
+            echo "   30 3 * * * /bin/bash -lc 'eval \"\$("$LINUX_BREW_PATH" shellenv)\" && brew update'"
+        fi
+    fi
+}
+
 # 主函数
 # Main function
 main() {
@@ -72,6 +120,10 @@ main() {
         echo "✅ Homebrew is installed and working"
     else
         install_homebrew
+    fi
+
+    if check_brew_installation "$BREW_PATH"; then
+        setup_brew_autoupdate "$BREW_PATH"
     fi
     
     echo
