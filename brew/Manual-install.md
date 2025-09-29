@@ -30,10 +30,13 @@ cargo --version
     npm -v
     ```
 
-## yazi
-参考 [yazi-install.md](../yazi/yazi-install.md)
-- mac: 使用 brew
-- Ubuntu: 使用 yazi/yazi-install.md 中那个脚本
+## [uv](https://docs.astral.sh/uv/getting-started/installation/) 
+(brew-both.txt 已经添加 uv，无需手动安装)
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# 可执行文件位于 `~/.local/bin`, zshenv 文件已经添加该路径
+```
 
 # brew 安装
 
@@ -52,13 +55,3 @@ case ":$PATH:" in
 esac
 # pnpm end
 ```
-
-## [uv](https://docs.astral.sh/uv/getting-started/installation/) 
-(brew-both.txt 已经添加 uv，无需手动安装)
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# 可执行文件位于 `~/.local/bin`, zshenv 文件已经添加该路径
-```
-
-
