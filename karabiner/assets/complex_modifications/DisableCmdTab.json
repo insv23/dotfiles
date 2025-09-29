@@ -1,3 +1,4 @@
+// “屏幕共享下来的按键不是硬件键盘事件”，而 Karabiner-Elements 只拦截 HID 层的物理键盘事件，所以在被控机上用 Karabiner 的确看不到、也拦不住通过 macOS 屏幕共享注入的按键（包括 ⌘+Tab）。这是 Karabiner 的已知限制：远程/虚拟键盘事件在它的 EventViewer 里不会出现。
 {
   "title": "Disable Command+Tab (Headless Mac mini - Always Screen Shared)",
   "rules": [
