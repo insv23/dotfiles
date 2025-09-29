@@ -1,0 +1,20 @@
+{
+  "title": "Disable Command+Tab (Headless Mac mini - Always Screen Shared)",
+  "rules": [
+    {
+      "description": "此规则用于无显示器的 Mac mini 主机（常驻被屏幕共享状态）。禁用 Command+Tab 应用切换器。在该机器上按下 Command+Tab 将不再生效。",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "tab",
+            "modifiers": {
+              "mandatory": ["command"]
+            }
+          },
+          "to": []
+        }
+      ]
+    }
+  ]
+}
