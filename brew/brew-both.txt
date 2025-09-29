@@ -14,7 +14,9 @@ gnu-sed
 lazydocker
 lazygit
 neovim
+somo
 unzip
 uv
 vim
+xh
 zoxide

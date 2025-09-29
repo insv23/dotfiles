@@ -1,5 +1,6 @@
 ack
 ffmpegthumbnailer
+heynote
 imagemagick
 jq
 python-argcomplete
