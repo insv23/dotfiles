@@ -25,29 +25,35 @@ sort_by        = "natural"
 linemode       = "size"
 
 [opener]
-# VSCode opener - 智能判断环境并选择合适的编辑器
-# 
-# 工作原理：
-# 1. 本地环境（无 SSH）：使用 VSCode
-# 2. VSCode Remote SSH 终端：使用 VSCode（支持远程开发）
-# 3. 普通 SSH 连接：使用终端编辑器（vim 或 $EDITOR）
-# 
-# 环境检测依据：
-# - $SSH_CLIENT / $SSH_TTY：检测是否在 SSH 会话中
-# - $VSCODE_INJECTION=1：检测是否在 VSCode Remote SSH 终端中
-vscode = [
+# 拆分为三组 opener：code / term_edit / smart
+# - code：仅在 macOS 上用 VS Code 打开（不阻塞）
+# - term_edit：终端编辑器（阻塞，适合 SSH）
+# - smart：按环境选择 code 或终端编辑器（自身阻塞）
+
+# 1) VS Code（macOS only）
+code = [
+    { run = 'code -r "$@"', block = false, for = "macos" },
+]
+
+# 2) 终端编辑器
+term_edit = [
+    { run = '${EDITOR:-vim} "$@"', block = true, for = "unix" },
+    { run = "%EDITOR% %*",       block = true, for = "windows" },
+]
+
+# 3) 智能选择（优先在 macOS/VSCode 场景用 VS Code，否则走终端编辑器）
+smart = [
     { run = '''sh -c '
-        if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ]; then
-            # 本地环境
-            code "$@"
-        elif [ "$VSCODE_INJECTION" = "1" ]; then
-            # VSCode Remote SSH 终端
-            code "$@"
+        if [ "$(uname)" = "Darwin" ] \
+           && command -v code >/dev/null 2>&1 \
+           && { { [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ]; } || [ "$VSCODE_INJECTION" = "1" ]; }; then
+            # 本地 macOS 或 VS Code Remote 终端
+            code -r "$@"
         else
-            # 普通 SSH，使用默认编辑器
+            # 普通 SSH / 非 macOS 等场景
             ${EDITOR:-vim} "$@"
         fi
-    ' sh "$@"''', block = false, for = "unix" },
+    ' sh "$@"''', block = true, for = "unix" },
 ]
 
 # 传统编辑器配置（保持默认行为）
@@ -66,12 +72,12 @@ open = [
 # 文件打开规则
 # use 数组中的顺序决定了优先级，第一个为默认选项
 rules = [
-    # 文本文件和代码文件 - 优先使用 VSCode
-    { mime = "text/*", use = [ "vscode", "edit", "open" ] },
-    { name = "*.{js,ts,jsx,tsx,json,md,yml,yaml,toml,rs,go,py}", use = [ "vscode", "edit", "open" ] },
+    # 文本文件和代码文件 - 优先使用 smart（macOS/VSCode 优先 VS Code）
+    { mime = "text/*", use = [ "smart", "edit", "open" ] },
+    { name = "*.{js,ts,jsx,tsx,json,md,yml,yaml,toml,rs,go,py}", use = [ "smart", "edit", "open" ] },
     
-    # 目录 - 使用 VSCode 打开项目
-    { mime = "inode/directory", use = [ "vscode", "open" ] },
+    # 目录 - 使用 smart（在可用时走 VS Code）
+    { mime = "inode/directory", use = [ "smart", "open" ] },
     
     # 其他文件 - 使用系统默认程序
     { name = "*", use = "open" },
