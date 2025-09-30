@@ -61,7 +61,7 @@ function ccglm() {
 function cc302() {
     ANTHROPIC_BASE_URL=https://api.302.ai/cc \
     ANTHROPIC_AUTH_TOKEN=$CC_302_API_KEY \
-    ANTHROPIC_MODEL=claude-sonnet-4-20250514 \
+    ANTHROPIC_MODEL=claude-sonnet-4-5-20250929 \
     DISABLE_AUTOUPDATER=1 \
     claude $@
 }
