@@ -41,13 +41,13 @@ alias info="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.downloa
 alias burn="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.embed.burning"
 alias whis="cd ~/code/Python/bilingual_subtitle_machine && uv run -m src.transcribe.mlx_whisper_cli"
 
-# glm4.5 接入 Claude Code
+# glm4.6 接入 Claude Code
 # Claude Code 使用 brew 安装, 因此使用 DISABLE_AUTOUPDATER=1 禁止自动更新
 # GLM_API_TOKEN 放在 mba.zshenv.secret 
 function ccglm() {
     ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic \
     ANTHROPIC_AUTH_TOKEN=$GLM_API_TOKEN \
-    ANTHROPIC_MODEL=glm-4.5 \
+    ANTHROPIC_MODEL=glm-4.6 \
     DISABLE_AUTOUPDATER=1 \
     claude $@
 }
