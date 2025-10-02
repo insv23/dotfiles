@@ -1,6 +1,9 @@
 # Hostname: macmini
 source ~/.dotfiles/zsh/hosts/macmini.local.secret.zshrc
 
+# 只在当前主机中使用的快捷别名
+source ~/.dotfiles/zsh/aliases/bilingual-subtitle-machine.sh
+
 # ----- trash -----
 export PATH="/opt/homebrew/opt/trash/bin:$PATH"
 alias del='trash'
@@ -27,59 +30,3 @@ esac
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 # llvm end
 
-
-down() {
-  local oldpwd=$PWD
-  cd ~/code/Python/bilingual_subtitle_machine
-  uv run -m src.download.cli
-  cd "$oldpwd"
-}
-
-info() {
-  local oldpwd=$PWD
-  cd ~/code/Python/bilingual_subtitle_machine
-  uv run -m src.download.ytdlp_extractor
-  cd "$oldpwd"
-}
-
-burn() {
-  local oldpwd=$PWD
-  cd ~/code/Python/bilingual_subtitle_machine
-  uv run -m src.embed.burning
-  cd "$oldpwd"
-}
-
-tran() {
-  local oldpwd=$PWD
-  cd ~/code/Python/bilingual_subtitle_machine
-  uv run -m src.translate.cli
-  cd "$oldpwd"
-}
-
-whis() {
-  local oldpwd=$PWD
-  cd ~/code/Python/bilingual_subtitle_machine
-  uv run -m src.transcribe.mlx_whisper_cli
-  cd "$oldpwd"
-}
-
-noad() {
-  local oldpwd=$PWD
-  cd ~/code/Python/bilingual_subtitle_machine
-  uv run -m src.edit.cli
-  cd "$oldpwd"
-}
-
-mvb() {
-  local src=~/Documents/biliV5
-  local dest=/Volumes/Fassssst/biliV5
-
-  find "$src" -mindepth 1 -maxdepth 1 -type d -print0 |
-    while IFS= read -r -d '' dir; do
-      if [[ -n "$(find "$dir" -maxdepth 1 -type f -name 'final_*.mp4' -print -quit)" ]]; then
-        mv "$dir" "$dest"/
-      else
-        printf 'skip (no final_*.mp4): %s\n' "$dir"
-      fi
-    done
-}
