@@ -2,9 +2,11 @@
   "env": {},
   "permissions": {
     "allow": [
+      "Bash(cat:*)",
       "Bash(find:*)",
       "Bash(grep:*)",
       "Bash(ls:*)",
+      "Bash(tree:*)",
       "Read",
       "WebFetch",
       "WebSearch",
@@ -37,6 +39,5 @@
   "statusLine": {
     "type": "command",
     "command": "~/.dotfiles/claude/statusline.py"
-  },
-  "alwaysThinkingEnabled": true
+  }
 }
