@@ -5,6 +5,15 @@ source ~/.dotfiles/zsh/hosts/mba.zshenv.secret
 source ~/.dotfiles/zsh/aliases/bilingual-subtitle-machine.sh
 source ~/.dotfiles/zsh/aliases/claude-code.sh
 
+# 查看应用程序的 Bundle ID，全称是 Bundle Identifier
+id() {
+  if [ -z "$1" ]; then
+    echo "用法: id <应用名>"
+    return 1
+  fi
+  osascript -e "id of app \"$1\""
+}
+
 # ---- auto proxy ----
 # pxyon > /dev/null
 
@@ -27,16 +36,10 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 # bun end
 
-# 查看应用程序的 Bundle ID，全称是 Bundle Identifier
-id() {
-  if [ -z "$1" ]; then
-    echo "用法: id <应用名>"
-    return 1
-  fi
-  osascript -e "id of app \"$1\""
-}
+# ===== go binary: 便直接运行安装的 Go 工具
+export PATH="$PATH:$(go env GOPATH)/bin"
 
-# carapace 名字自动补全: 内置了上百个常见 CLI 的补全（git、docker、kubectl、gh、ffmpeg、aws…）
+# ===== carapace 名字自动补全: 内置了上百个常见 CLI 的补全（git、docker、kubectl、gh、ffmpeg、aws…）
 # 可使用 `carapace --list` 查看可补全命令列表
 # 配置样式: https://carapace-sh.github.io/carapace-bin/style.html
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
