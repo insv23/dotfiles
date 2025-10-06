@@ -37,3 +37,21 @@ function cc302() {
     DISABLE_AUTOUPDATER=1 \
     claude $@
 }
+
+# ===== 本地 cli-proxy-api 接入 =====
+# 虽然没什么用... codex 在 vscode GUI 插件中才堪堪能用
+# gpt5 只能写代码，讲东西一点都讲不明白
+# 而且接入 Claude Code 后 context 无法正常显示(模型返回缺少对应字段)
+function ccx() {
+    if lsof -nP -iTCP:8317 -sTCP:LISTEN | grep -qi cli-proxy; then
+        ANTHROPIC_BASE_URL=http://127.0.0.1:8317 \
+        ANTHROPIC_AUTH_TOKEN=sk-dummy \
+        ANTHROPIC_MODEL=gpt-5 \
+        ANTHROPIC_SMALL_FAST_MODEL=gpt-5 \
+        DISABLE_AUTOUPDATER=1 \
+        claude $@
+    else
+        echo "未检测到 8317 端口上的 cli-proxy。请先启动 cli-proxy-api。"
+        return 1
+    fi
+}
