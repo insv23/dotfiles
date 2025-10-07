@@ -8,28 +8,35 @@ down() {
 burn() {
   local oldpwd=$PWD
   cd ~/code/Python/bilingual_subtitle_machine
-  uv run -m src.embed.burning
+  uv run -m src.burn.cli
   cd "$oldpwd"
 }
 
 tran() {
   local oldpwd=$PWD
   cd ~/code/Python/bilingual_subtitle_machine
-  uv run -m src.translate.cli
+  uv run -m src.translation.cli
   cd "$oldpwd"
 }
 
 whis() {
   local oldpwd=$PWD
   cd ~/code/Python/bilingual_subtitle_machine
-  uv run -m src.transcribe.mlx_whisper_cli
+  uv run -m src.whisper.cli
   cd "$oldpwd"
 }
 
 noad() {
   local oldpwd=$PWD
   cd ~/code/Python/bilingual_subtitle_machine
-  uv run -m src.edit.cli
+  uv run -m src.edit.noad
+  cd "$oldpwd"
+}
+
+clip() {
+  local oldpwd=$PWD
+  cd ~/code/Python/bilingual_subtitle_machine
+  uv run -m src.edit.clip
   cd "$oldpwd"
 }
 
