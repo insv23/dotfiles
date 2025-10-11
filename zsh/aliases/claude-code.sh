@@ -55,3 +55,12 @@ function ccx() {
         return 1
     fi
 }
+
+function cckat() {
+    ANTHROPIC_BASE_URL=https://vanchin.streamlake.ai/api/gateway/v1/endpoints/ep-uflfxs-1760153821291704226/claude-code-proxy \
+    ANTHROPIC_AUTH_TOKEN=$CC_KAT_API_KEY \
+    ANTHROPIC_MODEL=KAT-Coder \
+    ANTHROPIC_SMALL_FAST_MODEL=KAT-Coder \
+    DISABLE_AUTOUPDATER=1 \
+    claude $@
+}
