@@ -64,3 +64,12 @@ function cckat() {
     DISABLE_AUTOUPDATER=1 \
     claude $@
 }
+
+function cckimi() {
+    ANTHROPIC_BASE_URL=https://api.kimi.com/coding/ \
+    ANTHROPIC_AUTH_TOKEN=$CC_KIMI_API_KEY \
+    ANTHROPIC_MODEL=kimi-for-coding \
+    ANTHROPIC_SMALL_FAST_MODEL=kimi-for-coding \
+    DISABLE_AUTOUPDATER=1 \
+    claude $@
+}
