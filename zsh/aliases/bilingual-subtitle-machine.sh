@@ -83,3 +83,71 @@ lsb() {
     return 1
   fi
 }
+
+cleanbili() {
+  local target_dir="/Volumes/Fassssst/biliV5"
+  local size_limit="+5M"  # 5MB size limit
+  local time_limit="7d"   # 7 days
+
+  if [[ ! -d "$target_dir" ]]; then
+    echo "Error: $target_dir does not exist or is not accessible"
+    return 1
+  fi
+
+  echo "Scanning for files larger than 2MB in subdirectories older than 7 days..."
+  echo
+
+  # Get subdirectories that are older than 7 days
+  local old_dirs=$(fd . "$target_dir" --min-depth 1 --max-depth 1 --type d --older "$time_limit")
+
+  if [[ -z "$old_dirs" ]]; then
+    echo "No subdirectories older than 7 days found."
+    return 0
+  fi
+
+  echo "Found old subdirectories:"
+  echo "$old_dirs" | while IFS= read -r dir; do
+    local dir_age=$(stat -f "%Sm" -t "%Y-%m-%d %H:%M" "$dir")
+    echo "  $dir (modified: $dir_age)"
+  done
+  echo
+
+  # Find large files only in old directories
+  local large_files=""
+  while IFS= read -r dir; do
+    local dir_files=$(fd . "$dir" --type f --size $size_limit)
+    if [[ -n "$dir_files" ]]; then
+      large_files+="${dir_files}\n"
+    fi
+  done <<< "$(echo "$old_dirs")"
+
+  large_files=$(echo -e "$large_files" | grep -v '^$')
+
+  if [[ -z "$large_files" ]]; then
+    echo "No files larger than 2MB found in old subdirectories."
+    return 0
+  fi
+
+  echo "Found the following large files in old subdirectories:"
+  echo "$large_files" | while IFS= read -r file; do
+    local size=$(du -h "$file" | cut -f1)
+    echo "  $file ($size)"
+  done
+
+  echo
+  echo -n "Do you want to delete these files? (y/N): "
+  read -r response
+
+  if [[ "$response" =~ ^[Yy]$ ]]; then
+    echo "Deleting large files..."
+    echo "$large_files" | while IFS= read -r file; do
+      if [[ -f "$file" ]]; then
+        echo "Deleting: $file"
+        rm -f "$file"
+      fi
+    done
+    echo "Cleanup completed."
+  else
+    echo "Cleanup cancelled."
+  fi
+}
