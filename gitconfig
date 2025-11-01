@@ -21,7 +21,7 @@
 	pushom = push origin main
 	pullom = pull origin main
 [core]
-	editor = vim
+	editor = micro
 	autocrlf = input
     pager = delta
 	excludesfile = ~/.dotfiles/gitignore_global

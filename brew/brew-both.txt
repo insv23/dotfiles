@@ -13,6 +13,7 @@ git-lfs
 gnu-sed
 lazydocker
 lazygit
+micro
 neovim
 somo
 unzip
