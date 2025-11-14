@@ -20,7 +20,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "open \"raycast://extensions/raycast/raycast/confetti\"; afplay ~/music/wait_input.mp3"
+            "command": "afplay ~/music/wait_input.mp3"
           }
         ]
       }
@@ -30,7 +30,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "open \"raycast://extensions/raycast/raycast/confetti\"; afplay ~/music/output_end.mp3"
+            "command": "afplay ~/music/output_end.mp3"
           }
         ]
       }
@@ -39,5 +39,6 @@
   "statusLine": {
     "type": "command",
     "command": "~/.dotfiles/claude/statusline.py"
-  }
+  },
+  "alwaysThinkingEnabled": true
 }
