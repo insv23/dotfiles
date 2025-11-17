@@ -15,6 +15,7 @@ export LC_ALL=en_US.UTF-8
 export TERM=xterm-256color
 
 # default editor
+# 比 vim/nvim 好的地方在于，不用折腾与系统剪贴板同步，micro ctrl c 就是系统剪贴板
 export EDITOR='micro'
 
 # $HOME/.local/bin 添加到 PATH

@@ -3,7 +3,11 @@ bindkey -v  # 键盘绑定模式设置为 viins 模式
 # 按下 ESC 后更快切换到命令模式
 export KEYTIMEOUT=1 # 设置为 0.1 秒(默认是 0.4 秒)
 
-# 编辑模式下, 使用 ctrl v, 使用 nvim(默认编辑器) 编辑当前命令
+# 仅在 Zsh 交互编辑时使用 vim，不修改系统层面的 EDITOR=micro
+# 因为编辑命令可能涉及到修改一个引号中路径，使用 vim 直接 ci' 就能修改
+export VISUAL='vim'
+
+# 编辑模式下, 使用 ctrl v, 使用 vim 编辑当前命令
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M viins '^v' edit-command-line
