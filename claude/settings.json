@@ -20,7 +20,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay ~/music/wait_input.mp3"
+            "command": "afplay ~/music/sound-effects/wait_input.mp3"
           }
         ]
       }
@@ -30,7 +30,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay ~/music/output_end.mp3"
+            "command": "afplay ~/music/sound-effects/output_end.mp3"
           }
         ]
       }
