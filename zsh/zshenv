@@ -15,8 +15,11 @@ export LC_ALL=en_US.UTF-8
 export TERM=xterm-256color
 
 # default editor
-# 比 vim/nvim 好的地方在于，不用折腾与系统剪贴板同步，micro ctrl c 就是系统剪贴板
-export EDITOR='micro'
+# 决定使用 vim 作为默认的编辑器
+# - nvim 太重了，而且编辑命令时，没有自动折行，导致长命令编辑体验很烂(虽然通过配置应该能自动折行，但我不想再碰 nvim 了)
+# - micro VS Code/Cursor 的终端中 ctrl q 可能已经被占用，而且 micro 编辑命令不方便
+export VISUAL='vim'   # 首选，大多数程序用这个
+export EDITOR='vim'   # 后备，少数老程序只认这个
 
 # $HOME/.local/bin 添加到 PATH
 # 存放用户自己安装的、不属于系统级的可执行文件

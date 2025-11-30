@@ -99,7 +99,7 @@ This will overwrite the local repository with the latest state from the remote r
 .
 ├── brew/           # Homebrew related configuration
 ├── kitty/          # Kitty terminal configuration
-├── nvim/           # Neovim configuration
+├── nvim/           # Neovim configuration (deprecated, no more nvim)
 ├── tmux/           # Tmux configuration
 ├── vim/            # Vim configuration
 ├── yazi/           # Yazi file manager configuration

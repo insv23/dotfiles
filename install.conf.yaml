@@ -6,8 +6,8 @@
 - clean: ["~"]
 
 - link:
-    ~/.aider.model.metadata.json: ./aider/aider.model.metadata.json
-    ~/.aider.conf.yml: ./aider/aider.conf.yml
+    # ~/.aider.model.metadata.json: ./aider/aider.model.metadata.json
+    # ~/.aider.conf.yml: ./aider/aider.conf.yml
     ~/.bashrc:
     ~/.claude/agents/: ./claude/agents
     ~/.claude/CLAUDE.md: ./claude/CLAUDE.md
@@ -16,7 +16,7 @@
     ~/.config/atuin/: ./atuin
     ~/.config/karabiner/: ./karabiner
     ~/.config/kitty/: ./kitty
-    ~/.config/nvim/: ./nvim
+    # ~/.config/nvim/: ./nvim
     ~/.config/yazi/: ./yazi
     ~/.config/zellij/: ./zellij
     ~/.gitconfig:

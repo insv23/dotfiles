@@ -1,20 +1,19 @@
-# ---- 终端命令编辑模式 ----
-bindkey -v  # 键盘绑定模式设置为 viins 模式
-# 按下 ESC 后更快切换到命令模式
-export KEYTIMEOUT=1 # 设置为 0.1 秒(默认是 0.4 秒)
+# ---- ZLE 快捷键配置 ----
+# 基于 emacs 模式，复杂编辑用 Ctrl-V 进入 vim
+#
+# 快捷键速查:
+#   ^A  行首
+#   ^E  行尾
+#   ^F  删除到上一个目录层级
+#   ^D  清空引号内容
+#   ^V  进入 vim 编辑
+# -------------------------
 
-# 仅在 Zsh 交互编辑时使用 vim，不修改系统层面的 EDITOR=micro
-# 因为编辑命令可能涉及到修改一个引号中路径，使用 vim 直接 ci' 就能修改
-export VISUAL='vim'
+bindkey -e # 使用 emacs 模式
 
-# 编辑模式下, 使用 ctrl v, 使用 vim 编辑当前命令
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey -M viins '^v' edit-command-line
-bindkey -M vicmd '^v' edit-command-line  # 添加 normal 模式下的绑定
+# ^A ^E: 行首/行尾 (emacs 内置，无需额外绑定)
 
-# 删除光标左侧的一个目录层级, 相当于 bash 的 unix-filename-rubout
-# 效果和 ctrl w 差不多，但这个删除的会多一点
+# ^F: 删除光标左侧的一个目录层级
 backward-kill-dir () {
     local WORDCHARS=${WORDCHARS/\/}
     zle backward-kill-word
@@ -23,6 +22,49 @@ backward-kill-dir () {
 zle -N backward-kill-dir
 bindkey '^f' backward-kill-dir
 
-# Emacs 键位, ctrl a/e 到开头结尾
-bindkey -M viins '^a' beginning-of-line
-bindkey -M viins '^e' end-of-line
+# ^D: 清空当前引号内的内容，保留空引号
+clear-quote-content () {
+    local quote
+    local -i open_idx=-1 close_idx=-1 i
+
+    for (( i=${#LBUFFER}-1; i>=0; i-- )); do
+        local ch=${LBUFFER:i:1}
+        if [[ $ch == '"' || $ch == "'" ]]; then
+            if (( i == 0 || ${LBUFFER:i-1:1} != '\\' )); then
+                quote=$ch
+                open_idx=$i
+                break
+            fi
+        fi
+    done
+
+    if (( open_idx == -1 )); then
+        zle beep
+        return 1
+    fi
+
+    for (( i=0; i<${#RBUFFER}; i++ )); do
+        local ch=${RBUFFER:i:1}
+        if [[ $ch == "$quote" ]]; then
+            if (( i == 0 || ${RBUFFER:i-1:1} != '\\' )); then
+                close_idx=$i
+                break
+            fi
+        fi
+    done
+
+    if (( close_idx == -1 )); then
+        zle beep
+        return 1
+    fi
+
+    LBUFFER="${LBUFFER:0:open_idx+1}"
+    RBUFFER="${RBUFFER:close_idx}"
+}
+zle -N clear-quote-content
+bindkey '^d' clear-quote-content
+
+# ^V: 进入 vim 编辑当前命令
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^v' edit-command-line

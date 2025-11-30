@@ -102,7 +102,7 @@ dfu
 .
 ├── brew/           # Homebrew 相关配置
 ├── kitty/          # kitty 终端配置
-├── nvim/           # Neovim 配置
+├── nvim/           # Neovim 配置(不再折腾 nvim)
 ├── tmux/           # Tmux 配置
 ├── vim/            # Vim 配置
 ├── yazi/           # Yazi 文件管理器配置

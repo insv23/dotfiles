@@ -12,7 +12,8 @@ alias myip='curl cip.cc'
 
 # ---- socks proxy ----
 # 需要先安装好 proxychains4
-# 并使用 `sudo -E nvim /etc/proxychains.conf` 在最后添加
+# 并使用 `sudo -E nvim /etc/proxychains.conf` 在最后添加 (-E 保留环境变量，让 nvim 使用你的配置)
+# 不再使用 nvim，使用 vim 编辑 `sudo vim /etc/proxychains.conf`
 # socks5  运行socks服务的IP socks服务端口 用户  密码
 # 中间使用 tab 或 空格 分割
 alias pc='proxychains'

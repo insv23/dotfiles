@@ -40,8 +40,6 @@ alias bro='brew info'
 alias brup='brew upgrade'
 alias brui='brew uninstall --force'
 
-# nvim
-alias nv='nvim'
 
 # Update dotfiles
 dfu() {
@@ -79,7 +77,20 @@ alias py='python'
 alias pym='py -m'
 
 # ---- caddy ----
-alias caddy_edit_format_reload='sudo -E nvim /etc/caddy/Caddyfile && sudo caddy fmt --overwrite /etc/caddy/Caddyfile && sudo systemctl reload caddy'
+# 编辑 Caddyfile -> 格式化 -> 重载服务
+# `|| return 1` 确保失败时立即停止
+caddy_edit_format_reload() {
+    local caddyfile="/etc/caddy/Caddyfile"
+    
+    # 1. 编辑配置文件
+    sudo vim "$caddyfile" || return 1
+    
+    # 2. 格式化配置文件
+    sudo caddy fmt --overwrite "$caddyfile" || return 1
+    
+    # 3. 重新加载 Caddy 服务
+    sudo systemctl reload caddy
+}
 
 # ---- Docker ----
 alias ld='lazydocker'
@@ -168,6 +179,3 @@ function sleepto() {
 # ----- Cursor -----
 # 在 crusor 中打开 command palette 搜索 `install cursor command`
 alias cr='cursor'
-
-# ===== tmuxai =====
-alias ti="tmuxai"

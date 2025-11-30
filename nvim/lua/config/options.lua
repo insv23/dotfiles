@@ -2,6 +2,7 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 vim.opt.winbar = "%=%m %f"
+vim.opt.swapfile = false  -- 禁用 swap 文件，避免异常退出后残留 .swp
 
 -- 2025-06-10 最终结论: 不要再试图同步 vim 剪贴板了，OSC52 全是天坑
 -- 正经编辑还是用 vscode
