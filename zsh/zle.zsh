@@ -28,9 +28,9 @@ clear-quote-content () {
     local -i open_idx=-1 close_idx=-1 i
 
     for (( i=${#LBUFFER}-1; i>=0; i-- )); do
-        local ch=${LBUFFER:i:1}
+        local ch=${LBUFFER:$i:1}
         if [[ $ch == '"' || $ch == "'" ]]; then
-            if (( i == 0 || ${LBUFFER:i-1:1} != '\\' )); then
+            if (( i == 0 )) || [[ ${LBUFFER:$((i-1)):1} != '\\' ]]; then
                 quote=$ch
                 open_idx=$i
                 break
@@ -44,9 +44,9 @@ clear-quote-content () {
     fi
 
     for (( i=0; i<${#RBUFFER}; i++ )); do
-        local ch=${RBUFFER:i:1}
+        local ch=${RBUFFER:$i:1}
         if [[ $ch == "$quote" ]]; then
-            if (( i == 0 || ${RBUFFER:i-1:1} != '\\' )); then
+            if (( i == 0 )) || [[ ${RBUFFER:$((i-1)):1} != '\\' ]]; then
                 close_idx=$i
                 break
             fi
@@ -58,8 +58,8 @@ clear-quote-content () {
         return 1
     fi
 
-    LBUFFER="${LBUFFER:0:open_idx+1}"
-    RBUFFER="${RBUFFER:close_idx}"
+    LBUFFER="${LBUFFER:0:$((open_idx+1))}"
+    RBUFFER="${RBUFFER:$close_idx}"
 }
 zle -N clear-quote-content
 bindkey '^d' clear-quote-content
