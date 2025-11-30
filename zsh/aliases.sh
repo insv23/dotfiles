@@ -9,6 +9,9 @@ source ~/.dotfiles/zsh/aliases/run_log.sh
 source ~/.dotfiles/zsh/aliases/tts.sh
 source ~/.dotfiles/zsh/aliases/paste.sh
 
+# 查看某个文件完整路径(参考 pwd 命令展示当前目录的完整路径)
+alias pwf='realpath'
+
 # PATH 分行显示
 alias echopath='echo $PATH | tr ":" "\n"'
 
