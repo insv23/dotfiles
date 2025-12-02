@@ -29,6 +29,7 @@ function ccglm() {
 # claude-3-5-haiku-20241022
 # claude-sonnet-4-20250514
 # claude-opus-4-20250514
+# claude-opus-4-5-20251101 (不知为何，换这个请求会失败)
 # 价格：原模型价格的3折
 function cc302() {
     ANTHROPIC_BASE_URL=https://api.302.ai/cc \

@@ -38,7 +38,11 @@
 
 ## which search mode to use
 ## possible values: prefix, fulltext, fuzzy, skim
-# search_mode = "fuzzy"
+# prefix: 搜索内容必须以你输入的字符开头
+# fulltext: 输入的字符必须完整地、连续地出现在历史命令的任意位置（即“包含”关系）
+# fuzzy: 输入的字符需要按顺序出现在命令中，但不需要连续 (默认)
+# skim: 使用 Rust 库 skim 进行匹配
+search_mode = "fulltext"
 
 ## which filter mode to use
 ## possible values: global, host, session, directory
@@ -132,7 +136,8 @@ filter_mode_shell_up_key_binding = "directory" # or global, host, directory
 
 ## Defaults to true. If enabled, upon hitting enter Atuin will immediately execute the command. Press tab to return to the shell and edit.
 # This applies for new installs. Old installs will keep the old behaviour unless configured otherwise.
-# enter_accept = true
+# 按下回车后立即执行命令(默认和 tab 效果一样，只是回显到终端，还需再 enter 一次才能执行)
+enter_accept = true
 
 
 ## Defaults to "emacs".  This specifies the keymap on the startup of `atuin
