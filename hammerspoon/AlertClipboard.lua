@@ -40,7 +40,7 @@ local Config = {
   -- 提示样式（详见 Hammerspoon alert 模块）
   -- atScreenEdge: 0=屏幕中心；1=顶部；2=底部
   alertStyle = {
-    atScreenEdge = 1,
+    atScreenEdge = 0,
     textSize     = 12, -- 更小的字体
     radius       = 8,  -- 更小的圆角
     strokeWidth  = 1,  -- 细边
