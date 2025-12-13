@@ -74,3 +74,11 @@ function cckimi() {
     DISABLE_AUTOUPDATER=1 \
     claude $@
 }
+
+function ccjk() {
+    ANTHROPIC_BASE_URL=https://api.jiekou.ai/anthropic \
+    ANTHROPIC_AUTH_TOKEN=$CC_JIEKOU_API_KEY \
+    ANTHROPIC_MODEL=claude-sonnet-4-5-20250929 \
+    DISABLE_AUTOUPDATER=1 \
+    claude $@
+}
