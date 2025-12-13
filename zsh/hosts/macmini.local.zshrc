@@ -30,3 +30,4 @@ esac
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 # llvm end
 
+alias noad='uv run ~/.dotfiles/zsh/aliases/noad.py'
