@@ -1,0 +1,74 @@
+{
+  "title": "CapsLock + Modifiers → Modifiers + Escape",
+  "rules": [
+    {
+      "description": "CapsLock with any modifier key → Modifier + Escape (press modifier first, then CapsLock)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "mandatory": ["shift"],
+              "optional": ["command", "control", "option"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "escape",
+              "modifiers": ["left_shift"]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "mandatory": ["command"],
+              "optional": ["shift", "control", "option"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "escape",
+              "modifiers": ["left_command"]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "mandatory": ["control"],
+              "optional": ["shift", "command", "option"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "escape",
+              "modifiers": ["left_control"]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "mandatory": ["option"],
+              "optional": ["shift", "command", "control"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "escape",
+              "modifiers": ["left_option"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
