@@ -87,7 +87,7 @@
 cleanbili() {
   local target_dir="/Volumes/Fassssst/biliV5"
   local size_limit="+5M"  # 5MB size limit
-  local time_limit="7d"   # 7 days
+  local time_limit="1d"   # 1 days
 
   if [[ ! -d "$target_dir" ]]; then
     echo "Error: $target_dir does not exist or is not accessible"
