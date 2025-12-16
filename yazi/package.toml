@@ -3,5 +3,25 @@ use = "MasouShizuka/projects"
 rev = "a5e33db"
 hash = "3de26efded35814ba3e55e28f1c389a4"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "19dc890"
+hash = "56fdabc96fc1f4d53c96eb884b02a5be"
+
+[[plugin.deps]]
+use = "ahkohd/eza-preview"
+rev = "7b00863"
+hash = "c538f3766b4b3bafbae3f0b7c3c3d763"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+rev = "19dc890"
+hash = "5b2eb0cc2050cec1e4de83cfa51a5b90"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "19dc890"
+hash = "27ca02f49fd236b5cc7bf03c243859fe"
+
 [flavor]
 deps = []

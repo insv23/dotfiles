@@ -1,3 +1,5 @@
+require("git"):setup()
+
 require("projects"):setup({
     save = {
         method = "yazi", -- yazi | lua

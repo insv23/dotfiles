@@ -3,82 +3,46 @@
 
 # Yazi 配置文件说明
 # =================
-# 
+#
 # Yazi 界面布局（三列模式）：
 # - 左列：父目录内容
 # - 中列：当前目录内容（焦点所在）
 # - 右列：预览区域（文件内容或子目录列表）
-# 
-# 按键操作：
-# - Enter：打开中列选中的文件/目录（默认使用第一个匹配的 opener）
-# - Shift+Enter 或 O：交互式选择 opener
-# 
-# 文件打开流程：
-# 1. 按键触发 open 命令
-# 2. 根据 [open] rules 匹配文件类型
-# 3. 使用匹配规则中 use 数组的第一个 opener
-# 4. 执行对应 [opener] 中定义的命令
+#
+# 默认 opener 行为（edit vs open）：
+# +-----------+-------------------------+---------------------------+
+# | 类型      | edit (Enter)            | open (O 选择)             |
+# +-----------+-------------------------+---------------------------+
+# | 文本文件  | $EDITOR (vim)           | macOS open 命令           |
+# | 图片文件  | 不适用                  | macOS open (预览.app)     |
+# | 目录      | $EDITOR (vim 打开目录)  | macOS open (Finder)       |
+# +-----------+-------------------------+---------------------------+
+# - edit = 终端编辑器，阻塞式
+# - open = 系统默认程序，非阻塞
 
 [mgr]
-ratio          = [ 1, 3, 3 ]  # 三列宽度比例：父目录:当前目录:预览
+ratio          = [ 0, 1, 1 ]  # 三列宽度比例：父目录:当前目录:预览
 sort_by        = "natural"
 linemode       = "size"
 
+[plugin]
+prepend_previewers = [
+    { name = "*/", run = "eza-preview" },
+]
+
+prepend_fetchers = [
+    { id = "git", name = "*", run = "git" },
+    { id = "git", name = "*/", run = "git" },
+]
+
 [opener]
-# 拆分为三组 opener：code / term_edit / smart
-# - code：仅在 macOS 上用 VS Code 打开（不阻塞）
-# - term_edit：终端编辑器（阻塞，适合 SSH）
-# - smart：按环境选择 code 或终端编辑器（自身阻塞）
-
-# 1) VS Code（macOS only）
-code = [
-    { run = 'code -r "$@"', block = false, for = "macos" },
-]
-
-# 2) 终端编辑器
-term_edit = [
-    { run = '${EDITOR:-vim} "$@"', block = true, for = "unix" },
-    { run = "%EDITOR% %*",       block = true, for = "windows" },
-]
-
-# 3) 智能选择（优先在 macOS/VSCode 场景用 VS Code，否则走终端编辑器）
-smart = [
-    { run = '''sh -c '
-        if [ "$(uname)" = "Darwin" ] \
-           && command -v code >/dev/null 2>&1 \
-           && { { [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ]; } || [ "$VSCODE_INJECTION" = "1" ]; }; then
-            # 本地 macOS 或 VS Code Remote 终端
-            code -r "$@"
-        else
-            # 普通 SSH / 非 macOS 等场景
-            ${EDITOR:-vim} "$@"
-        fi
-    ' sh "$@"''', block = true, for = "unix" },
-]
-
-# 传统编辑器配置（保持默认行为）
-edit = [
-    { run = '$EDITOR "$@"', block = true, for = "unix" },
-    { run = "%EDITOR% %*",  block = true, for = "windows" },
-]
-
-# 系统默认打开方式
-open = [
-    { run = 'xdg-open "$@"', desc = "Open", for = "linux" },
-    { run = 'open "$@"', desc = "Open", for = "macos" },
+zed = [
+    { run = 'zed "$@"', block = false, desc = "Zed", for = "macos" },
 ]
 
 [open]
-# 文件打开规则
-# use 数组中的顺序决定了优先级，第一个为默认选项
-rules = [
-    # 文本文件和代码文件 - 优先使用 smart（macOS/VSCode 优先 VS Code）
-    { mime = "text/*", use = [ "smart", "edit", "open" ] },
-    { name = "*.{js,ts,jsx,tsx,json,md,yml,yaml,toml,rs,go,py}", use = [ "smart", "edit", "open" ] },
-    
-    # 目录 - 使用 smart（在可用时走 VS Code）
-    { mime = "inode/directory", use = [ "smart", "open" ] },
-    
-    # 其他文件 - 使用系统默认程序
-    { name = "*", use = "open" },
+prepend_rules = [
+    # 文本文件和代码文件 - 可用 Zed 打开（按 O 选择）
+    { mime = "text/*", use = [ "edit", "zed", "open" ] },
+    { name = "*.{js,ts,jsx,tsx,json,md,yml,yaml,toml,rs,go,py,lua,sh}", use = [ "edit", "zed", "open" ] },
 ]
