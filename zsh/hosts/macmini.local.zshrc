@@ -2,7 +2,6 @@
 source ~/.dotfiles/zsh/hosts/macmini.local.secret.zshrc
 
 # 只在当前主机中使用的快捷别名
-source ~/.dotfiles/zsh/aliases/bilingual-subtitle-machine.sh
 
 # ----- trash -----
 export PATH="/opt/homebrew/opt/trash/bin:$PATH"

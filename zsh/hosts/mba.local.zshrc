@@ -2,7 +2,6 @@
 source ~/.dotfiles/zsh/hosts/mba.zshenv.secret
 
 # 只在当前主机中使用的快捷别名
-source ~/.dotfiles/zsh/aliases/bilingual-subtitle-machine.sh
 source ~/.dotfiles/zsh/aliases/claude-code.sh
 
 # 查看应用程序的 Bundle ID，全称是 Bundle Identifier
