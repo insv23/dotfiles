@@ -124,14 +124,12 @@ endfunction
 
 " ----- Line Numbers -----
 set nu                          " number lines
-set rnu                         " relative line numbering
-nnoremap <C-n> :call ToggleLineNumbers()<CR>          " toggle line numbers of/off 
+"set rnu                         " relative line numbering
+nnoremap <C-n> :call ToggleLineNumbers()<CR>          " toggle line numbers on/off
 function! ToggleLineNumbers()
-    if(&relativenumber == 1)
-        set norelativenumber
+    if(&number == 1)
         set nonumber
     else
-        set relativenumber
         set number
     endif
 endfunction
