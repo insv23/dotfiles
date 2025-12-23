@@ -18,7 +18,7 @@ alias cc="claude"
 function ccglm() {
     ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic \
     ANTHROPIC_AUTH_TOKEN=$GLM_API_TOKEN \
-    ANTHROPIC_MODEL=glm-4.6 \
+    ANTHROPIC_MODEL=glm-4.7 \
     DISABLE_AUTOUPDATER=1 \
     claude $@
 }
