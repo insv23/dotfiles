@@ -1,5 +1,24 @@
 # Changelog
 
+## 2025-12-28
+
+### Zsh 缩写管理增强
+- **新增插件**：
+  - `zsh-abbr`：Fish shell 风格的缩写管理工具
+  - `zsh-autosuggestions-abbreviations-strategy`：让 autosuggestions 能够建议缩写
+- **缩写配置**：
+  - 缩写文件统一管理在 `~/.dotfiles/zsh/abbreviations`
+  - 配置建议策略：优先建议缩写，然后是历史命令
+  - 缩写会在输入空格后自动展开为完整命令，便于学习和查看
+- **Alias 迁移**：
+  - 将简单的命令别名转换为 abbr（如 `pingg`、`dsize` 等）
+  - 保留修改默认行为的 alias（如 `cp -i`、`mv -i`）
+  - 保留全局别名（如 `C`、`P`）和函数
+- **新增缩写**：
+  - Git 操作：32 个常用 git 缩写（gst, gco, gcm 等）
+  - 网络工具：ping 各大 DNS、查看 IP、proxychains
+  - 文件管理：目录导航、文件大小排序等
+
 ## 2025-12-16
 
 ### Yazi 配置重构
