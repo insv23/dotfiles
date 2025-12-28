@@ -1,23 +1,5 @@
 #!/bin/sh
 
-# Ping 公共 DNS 服务器
-alias pingg='ping 8.8.8.8'      # Google
-alias pingc='ping 1.1.1.1'      # Cloudflare
-alias pinga='ping 223.5.5.5'    # 阿里
-alias pingt='ping 119.29.29.29' # 腾讯
-
-# 查看本机 IP
-# 有代理时是代理 IP, 没有代理时则是本机真实 IP
-alias myip='curl cip.cc'
-
-# ---- socks proxy ----
-# 需要先安装好 proxychains4
-# 并使用 `sudo -E nvim /etc/proxychains.conf` 在最后添加 (-E 保留环境变量，让 nvim 使用你的配置)
-# 不再使用 nvim，使用 vim 编辑 `sudo vim /etc/proxychains.conf`
-# socks5  运行socks服务的IP socks服务端口 用户  密码
-# 中间使用 tab 或 空格 分割
-alias pc='proxychains'
-
 # ---- proxy ----
 # macOS, WSL 使用 Clash/Mihomo Party
 # Linux 使用 v2ray

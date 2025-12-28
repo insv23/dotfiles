@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet # 当主题加载时保持安静，不显示警告信息 
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet # 当主题加载时保持安静，不显示警告信息
 
 source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 
@@ -17,11 +17,27 @@ source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 fpath=(~/.zsh/plugins/zsh-completions/src $fpath)
 
 
+# ---- zsh-abbr ----
+# 缩写管理工具，类似 fish shell 的 abbr
+# 设置缩写存储位置到 dotfiles 目录，便于版本控制
+# 文档: https://zsh-abbr.olets.dev/
+export ABBR_USER_ABBREVIATIONS_FILE="$HOME/.dotfiles/zsh/abbreviations"
+source ~/.zsh/plugins/zsh-abbr/zsh-abbr.zsh
+
+
 # ---- zsh-autosuggestions ----
 # 在你输入命令时，zsh-autosuggestions 会根据你的历史命令记录，在你输入的位置之后，以灰色文本显示建议的命令。
 # 演示: https://asciinema.org/a/37390
 # 使用右方向键接受整个, 可与 vi 联合使用, 逐个字母/单词的接受建议
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# ---- zsh-autosuggestions-abbreviations-strategy ----
+# 让 autosuggestions 能够建议 zsh-abbr 的缩写
+# 必须在 zsh-abbr 和 zsh-autosuggestions 之后加载
+source ~/.zsh/plugins/zsh-autosuggestions-abbreviations-strategy/zsh-autosuggestions-abbreviations-strategy.zsh
+
+# 配置建议策略：优先建议缩写，然后是历史命令
+ZSH_AUTOSUGGEST_STRATEGY=( abbreviations history )
 
 
 # ---- zsh-syntax-highlighting ----
@@ -36,7 +52,7 @@ source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # 按下 下方向键 展示所有可选
 # https://www.notion.so/zsh-53922bbbd4f74a8f961a3010f541845a?pvs=4#8723929e12c1463998b9dded920ab0b1
 # cd 的自动补全效果一般，按下 tab 就把第一个补上了... 因此更推荐使用 z 直接跳转 或 yazi
-# 2025-05-31 已弃用: 
+# 2025-05-31 已弃用:
 # 按下 down arrow key 这个操作我始终想不起来，只会用 tab, 而它直接补全了第一个，让很多软件都几乎无法使用
 # source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
@@ -50,7 +66,7 @@ source ~/.zsh/hosts/local_index.sh
 # fzf 还是用不太习惯
 # 使用参考: https://www.notion.so/fzf-b15582832ee449dbbec50c0b0481852b?pvs=4
 # `任何命令 **Tab`: 触发 fzf 的模糊查找，并将其结果作为命令的参数
-# 例如: 
+# 例如:
 # cd **Tab：会列出当前目录下的所有文件和目录。
 # vim **Tab：会列出当前目录下的所有文件。
 ## (或者 cd/vim/以及其他操纵文件的命令 ctrl t, 因为 ctrl t 是模糊查找工作目录下的所有文件和子目录，并将选择输出到标准输出。)
@@ -71,7 +87,7 @@ precmd() {
 
 
 # ---- autin ----
-# 放在 fzf 和 auto-complete 下面才能保证 上方向键 和 Ctrl r 使用 atuin 来查找历史命令 
+# 放在 fzf 和 auto-complete 下面才能保证 上方向键 和 Ctrl r 使用 atuin 来查找历史命令
 eval "$(atuin init zsh)"
 
 

@@ -1,13 +1,6 @@
-# cd folder
-alias ..='cd ..'
-alias ...='cd ../..'
-
 # 交互模式 -i 可以防止在复制过程中意外覆盖文件。
 alias cp='cp -i'
 alias mv='mv -i'
-
-# 列出当前目录下的所有文件和文件夹，并按照大小从大到小排序显示。
-alias dsize='du -sh * | sort -hr'
 
 # ---- Eza (better ls) -----
 alias ll='eza \
@@ -45,7 +38,7 @@ mkcd() {
 
 # mktc() - Make and Touch
 # Creates a file at the specified path, automatically creating any necessary parent directories.
-# 
+#
 # Usage: mktc /path/to/your/file
 #
 # Parameters:
@@ -65,4 +58,3 @@ mktc() { mkdir -p "$(dirname "$1")" && touch "$1" }
 mc() {
     mkdir "$1" && echo "$1" | pbcopy
 }
-

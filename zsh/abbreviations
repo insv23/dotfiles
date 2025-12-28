@@ -1,0 +1,49 @@
+# zsh-abbr 用户缩写文件
+#
+# 这个文件由 zsh-abbr 自动管理
+# 可以手动编辑，但 zsh-abbr 会自动格式化和排序
+#
+# 添加缩写的方式：
+#   1. 直接在这里添加 `abbr <name>=<expansion>` 格式的行
+#   2. 或使用命令：abbr add <name>=<expansion>
+#
+# 文档: https://zsh-abbr.olets.dev/
+
+# ===== Git 相关缩写 =====
+abbr gst="git status"
+abbr gco="git checkout"
+abbr gcb="git checkout -b"
+abbr gcm="git commit -m"
+abbr gca="git commit --amend"
+abbr gcane="git commit --amend --no-edit"
+abbr gaa="git add -A"
+abbr gap="git add -p"
+abbr gp="git push"
+abbr gpf="git push --force-with-lease"
+abbr gpl="git pull"
+abbr gplr="git pull --rebase"
+abbr gl="git log --oneline --graph"
+abbr gd="git diff"
+abbr gds="git diff --staged"
+abbr gb="git branch"
+abbr gbd="git branch -d"
+abbr gm="git merge"
+abbr gr="git rebase"
+abbr gri="git rebase -i"
+
+
+# ===== 目录导航 =====
+abbr ..="cd .."
+abbr ...="cd ../.."
+abbr ....="cd ../../.."
+
+# ===== 文件和目录管理 =====
+abbr dsize="du -sh * | sort -hr"
+
+# ===== 网络工具 =====
+abbr pingg="ping 8.8.8.8"
+abbr pingc="ping 1.1.1.1"
+abbr pinga="ping 223.5.5.5"
+abbr pingt="ping 119.29.29.29"
+abbr myip="curl cip.cc"
+abbr pc="proxychains"
