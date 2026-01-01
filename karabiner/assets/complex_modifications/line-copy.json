@@ -1,0 +1,25 @@
+{
+  "title": "Select line & copy on Cmd-Shift-L",
+  "rules": [
+    {
+      "description": "Cmd-Shift-L → select current line then copy",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "l",
+            "modifiers": {
+              "mandatory": ["command", "shift"],
+              "optional": ["any"]
+            }
+          },
+          "to": [
+            { "key_code": "left_arrow", "modifiers": ["command"] },
+            { "key_code": "right_arrow", "modifiers": ["shift", "command"] },
+            { "key_code": "c", "modifiers": ["command"] }
+          ]
+        }
+      ]
+    }
+  ]
+}
