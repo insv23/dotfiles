@@ -6,7 +6,9 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:bark.day.app)",
       "WebFetch(domain:docs.anthropic.com)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(echo:*)",
+      "Bash(awk:*)"
     ],
     "deny": []
   }
