@@ -21,7 +21,7 @@
 # - open = 系统默认程序，非阻塞
 
 [mgr]
-ratio          = [ 0, 1, 1 ]  # 三列宽度比例：父目录:当前目录:预览
+ratio          = [ 0, 4, 6 ]  # 三列宽度比例：父目录:当前目录:预览
 sort_by        = "natural"
 linemode       = "size"
 
