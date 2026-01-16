@@ -2,13 +2,16 @@
 """
 删除指定目录下的所有视频和音频文件
 
+在 ~/.dotfiles/zsh/aliases.sh 中添加以下别名以便全局使用:
+    alias rm_media='~/.dotfiles/zsh/aliases/rm_media.py'
+
 用法:
-    rm_media.py <目录1> [目录2] [目录3] ...
+    rm_media <目录1> [目录2] [目录3] ...
 
 示例:
-    rm_media.py /Volumes/Fassssst/biliV5
-    rm_media.py ~/Downloads /tmp/media
-    rm_media.py .
+    rm_media /Volumes/Fassssst/biliV5
+    rm_media ~/Downloads /tmp/media
+    rm_media .
 
 警告: 此脚本会直接删除文件，无确认提示，请谨慎使用！
 """
