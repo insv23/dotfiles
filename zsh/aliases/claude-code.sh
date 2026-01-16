@@ -1,16 +1,9 @@
 # # ===== Claude Code =====
-alias cc="claude"
-# alias claude="/Users/tony/.claude/local/claude"
+alias cc="claude --dangerously-skip-permissions --model sonnet"
+alias cco="claude --dangerously-skip-permissions --model opus"
 # alias cc="claude --dangerously-skip-permissions"
 # alias ccc="claude --dangerously-skip-permissions --continue"
-# alias cco="claude --dangerously-skip-permissions --model opus"
 
-# # ===== xlaude =====
-# alias xl="xlaude"
-# alias xll="xlaude list"
-# alias xlc="xlaude create"
-# alias xld="xlaude delete"
-# alias xln="xlaude new --with code"
 
 # # ===== glm4.6 接入=====
 # Claude Code 使用 brew 安装, 因此使用 DISABLE_AUTOUPDATER=1 禁止自动更新
