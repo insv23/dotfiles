@@ -16,6 +16,7 @@
     ~/.config/atuin/: ./atuin
     ~/.config/karabiner/: ./karabiner
     ~/.config/kitty/: ./kitty
+    ~/.config/lazygit/: ./lazygit
     # ~/.config/nvim/: ./nvim
     ~/.config/yazi/: ./yazi
     ~/.config/zellij/: ./zellij

@@ -1,0 +1,4 @@
+git:
+  paging:
+    colorArg: always
+    pager: /opt/homebrew/bin/delta --paging=never --no-gitconfig --dark --line-numbers
