@@ -23,6 +23,21 @@ augroup CursorLineOnlyInActiveWindow
     autocmd WinLeave * setlocal nocursorline
 augroup END
 
+" 去掉 cursorline 的下划线，只保留背景色（用 autocmd 确保在颜色方案后生效）
+augroup CursorLineStyle
+    autocmd!
+    " cterm=NONE 去掉下划线, ctermbg=236 深灰背景色, gui* 为 gvim/MacVim 设置
+    autocmd ColorScheme,VimEnter * highlight CursorLine cterm=NONE ctermbg=236 gui=NONE guibg=#303030
+    " 去掉行号区域的下划线
+    autocmd ColorScheme,VimEnter * highlight CursorLineNr term=NONE cterm=NONE
+augroup END
+
+" ===== 中文支持 =====
+set encoding=utf-8
+set fileencodings=utf-8,gbk,gb2312,gb18030
+set breakindent               " 软换行续行保持缩进
+set ambiwidth=double          " 东亚字符宽度
+
 filetype plugin indent on " enable file type detection
 set autoindent
 
@@ -121,6 +136,8 @@ function ToggleMovementByDisplayLines()
     endif
 endfunction
 
+" 默认启用按显示行移动（对中文长文本友好）
+autocmd BufReadPost * call SetMovementByDisplayLines()
 
 " ----- Line Numbers -----
 set nu                          " number lines
