@@ -65,6 +65,11 @@ set nojoinspaces                " suppress inserting two spaces between sentence
 " enable ssh cilpboard, keybinding: <leader>y
 vnoremap <leader>y :OSCYankVisual<CR>
 
+" 在 SSH 环境下，每次 yank 自动通过 OSC 52 同步到本地剪贴板
+if !empty($SSH_CONNECTION)
+    autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankRegister "' | endif
+endif
+
 nnoremap H 0
 nnoremap L $
 nnoremap <C-e> %    " 跳转到匹配的括号、括弧或引号
