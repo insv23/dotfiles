@@ -23,7 +23,7 @@
 [core]
 	editor = micro
 	autocrlf = input
-    pager = delta
+	pager = delta
 	excludesfile = ~/.dotfiles/gitignore_global
 [user]
 	name = insv
@@ -34,11 +34,18 @@
 	process = git-lfs filter-process
 	required = true
 [interactive]
-    diffFilter = delta --color-only
+	diffFilter = delta --color-only
 
 [delta]
-    navigate = true    # use n and N to move between diff sections
-    side-by-side = true
+	navigate = true
+	side-by-side = true
+	pager = less --mouse --wheel-lines=3 -R -F -X
+	line-numbers = true
+	line-fill-method = spaces
+	syntax-theme = Coldark-Dark
+	file-style = omit
+	file-decoration-style = omit
+	hunk-header-style = file line-number syntax
 
 
     # delta detects terminal colors automatically; set one of these to disable auto-detection
