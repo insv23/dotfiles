@@ -102,7 +102,7 @@ set nofoldenable             " disable folding by default
 " unbind keys
 map <C-a> <Nop>
 map <C-x> <Nop>
-nmap Q <Nop>
+nmap Q :wq<CR>
 
 " disable audible bell
 set noerrorbells visualbell t_vb=
