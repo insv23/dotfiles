@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-删除指定目录下的所有视频和音频文件
+删除指定目录下的所有视频和音频文件，以及下载残留的 .part 临时文件
 
 在 ~/.dotfiles/zsh/aliases.sh 中添加以下别名以便全局使用:
     alias rm_media='~/.dotfiles/zsh/aliases/rm_media.py'
@@ -55,7 +55,7 @@ AUDIO_EXTENSIONS = {
     ".dsf",
 }
 
-MEDIA_EXTENSIONS = VIDEO_EXTENSIONS | AUDIO_EXTENSIONS
+MEDIA_EXTENSIONS = VIDEO_EXTENSIONS | AUDIO_EXTENSIONS | {".part"}
 
 
 def remove_media_files(directories):
