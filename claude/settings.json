@@ -41,5 +41,6 @@
     "type": "command",
     "command": "~/.dotfiles/claude/statusline.py"
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "skipDangerousModePermissionPrompt": true
 }
