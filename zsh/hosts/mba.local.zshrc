@@ -44,3 +44,8 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 source <(carapace _carapace)
+
+# leetcode-cli
+eval "$(leetcode completions)"
+source ~/.dotfiles/zsh/aliases/lcd.zsh
+

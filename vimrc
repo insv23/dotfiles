@@ -1,4 +1,5 @@
 set nocompatible " not vi compatible
+let mapleader = " "
 
 " -----------------
 "  Style
@@ -61,9 +62,6 @@ set autochdir                   " automatically set current directory to directo
 set hidden                      " allow auto-hiding of edited buffers
 set history=8192                " more history
 set nojoinspaces                " suppress inserting two spaces between sentences
-
-" enable ssh cilpboard, keybinding: <leader>y
-vnoremap <leader>y :OSCYankVisual<CR>
 
 " 在 SSH 环境下，每次 yank 自动通过 OSC 52 同步到本地剪贴板
 if !empty($SSH_CONNECTION)
@@ -166,3 +164,7 @@ command -nargs=0 Sudow w !sudo tee % >/dev/null
 " nerdtree
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
+
+" LeetCode Daily
+nnoremap <Leader>t :!source ~/.dotfiles/zsh/aliases/lcd.zsh && lcd test %<CR>
+nnoremap <Leader>x :!source ~/.dotfiles/zsh/aliases/lcd.zsh && lcd exec %<CR>
