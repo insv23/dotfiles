@@ -158,6 +158,10 @@ _lcd_new_problem() {
         return 1
     fi
 
+    # 初始提交：建立 baseline，后续解法 diff 只显示真正写的代码
+    (cd "$HOME/.leetcode" && git add "$file_path" && \
+     git commit -m "init(${id}): $(basename "$file_path" .rs | sed 's/^[0-9]*\.//')")
+
     # 创建 GitHub Issue
     local issue_url
     issue_url=$(_lcd_create_issue "$id" "$title" "$diff_name")
@@ -320,6 +324,10 @@ _lcd_open_by_id() {
             echo "题目 #${id} 不存在或下载失败。"
             return 1
         fi
+
+        # 初始提交：建立 baseline，后续解法 diff 只显示真正写的代码
+        (cd "$HOME/.leetcode" && git add "$file_path" && \
+         git commit -m "init(${id}): $(basename "$file_path" .rs | sed 's/^[0-9]*\.//')")
     fi
 
     # 解析难度和标题
