@@ -1,0 +1,36 @@
+{
+  "title": "Right Command to Cmd+Fn When Alone",
+  "rules": [
+    {
+      "description": "Tap Right Command alone to send Cmd+Fn",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "right_command",
+            "modifiers": {
+              "optional": ["caps_lock"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "right_command",
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "fn",
+              "modifiers": ["left_command"]
+            }
+          ],
+          "to_if_held_down": [
+            {
+              "key_code": "right_command"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}
