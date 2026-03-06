@@ -47,5 +47,5 @@ source <(carapace _carapace)
 
 # leetcode-cli
 eval "$(leetcode completions)"
-source ~/.dotfiles/zsh/aliases/lcd.zsh
+alias lcd="uv run --project ~/.leetcode -m lcd.cli --"
 
