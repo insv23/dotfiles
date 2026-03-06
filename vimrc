@@ -166,5 +166,5 @@ nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
 
 " LeetCode Daily
-nnoremap <Leader>t :execute '!leetcode test ' . split(expand('%:t'), '\.')[0]<CR>
+nnoremap <Leader>t :update<Bar>execute '!leetcode test ' . split(expand('%:t'), '\.')[0]<CR>
 nnoremap <Leader>x :execute '!leetcode exec ' . split(expand('%:t'), '\.')[0]<CR>
