@@ -33,14 +33,30 @@ augroup CursorLineStyle
     autocmd ColorScheme,VimEnter * highlight CursorLineNr term=NONE cterm=NONE
 augroup END
 
+" Insert 模式下关闭括号匹配高亮，避免遮挡光标
+augroup MatchParenInInsert
+    autocmd!
+    autocmd InsertEnter * NoMatchParen
+    autocmd InsertLeave * DoMatchParen
+augroup END
+
 " ===== 中文支持 =====
 set encoding=utf-8
 set fileencodings=utf-8,gbk,gb2312,gb18030
 set breakindent               " 软换行续行保持缩进
-set ambiwidth=double          " 东亚字符宽度
+" set ambiwidth=double          " 注释掉：它把 ┊· 等 Unicode 字符当全角，导致 leadmultispace 报错。现代终端本身能正确处理中文宽度，不需要这个设置
 
 filetype plugin indent on " enable file type detection
 set autoindent
+
+" Insert 模式下回车的增强映射：
+"   <C-g>u    — 插入撤销断点，让每次回车可以单独用 u 撤销
+"   <CR>      — 正常换行
+"   <Space><BS> — 插入空格再删掉，骗 Vim 保留空行的自动缩进
+inoremap <CR> <C-g>u<CR><Space><BS>
+" 同理，o/O 新建行后离开再回来也保留缩进
+nnoremap o o<Space><BS>
+nnoremap O O<Space><BS>
 
 "---------------------
 " Basic editing config
@@ -50,7 +66,8 @@ set noswapfile                  " no swap file
 set shortmess+=I                " disable startup message
 set incsearch                   " incremental search (as string is being typed)
 set hls                         " highlight search
-set listchars=tab:>>,nbsp:~     " set list to see tabs and non-breakable spaces
+set list                                      " 显示不可见字符
+set listchars=tab:>>,nbsp:~,leadmultispace:┊···  " 每 4 格一条竖线，可视化缩进层级
 set lbr                         " line break
 set scrolloff=5                 " show lines above and below cursor (when possible)
 set noshowmode                  " hide mode
@@ -97,6 +114,18 @@ set nofoldenable             " disable folding by default
 " Misc configurations
 "--------------------
 
+" vimrc 快捷编辑与重载
+nnoremap <Leader>ve :e $MYVIMRC<CR>
+"   编辑完后 :w 保存（自动 reload）→ :bd 关闭 buffer 回到原文件
+"   或用 Ctrl-^ 在两个 buffer 间来回切换
+nnoremap <Leader>vr :source $MYVIMRC<CR>
+
+" 保存 vimrc 时自动重载
+augroup ReloadVimrc
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
 " unbind keys
 map <C-a> <Nop>
 map <C-x> <Nop>
@@ -117,13 +146,13 @@ nnoremap <C-l> <C-w>l
 
 " movement relative to display lines
 nnoremap <silent> <Leader>d :call ToggleMovementByDisplayLines()<CR>
-function SetMovementByDisplayLines()
+function! SetMovementByDisplayLines()
     noremap <buffer> <silent> <expr> k v:count ? 'k' : 'gk'
     noremap <buffer> <silent> <expr> j v:count ? 'j' : 'gj'
     noremap <buffer> <silent> 0 g0
     noremap <buffer> <silent> $ g$
 endfunction
-function ToggleMovementByDisplayLines()
+function! ToggleMovementByDisplayLines()
     if !exists('b:movement_by_display_lines')
         let b:movement_by_display_lines = 0
     endif
@@ -155,7 +184,7 @@ function! ToggleLineNumbers()
 endfunction
 
 " add new command 'Sudow' to sudo write cur file
-command -nargs=0 Sudow w !sudo tee % >/dev/null
+command! -nargs=0 Sudow w !sudo tee % >/dev/null
 
 "---------------------
 " Plugin configuration
