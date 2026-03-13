@@ -201,6 +201,9 @@ command! -nargs=0 Sudow w !sudo tee % >/dev/null
 " （auto-pairs 的 buffer-local 映射优先级更高，会导致 u 一次性撤销整个 Insert 会话）
 let g:AutoPairsMapSpace = 0
 
+" rust.vim
+let g:rustfmt_autosave = 1
+
 " nerdtree
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>

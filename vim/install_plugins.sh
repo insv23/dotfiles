@@ -12,6 +12,7 @@ git clone --depth=1 https://github.com/tmux-plugins/vim-tmux-focus-events.git ~/
 git clone --depth=1 https://github.com/ojroques/vim-oscyank.git ~/.vim/pack/vendor/start/vim-oscyank
 git clone --depth=1 https://github.com/tpope/vim-commentary.git ~/.vim/pack/vendor/start/vim-commentary
 git clone --depth=1 https://github.com/jiangmiao/auto-pairs.git ~/.vim/pack/vendor/start/auto-pairs
+git clone --depth=1 https://github.com/rust-lang/rust.vim.git ~/.vim/pack/vendor/start/rust.vim
 
 echo "✅ vim 插件安装完成"
 echo
