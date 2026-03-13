@@ -54,6 +54,12 @@ set autoindent
 "   <CR>      — 正常换行
 "   <Space><BS> — 插入空格再删掉，骗 Vim 保留空行的自动缩进
 inoremap <CR> <C-g>u<CR><Space><BS>
+" 让 undo 更细粒度：每输入一个词/短语就断开撤销单元
+" 这样 u 只撤销最近一小段输入，而不是整个 Insert 会话
+" 效果接近 GUI 编辑器的 Ctrl-Z 体验
+inoremap <Space> <C-g>u<Space>
+inoremap , <C-g>u,
+inoremap . <C-g>u.
 " 同理，o/O 新建行后离开再回来也保留缩进
 nnoremap o o<Space><BS>
 nnoremap O O<Space><BS>
@@ -189,6 +195,11 @@ command! -nargs=0 Sudow w !sudo tee % >/dev/null
 "---------------------
 " Plugin configuration
 "---------------------
+
+" auto-pairs
+" 禁用 auto-pairs 对 <Space> 的映射，防止它覆盖我们的 <C-g>u<Space> 撤销断点
+" （auto-pairs 的 buffer-local 映射优先级更高，会导致 u 一次性撤销整个 Insert 会话）
+let g:AutoPairsMapSpace = 0
 
 " nerdtree
 nnoremap <Leader>n :NERDTreeToggle<CR>
