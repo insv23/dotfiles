@@ -36,6 +36,7 @@
     context                 # user@hostname
     dir                     # current directory
     vcs                     # git status
+    jj_status               # jujutsu status
     # =========================[ Line #2 ]=========================
     newline                 # \n
     prompt_char             # prompt symbol

@@ -10,6 +10,10 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet # 当主题加载时保持安静，
 
 source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 
+# ---- jj-status (自定义) ----
+# 在 p10k 提示符中显示 jujutsu (jj) 仓库状态
+source ~/.zsh/custom-plugins/jj-status/jj-status.plugin.zsh
+
 
 # ---- zsh-completions ----
 # 一个补全规则的集合, 提供了各种命令、选项、文件名、目录名、变量名等的补全规则。
