@@ -1,5 +1,9 @@
 {
-  "env": {},
+  "env": {
+    "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
+    "CLAUDE_CODE_NO_FLICKER": "1",
+    "DISABLE_TELEMETRY": "1"
+  },
   "permissions": {
     "allow": [
       "Bash(cat:*)",
@@ -15,7 +19,7 @@
     "deny": [],
     "defaultMode": "plan"
   },
-  "model": "sonnet",
+  "model": "opus",
   "hooks": {
     "Notification": [
       {
@@ -40,11 +44,14 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "~/.dotfiles/claude/statusline.py"
+    "command": "bash \"$HOME/.claude/statusline.sh\""
   },
   "enabledPlugins": {
-    "frontend-design@claude-plugins-official": true
+    "frontend-design@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "showThinkingSummaries": true
 }

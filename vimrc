@@ -95,6 +95,8 @@ nnoremap H 0
 nnoremap L $
 nnoremap <C-e> %    " 跳转到匹配的括号、括弧或引号
 nnoremap yie :%y+<CR>   " 复制整个文件的内容到系统剪贴板
+nnoremap die :%d+<CR>   " 剪切整个文件的内容到系统剪贴板
+nnoremap yte VGy        " 复制从当前行到最后一行
 
 " use 4 spaces instead of tabs during formatting
 set expandtab
@@ -208,6 +210,6 @@ let g:rustfmt_autosave = 1
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
 
-" LeetCode Daily
-nnoremap <Leader>t :update<Bar>execute '!leetcode test ' . split(expand('%:t'), '\.')[0]<CR>
-nnoremap <Leader>x :execute '!leetcode exec ' . split(expand('%:t'), '\.')[0]<CR>
+" LeetCode Daily  (<Leader>l 为 LeetCode 分组前缀)
+nnoremap <Leader>lt :update<Bar>execute '!leetcode test ' . split(expand('%:t'), '\.')[0]<CR>
+nnoremap <Leader>lx :execute '!leetcode exec ' . split(expand('%:t'), '\.')[0]<CR>
