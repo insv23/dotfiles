@@ -210,6 +210,10 @@ let g:AutoPairsMapSpace = 0
 " rust.vim
 let g:rustfmt_autosave = 1
 
+" vim9-stargate — 全屏双向跳转（类似 leap.nvim）
+" 输入 s 后键入两个字符，屏幕上所有匹配位置（上下方向）显示标签，按标签直接跳转
+noremap s <Cmd>call stargate#OKvim(2)<CR>
+
 " nerdtree
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
