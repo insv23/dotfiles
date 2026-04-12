@@ -68,6 +68,10 @@ nnoremap O O<Space><BS>
 " Basic editing config
 "---------------------
 set clipboard=unnamed           " system clipboard
+" c 操作不污染系统剪贴板，删除内容送入黑洞寄存器
+nnoremap c "_c
+nnoremap C "_C
+xnoremap c "_c
 set noswapfile                  " no swap file
 set shortmess+=I                " disable startup message
 set incsearch                   " incremental search (as string is being typed)
@@ -126,12 +130,12 @@ set nofoldenable             " disable folding by default
 nnoremap <Leader>ve :e $MYVIMRC<CR>
 "   编辑完后 :w 保存（自动 reload）→ :bd 关闭 buffer 回到原文件
 "   或用 Ctrl-^ 在两个 buffer 间来回切换
-nnoremap <Leader>vr :source $MYVIMRC<CR>
+nnoremap <Leader>vr :source $MYVIMRC \| redraw \| call popup_notification('  vimrc reloaded ✓ ', #{time: 800, highlight: 'Normal', pos: 'botright', line: &lines - 1, col: &columns})<CR>
 
 " 保存 vimrc 时自动重载
 augroup ReloadVimrc
     autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC | redraw | call popup_notification('  vimrc reloaded ✓ ', #{time: 800, highlight: 'Normal', pos: 'botright', line: &lines - 1, col: &columns})
 augroup END
 
 " unbind keys
