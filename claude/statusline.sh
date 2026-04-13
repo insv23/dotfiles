@@ -27,6 +27,7 @@ if $is_light; then
     yellow='\033[38;2;170;140;0m'
     white='\033[38;2;140;140;140m'
     magenta='\033[38;2;120;70;210m'
+    pink='\033[38;2;243;139;168m'
 else
     blue='\033[38;2;0;153;255m'
     orange='\033[38;2;255;176;85m'
@@ -36,6 +37,7 @@ else
     yellow='\033[38;2;230;200;0m'
     white='\033[38;2;140;140;140m'
     magenta='\033[38;2;180;140;255m'
+    pink='\033[38;2;243;139;168m'
 fi
 dim='\033[2m'
 reset='\033[0m'
@@ -157,13 +159,13 @@ else
     pct_used=0
 fi
 
-effort="default"
-settings_path="$HOME/.claude/settings.json"
-if [ -f "$settings_path" ]; then
-    effort=$(jq -r '.effortLevel // "default"' "$settings_path" 2>/dev/null)
-fi
+# effort="default"
+# settings_path="$HOME/.claude/settings.json"
+# if [ -f "$settings_path" ]; then
+#     effort=$(jq -r '.effortLevel // "default"' "$settings_path" 2>/dev/null)
+# fi
 
-# ── LINE 1: Model │ Context % │ Directory (branch) │ Session │ Thinking ──
+# ── LINE 1: Model │ Context % │ Directory (branch) │ Thinking ──
 pct_color=$(color_for_pct "$pct_used")
 cwd=$(echo "$input" | jq -r '.cwd // ""')
 [ -z "$cwd" ] || [ "$cwd" = "null" ] && cwd=$(pwd)
@@ -195,9 +197,9 @@ if [ -n "$session_start" ] && [ "$session_start" != "null" ]; then
     fi
 fi
 
-line1="${blue}${model_name}${reset}"
+line1="${pink}${model_name}${reset}"
 line1+="${sep}"
-line1+="✍️ ${pct_color}${pct_used}%${reset}"
+line1+="🪟 ${pct_color}${pct_used}%${reset}"
 line1+="${sep}"
 line1+="${cyan}${dirname}${reset}"
 if [ -n "$git_branch" ]; then
@@ -207,32 +209,35 @@ if [ -n "$session_duration" ]; then
     line1+="${sep}"
     line1+="${dim}⏱ ${reset}${white}${session_duration}${reset}"
 fi
-line1+="${sep}"
-case "$effort" in
-    high)   line1+="${magenta}● ${effort}${reset}" ;;
-    medium) line1+="${dim}◑ ${effort}${reset}" ;;
-    low)    line1+="${dim}◔ ${effort}${reset}" ;;
-    *)      line1+="${dim}◑ ${effort}${reset}" ;;
-esac
+# line1+="${sep}"
+# case "$effort" in
+#     max)    line1+="${magenta}🧠 max${reset}" ;;
+#     high)   line1+="${magenta}🧠 high${reset}" ;;
+#     medium) line1+="${dim}🧠 medium${reset}" ;;
+#     low)    line1+="${dim}🧠 low${reset}" ;;
+#     auto)   line1+="${cyan}🧠 auto${reset}" ;;
+#     *)      line1+="${dim}🧠 medium${reset}" ;;
+# esac
 
 # ── 2x usage detection ──────────────────────────────────
+# Commented out — re-enable if needed in the future
 # 2x on weekdays outside 5–11am PT, 2x all day on weekends
-pt_day=$(TZ="America/Los_Angeles" date +%u)   # 1=Mon … 7=Sun
-pt_hour=$(TZ="America/Los_Angeles" date +%-H)
-if [ "$pt_day" -ge 6 ]; then
-    is_2x=true
-elif [ "$pt_hour" -lt 5 ] || [ "$pt_hour" -ge 11 ]; then
-    is_2x=true
-else
-    is_2x=false
-fi
-
-line1+="${sep}"
-if $is_2x; then
-    line1+="${green}2x YES${reset}"
-else
-    line1+="${dim}2x NO${reset}"
-fi
+# pt_day=$(TZ="America/Los_Angeles" date +%u)   # 1=Mon … 7=Sun
+# pt_hour=$(TZ="America/Los_Angeles" date +%-H)
+# if [ "$pt_day" -ge 6 ]; then
+#     is_2x=true
+# elif [ "$pt_hour" -lt 5 ] || [ "$pt_hour" -ge 11 ]; then
+#     is_2x=true
+# else
+#     is_2x=false
+# fi
+#
+# line1+="${sep}"
+# if $is_2x; then
+#     line1+="${green}2x YES${reset}"
+# else
+#     line1+="${dim}2x NO${reset}"
+# fi
 
 # ── OAuth token resolution ──────────────────────────────
 get_oauth_token() {
