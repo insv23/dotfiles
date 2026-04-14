@@ -82,7 +82,7 @@ set lbr                         " line break
 set scrolloff=5                 " show lines above and below cursor (when possible)
 set noshowmode                  " hide mode
 set laststatus=2
-set statusline=%{expand('%:h:t')}/%t\ %m%=%l:%c
+set statusline=%{fnamemodify(expand('%:p:h'),':t')}/%t\ %m%=%l:%c
 set backspace=indent,eol,start  " allow backspacing over everything
 set timeout timeoutlen=1000 ttimeoutlen=100 " fix slow O inserts
 set lazyredraw                  " skip redrawing screen in some cases
