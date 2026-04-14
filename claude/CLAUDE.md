@@ -1,4 +1,3 @@
-
 ## General Rules
 - When I ask you to re-read or re-check a file, actually re-read it from disk before responding. Never rely on your cached version.
 - When I ask you to make a config change or edit, actually perform the edit — don't just tell me what to change. Always use Edit/Write tools for file modifications.
@@ -19,3 +18,5 @@
 - First, paraphrase the user's request back to them to confirm alignment — ensure what you understood matches what the user actually wants.
 - Then, before making ANY file changes, explain in detail: what you plan to do, which files will be modified, and how they will be changed.
 - Wait for the user's explicit confirmation before proceeding with edits.
+
+@RTK.md
