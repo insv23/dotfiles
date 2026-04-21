@@ -112,6 +112,30 @@ iso_to_epoch() {
     return 1
 }
 
+format_remaining() {
+    local epoch="$1" style="$2"
+    local now_epoch diff
+    now_epoch=$(date +%s)
+    diff=$(( epoch - now_epoch ))
+    [ "$diff" -le 0 ] && printf "now" && return
+    case "$style" in
+        hours)
+            local h=$(( diff / 3600 ))
+            local m=$(( (diff % 3600) / 60 ))
+            if [ "$h" -gt 0 ] && [ "$m" -gt 0 ]; then printf "%dh%dm" "$h" "$m"
+            elif [ "$h" -gt 0 ]; then printf "%dh" "$h"
+            else printf "%dm" "$m"
+            fi ;;
+        days)
+            local d=$(( diff / 86400 ))
+            local h=$(( (diff % 86400) / 3600 ))
+            if [ "$d" -gt 0 ] && [ "$h" -gt 0 ]; then printf "%dd%dh" "$d" "$h"
+            elif [ "$d" -gt 0 ]; then printf "%dd" "$d"
+            else printf "%dh" "$h"
+            fi ;;
+    esac
+}
+
 format_reset_time() {
     local iso_str="$1"
     local style="$2"
@@ -334,8 +358,12 @@ if [ -n "$usage_data" ] && echo "$usage_data" | jq -e . >/dev/null 2>&1; then
     five_hour_bar=$(build_bar "$five_hour_pct" "$bar_width")
     five_hour_pct_color=$(color_for_pct "$five_hour_pct")
     five_hour_pct_fmt=$(printf "%3d" "$five_hour_pct")
+    five_hour_epoch=$(iso_to_epoch "$five_hour_reset_iso")
+    five_hour_remaining=""
+    [ -n "$five_hour_epoch" ] && five_hour_remaining=$(format_remaining "$five_hour_epoch" "hours")
 
     rate_lines+="${white}current${reset} ${five_hour_bar} ${five_hour_pct_color}${five_hour_pct_fmt}%${reset} ${dim}⟳${reset} ${white}${five_hour_reset}${reset}"
+    [ -n "$five_hour_remaining" ] && rate_lines+=" ${dim}│${reset} ${white}${five_hour_remaining}${reset}"
 
     seven_day_pct=$(echo "$usage_data" | jq -r '.seven_day.utilization // 0' | awk '{printf "%.0f", $1}')
     seven_day_reset_iso=$(echo "$usage_data" | jq -r '.seven_day.resets_at // empty')
@@ -343,8 +371,12 @@ if [ -n "$usage_data" ] && echo "$usage_data" | jq -e . >/dev/null 2>&1; then
     seven_day_bar=$(build_bar "$seven_day_pct" "$bar_width")
     seven_day_pct_color=$(color_for_pct "$seven_day_pct")
     seven_day_pct_fmt=$(printf "%3d" "$seven_day_pct")
+    seven_day_epoch=$(iso_to_epoch "$seven_day_reset_iso")
+    seven_day_remaining=""
+    [ -n "$seven_day_epoch" ] && seven_day_remaining=$(format_remaining "$seven_day_epoch" "days")
 
     rate_lines+="\n${white}weekly${reset}  ${seven_day_bar} ${seven_day_pct_color}${seven_day_pct_fmt}%${reset} ${dim}⟳${reset} ${white}${seven_day_reset}${reset}"
+    [ -n "$seven_day_remaining" ] && rate_lines+=" ${dim}│${reset} ${white}${seven_day_remaining}${reset}"
 
     extra_enabled=$(echo "$usage_data" | jq -r '.extra_usage.is_enabled // false')
     if [ "$extra_enabled" = "true" ]; then
