@@ -192,6 +192,19 @@ ssh-ck () {
 }
 
 
+# cmux ssh
+# 在 cmux 内部直接输入 ssh hostname，自动走 cmux ssh 建立持久化 workspace
+# 新开的 pane / 分屏自动都是远程 shell，无需重复连接
+# 检测依据：cmux 基于 libghostty，会注入 TERM_PROGRAM=ghostty
+# 非 cmux 环境（普通终端、脚本、CI）不受影响，仍走原生 ssh
+function ssh() {
+  if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+    cmux ssh "$@"
+  else
+    command ssh "$@"
+  fi
+}
+
 # kitty `kitten ssh`
 ## 目前我体会到的唯一优势是: 新建 Kitty window, 会是服务器的；普通 ssh 是本地的终端
 ## 但没有断开自动重连能力，所以还是更倾向使用下面的 autossh
