@@ -1,10 +1,7 @@
 # # ===== Claude Code =====
-alias cc="claude --dangerously-skip-permissions --model opusplan"
-alias ccp="claude --permission-mode plan --model opusplan"
+alias cc="claude --dangerously-skip-permissions --model sonnet"
 alias cco="claude --dangerously-skip-permissions --model opus"
 alias ccs="claude --dangerously-skip-permissions --model sonnet"
-# alias cc="claude --dangerously-skip-permissions"
-# alias ccc="claude --dangerously-skip-permissions --continue"
 
 
 # # ===== glm4.6 接入=====

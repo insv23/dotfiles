@@ -15,6 +15,7 @@
     ~/.claude/settings.json: ./claude/settings.json
     ~/.config/atuin/: ./atuin
     ~/.config/karabiner/: ./karabiner
+    ~/.config/ghostty/: ./ghostty
     ~/.config/kitty/: ./kitty
     ~/.config/lazygit/: ./lazygit
     # ~/.config/nvim/: ./nvim

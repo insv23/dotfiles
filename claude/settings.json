@@ -25,14 +25,13 @@
     "deny": [],
     "defaultMode": "plan"
   },
-  "model": "opus",
   "hooks": {
     "Notification": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "afplay ~/music/sound-effects/wait_input.mp3"
+            "command": "afplay $HOME/music/sound-effects/wait_input.mp3"
           }
         ]
       }
@@ -42,7 +41,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay ~/music/sound-effects/output_end.mp3"
+            "command": "afplay $HOME/music/sound-effects/output_end.mp3"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/rtk-rewrite.sh"
           }
         ]
       }

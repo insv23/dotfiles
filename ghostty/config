@@ -1,0 +1,36 @@
+# 与 kitty 对齐的字体设置
+# kitty 使用的是 Maple Mono NF CN 全套字族，字号 14
+font-family = Maple Mono NF CN
+font-family-bold = Maple Mono NF CN
+font-family-italic = Maple Mono NF CN
+font-family-bold-italic = Maple Mono NF CN
+font-size = 14
+
+# 保持和 kitty 一致的 OpenType 字形特性
+font-feature = cv01
+font-feature = ss02
+font-feature = ss04
+font-feature = ss05
+font-feature = zero
+
+# Ghostty / cmux 与 kitty 的渲染引擎不同
+# 开启轻微字重增强，让中文和整体观感更接近 kitty
+font-thicken = true
+font-thicken-strength = 48
+
+# 给终端内容留一点边距，左侧稍大一些，贴边感会轻很多
+window-padding-x = 8,4
+window-padding-y = 6
+
+# 把无法整除字符网格的零头像素均匀分配到四边
+window-padding-balance = true
+
+# padding 区域沿用边缘单元格背景色，视觉上更连贯
+window-padding-color = extend
+
+# split-divider-color / unfocused-split-opacity / unfocused-split-fill
+# 这三个 Ghostty 配置目前在 cmux 里不生效，是已知 bug（issue #1400 / #1658）
+# 官方还未修复，待 cmux 修复后再启用
+
+# 将 Option 键作为 Meta/Alt，以支持 alt+p 等快捷键
+macos-option-as-alt = true
