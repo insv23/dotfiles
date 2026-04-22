@@ -21,6 +21,17 @@ source ~/.zsh/custom-plugins/jj-status/jj-status.plugin.zsh
 fpath=(~/.zsh/plugins/zsh-completions/src $fpath)
 
 
+# ---- compinit ----
+# 初始化 zsh 补全系统，扫描 fpath 并注册所有补全定义，必须在修改 fpath 之后调用
+autoload -Uz compinit && compinit
+
+
+# ---- fzf-tab ----
+# 接管 zsh 原生 Tab 补全菜单，将所有补全候选通过 fzf 展示（git、brew、cd 等全部覆盖）
+# 必须在 compinit 之后、zsh-autosuggestions 之前加载
+source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
+
+
 # ---- zsh-abbr ----
 # 缩写管理工具，类似 fish shell 的 abbr
 # 设置缩写存储位置到 dotfiles 目录，便于版本控制
@@ -67,6 +78,7 @@ source ~/.zsh/aliases.sh
 
 source ~/.zsh/hosts/local_index.sh
 
+source ~/.dotfiles/zsh/zle.zsh
 # fzf 还是用不太习惯
 # 使用参考: https://www.notion.so/fzf-b15582832ee449dbbec50c0b0481852b?pvs=4
 # `任何命令 **Tab`: 触发 fzf 的模糊查找，并将其结果作为命令的参数
@@ -75,9 +87,8 @@ source ~/.zsh/hosts/local_index.sh
 # vim **Tab：会列出当前目录下的所有文件。
 ## (或者 cd/vim/以及其他操纵文件的命令 ctrl t, 因为 ctrl t 是模糊查找工作目录下的所有文件和子目录，并将选择输出到标准输出。)
 # kill **Tab: 杀死进程
-source ~/.dotfiles/zsh/fzf.zshrc
 
-source ~/.dotfiles/zsh/zle.zsh
+source ~/.dotfiles/zsh/fzf.zshrc
 
 
 # ---- kitty 设置窗口标题 ----
