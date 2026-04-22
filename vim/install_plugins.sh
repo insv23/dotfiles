@@ -16,6 +16,7 @@ git clone --depth=1 https://github.com/rust-lang/rust.vim.git ~/.vim/pack/vendor
 git clone --depth=1 https://github.com/wellle/targets.vim.git ~/.vim/pack/vendor/start/targets.vim
 git clone --depth=1 https://github.com/monkoose/vim9-stargate.git ~/.vim/pack/vendor/start/vim9-stargate
 git clone --depth=1 https://github.com/airblade/vim-gitgutter.git ~/.vim/pack/vendor/start/vim-gitgutter
+git clone --depth=1 https://github.com/liuchengxu/vim-which-key.git ~/.vim/pack/vendor/start/vim-which-key
 
 echo "✅ vim 插件安装完成"
 echo

@@ -39,6 +39,13 @@ augroup CursorLineStyle
     autocmd ColorScheme,VimEnter * highlight GitGutterAdd    ctermfg=65  guifg=#5f875f ctermbg=NONE guibg=NONE cterm=NONE gui=NONE
     autocmd ColorScheme,VimEnter * highlight GitGutterChange ctermfg=136 guifg=#87875f ctermbg=NONE guibg=NONE cterm=NONE gui=NONE
     autocmd ColorScheme,VimEnter * highlight GitGutterDelete ctermfg=131 guifg=#875f5f ctermbg=NONE guibg=NONE cterm=NONE gui=NONE
+    " vim-which-key 菜单配色：低饱和度，与暗色主题协调
+    " WhichKeyFloating 控制弹窗背景色，不设置则继承颜色方案的 Normal，容易出现紫色等突兀颜色
+    autocmd ColorScheme,VimEnter * highlight WhichKeyFloating  ctermbg=235 guibg=#262626
+    autocmd ColorScheme,VimEnter * highlight WhichKey          ctermfg=179 guifg=#d7af5f cterm=NONE gui=NONE
+    autocmd ColorScheme,VimEnter * highlight WhichKeySeperator ctermfg=243 guifg=#767676 cterm=NONE gui=NONE
+    autocmd ColorScheme,VimEnter * highlight WhichKeyGroup     ctermfg=109 guifg=#87afaf cterm=NONE gui=NONE
+    autocmd ColorScheme,VimEnter * highlight WhichKeyDesc      ctermfg=250 guifg=#bcbcbc cterm=NONE gui=NONE
 augroup END
 
 " Insert 模式下关闭括号匹配高亮，避免遮挡光标
@@ -89,13 +96,25 @@ set listchars=tab:>>,nbsp:~,leadmultispace:┊···  " 每 4 格一条竖线，
 set lbr                         " line break
 set scrolloff=5                 " show lines above and below cursor (when possible)
 set noshowmode                  " hide mode
+set showcmd                     " 右下角实时显示正在输入的按键序列，确认 leader 等前缀键是否已被接收
 set laststatus=2
 set statusline=%{fnamemodify(expand('%:p:h'),':t')}/%t\ %m%=%l:%c
 set backspace=indent,eol,start  " allow backspacing over everything
-set timeout timeoutlen=1000 ttimeoutlen=100 " fix slow O inserts
+set timeout timeoutlen=400 ttimeoutlen=100  " fix slow O inserts; timeoutlen 同时控制 vim-which-key 弹出延迟
 set lazyredraw                  " skip redrawing screen in some cases
 set autochdir                   " automatically set current directory to directory of last opened file
 set hidden                      " allow auto-hiding of edited buffers
+set autoread                    " 文件被外部程序修改时自动重新加载，不弹提示
+" autoread 本身是被动的，只有 Vim 主动触发检查（checktime）时才生效。
+" 下面的 autocmd 在三个时机触发检查：
+"   FocusGained — Vim 重新获得焦点（从其他窗口切回来）
+"   BufEnter    — 切换到另一个 buffer
+"   CursorHold  — 停止输入超过 updatetime 毫秒（当前为 100ms）
+" 三者结合，效果等同于 VS Code 的自动静默刷新
+augroup AutoReload
+    autocmd!
+    autocmd FocusGained,BufEnter,CursorHold * checktime
+augroup END
 set history=8192                " more history
 set nojoinspaces                " suppress inserting two spaces between sentences
 
@@ -110,6 +129,14 @@ nnoremap <C-e> %    " 跳转到匹配的括号、括弧或引号
 nnoremap yie :%y+<CR>   " 复制整个文件的内容到系统剪贴板
 nnoremap die :%d+<CR>   " 剪切整个文件的内容到系统剪贴板
 nnoremap yte VGy        " 复制从当前行到最后一行
+
+" 复制当前文件的完整绝对路径（从根目录起），右下角弹出通知确认
+" 同时写入两个寄存器，原因如下：
+"   @+ — 系统剪贴板寄存器，对应 Cmd+V，本地 macOS 下首选
+"   @" — Vim 无名寄存器，SSH 远程环境下系统剪贴板同步可能失败，
+"         但 @" 是 Vim 内部的，p 命令始终可用，作为保底
+" expand('%:p')：% = 当前文件，:p = 展开为完整绝对路径
+nnoremap <silent> <Leader>yp :let @+ = expand('%:p') \| let @" = expand('%:p') \| call popup_notification('  ' . expand('%:p'), #{time: 1500, highlight: 'Normal', pos: 'botright', line: &lines - 1, col: &columns})<CR>
 
 " use 4 spaces instead of tabs during formatting
 set expandtab
@@ -227,11 +254,44 @@ command! -nargs=0 Sudow w !sudo tee % >/dev/null
 " vim-gitgutter — 在行号左侧显示 git 改动标记
 " updatetime 控制停止输入后多久刷新 gutter，默认 4000ms 太慢
 set updatetime=100
-" 默认快捷键（无需额外配置）：
-"   ]c / [c         — 跳到下一个 / 上一个改动块（hunk）
+" 默认的 ]c / [c 跳转 hunk 在定制键盘上不好按，改用 <Leader>hg / <Leader>hk
+nnoremap <silent> <Leader>hj :GitGutterNextHunk<CR>
+nnoremap <silent> <Leader>hk :GitGutterPrevHunk<CR>
 "   <Leader>hp      — 预览当前 hunk 的 diff
 "   <Leader>hs      — 暂存（stage）当前 hunk
 "   <Leader>hu      — 撤销（undo）当前 hunk
+
+" vim-which-key — 按下 leader 后弹出可用快捷键菜单
+" 按下 leader（空格）后停顿 timeoutlen 毫秒，自动弹出菜单列出所有 leader 映射
+" 如果在超时前继续按键，菜单不会出现，正常执行映射
+" 注意：g:which_key_timeout 对弹出延迟无效（只控制 chord 歧义消解），
+"       真正控制弹出速度的是上方的 timeoutlen
+let g:which_key_map = {}
+call which_key#register('<Space>', "g:which_key_map")
+nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
+vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
+
+let g:which_key_map['d'] = '切换视觉行/实际行移动'
+let g:which_key_map['n'] = '文件树 开/关'
+let g:which_key_map['f'] = '文件树 定位当前文件'
+
+let g:which_key_map['v'] = { 'name': '+vimrc' }
+let g:which_key_map['v']['e'] = '编辑 vimrc'
+let g:which_key_map['v']['r'] = '重载 vimrc'
+
+let g:which_key_map['y'] = { 'name': '+yank' }
+let g:which_key_map['y']['p'] = '复制文件完整路径'
+
+let g:which_key_map['h'] = { 'name': '+git hunk' }
+let g:which_key_map['h']['j'] = '下一个 hunk'
+let g:which_key_map['h']['k'] = '上一个 hunk'
+let g:which_key_map['h']['p'] = '预览 hunk diff'
+let g:which_key_map['h']['s'] = '暂存 hunk'
+let g:which_key_map['h']['u'] = '撤销 hunk'
+
+let g:which_key_map['l'] = { 'name': '+leetcode' }
+let g:which_key_map['l']['t'] = '测试当前题目'
+let g:which_key_map['l']['x'] = '提交当前题目'
 
 " auto-pairs
 " 禁用 auto-pairs 对 <Space> 的映射，防止它覆盖我们的 <C-g>u<Space> 撤销断点

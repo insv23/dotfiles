@@ -109,6 +109,20 @@ vimrc 中已配置 `noremap s <Cmd>call stargate#OKvim(2)<CR>`，按 `s` 触发 
 
 ---
 
+## vim-which-key — Leader 键提示菜单
+
+按下 leader 键（空格）后停顿片刻，屏幕下方自动弹出菜单，列出所有以 leader 开头的快捷键及其功能描述。解决"leader 有没有被接收到"的不确定感，同时可作为快捷键速查手册。
+
+**使用方式：**
+- 按下 `<Space>` 后继续输入 → 正常执行映射，菜单不出现
+- 按下 `<Space>` 后停顿（1 秒，即 `timeoutlen`）→ 菜单弹出，展示所有可用映射
+- 菜单出现后按对应键 → 直接执行该映射
+- `<Esc>` 或 `<C-c>` → 关闭菜单
+
+vimrc 中已配置 `nnoremap <silent> <leader>` 触发 `WhichKey`，普通模式和可视模式均支持。
+
+---
+
 ## vim-gitgutter — Git 改动标记
 
 在行号左侧的 sign 列实时显示当前文件与 git HEAD 的差异，效果类似 VS Code / Zed 的彩色边栏。
