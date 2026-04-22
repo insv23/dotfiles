@@ -1,11 +1,13 @@
 gui:
-  commitAuthorShortLength: 4
-  commitAuthorLongLength: 4
+  commitAuthorShortLength: 2
+  commitAuthorLongLength: 2
   commitHashLength: 3
   shortTimeFormat: "15:04"
   timeFormat: "06.01.02"
 
 git:
+  log:
+    showGraph: never
   paging:
     colorArg: always
     pager: /opt/homebrew/bin/delta --paging=never --no-gitconfig --dark --line-numbers
