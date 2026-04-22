@@ -180,6 +180,8 @@ map <C-x> <Nop>
 " S = cc（删除整行进入 Insert），与 stargate 已重映射 s，S 失去配对意义，覆盖为保存退出
 " :x 比 :wq 更智能：仅在 buffer 有改动时才写入，不会无谓地更新文件时间戳
 nnoremap S :x<CR>
+" Visual 模式下 S 默认是 substitute（删选区进 Insert），覆盖为先退回 Normal 再保存退出
+xnoremap S <Esc>:x<CR>
 
 " disable audible bell
 set noerrorbells visualbell t_vb=
