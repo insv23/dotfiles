@@ -27,3 +27,6 @@ vim/pack/vendor/start
 *.secret
 
 .vscode/settings.json
+
+# claude code runtime directory (local only, not for version control)
+.claude/
