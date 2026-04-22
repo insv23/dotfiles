@@ -29,8 +29,16 @@ augroup CursorLineStyle
     autocmd!
     " cterm=NONE 去掉下划线, ctermbg=236 深灰背景色, gui* 为 gvim/MacVim 设置
     autocmd ColorScheme,VimEnter * highlight CursorLine cterm=NONE ctermbg=236 gui=NONE guibg=#303030
-    " 去掉行号区域的下划线
+    " 行号：低饱和度灰色，避免与语法高亮的黄色冲突
+    autocmd ColorScheme,VimEnter * highlight LineNr ctermfg=243 guifg=#767676 cterm=NONE gui=NONE
+    " 去掉当前行号的下划线
     autocmd ColorScheme,VimEnter * highlight CursorLineNr term=NONE cterm=NONE
+    " sign 列背景与编辑区保持一致，避免 gitgutter 的 gutter 显示为浅灰色
+    autocmd ColorScheme,VimEnter * highlight SignColumn ctermbg=NONE guibg=NONE
+    " gitgutter 改动标记：用低饱和度的绿/黄/红，在暗色背景上不刺眼
+    autocmd ColorScheme,VimEnter * highlight GitGutterAdd    ctermfg=65  guifg=#5f875f ctermbg=NONE guibg=NONE cterm=NONE gui=NONE
+    autocmd ColorScheme,VimEnter * highlight GitGutterChange ctermfg=136 guifg=#87875f ctermbg=NONE guibg=NONE cterm=NONE gui=NONE
+    autocmd ColorScheme,VimEnter * highlight GitGutterDelete ctermfg=131 guifg=#875f5f ctermbg=NONE guibg=NONE cterm=NONE gui=NONE
 augroup END
 
 " Insert 模式下关闭括号匹配高亮，避免遮挡光标
@@ -157,22 +165,35 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" movement relative to display lines
-nnoremap <silent> <Leader>d :call ToggleMovementByDisplayLines()<CR>
+" ----- 按视觉行移动（对中文长行友好）-----
+"
+" 问题：Vim 默认 j/k 按文件实际行跳。一行中文折成多个屏幕行时，
+"       按一下 j 会直接跳过所有折行，跳到下一个实际行首——
+"       光标"瞬移"，完全感知不到中间的视觉行。
+"
+" 方案：把 j/k/0/$ 重映射到对应的 gj/gk/g0/g$（按屏幕显示行移动）。
+"       带数字前缀时（如 5j）仍按实际行跳，保留行号跳转的精确性。
+"
+" 切换：<Leader>d 可按 buffer 临时切换回按实际行模式（需要大范围跳转时使用）。
+"
+" 注意：用 BufEnter 而非 BufReadPost 触发，确保新建的空 buffer
+"       （如直接 vim 打开不带文件名）也能立即生效。
+
 function! SetMovementByDisplayLines()
-    noremap <buffer> <silent> <expr> k v:count ? 'k' : 'gk'
     noremap <buffer> <silent> <expr> j v:count ? 'j' : 'gj'
+    noremap <buffer> <silent> <expr> k v:count ? 'k' : 'gk'
     noremap <buffer> <silent> 0 g0
     noremap <buffer> <silent> $ g$
 endfunction
+
 function! ToggleMovementByDisplayLines()
     if !exists('b:movement_by_display_lines')
         let b:movement_by_display_lines = 0
     endif
     if b:movement_by_display_lines
         let b:movement_by_display_lines = 0
-        silent! nunmap <buffer> k
         silent! nunmap <buffer> j
+        silent! nunmap <buffer> k
         silent! nunmap <buffer> 0
         silent! nunmap <buffer> $
     else
@@ -181,8 +202,8 @@ function! ToggleMovementByDisplayLines()
     endif
 endfunction
 
-" 默认启用按显示行移动（对中文长文本友好）
-autocmd BufReadPost * call SetMovementByDisplayLines()
+nnoremap <silent> <Leader>d :call ToggleMovementByDisplayLines()<CR>
+autocmd BufEnter * call SetMovementByDisplayLines()
 
 " ----- Line Numbers -----
 set nu                          " number lines
@@ -202,6 +223,15 @@ command! -nargs=0 Sudow w !sudo tee % >/dev/null
 "---------------------
 " Plugin configuration
 "---------------------
+
+" vim-gitgutter — 在行号左侧显示 git 改动标记
+" updatetime 控制停止输入后多久刷新 gutter，默认 4000ms 太慢
+set updatetime=100
+" 默认快捷键（无需额外配置）：
+"   ]c / [c         — 跳到下一个 / 上一个改动块（hunk）
+"   <Leader>hp      — 预览当前 hunk 的 diff
+"   <Leader>hs      — 暂存（stage）当前 hunk
+"   <Leader>hu      — 撤销（undo）当前 hunk
 
 " auto-pairs
 " 禁用 auto-pairs 对 <Space> 的映射，防止它覆盖我们的 <C-g>u<Space> 撤销断点

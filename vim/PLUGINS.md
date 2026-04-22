@@ -109,6 +109,28 @@ vimrc 中已配置 `noremap s <Cmd>call stargate#OKvim(2)<CR>`，按 `s` 触发 
 
 ---
 
+## vim-gitgutter — Git 改动标记
+
+在行号左侧的 sign 列实时显示当前文件与 git HEAD 的差异，效果类似 VS Code / Zed 的彩色边栏。
+
+| 标记 | 含义 |
+|------|------|
+| `+`  | 新增行 |
+| `~`  | 修改行 |
+| `-`  | 删除行（显示在相邻行旁） |
+
+| 快捷键 | 效果 |
+|--------|------|
+| `]c` | 跳到下一个改动块（hunk） |
+| `[c` | 跳到上一个改动块（hunk） |
+| `<Space>hp` | 预览当前 hunk 的 diff |
+| `<Space>hs` | 暂存（stage）当前 hunk |
+| `<Space>hu` | 撤销（undo）当前 hunk |
+
+vimrc 中已配置 `set updatetime=100`，确保停止输入后 100ms 内刷新标记（默认 4000ms 太慢）。
+
+---
+
 ## rust.vim — Rust 语言支持
 
 提供 Rust 语法高亮、文件类型检测，以及保存时自动调用 `rustfmt` 格式化代码。
