@@ -55,7 +55,7 @@ search_mode = "fulltext"
 ## which filter mode to use when atuin is invoked from a shell up-key binding
 ## the accepted values are identical to those of "filter_mode"
 ## leave unspecified to use same mode set in "filter_mode"
-filter_mode_shell_up_key_binding = "directory" # or global, host, directory
+filter_mode_shell_up_key_binding = "session" # or global, host, directory
 
 ## which search mode to use when atuin is invoked from a shell up-key binding
 ## the accepted values are identical to those of "search_mode"
@@ -177,3 +177,6 @@ enter_accept = true
 #
 # Set commands that should be totally stripped and ignored from stats
 #common_prefix = ["sudo"]
+
+[search]
+filters = ["global", "session", "directory"]
