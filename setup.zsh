@@ -17,7 +17,7 @@ steps=(
     "安装 Vim 插件"       "./vim/install_plugins.sh"
     "安装 Homebrew"       "./brew/0.install.sh"
     "安装 Homebrew 应用"  "./brew/1.brewInstallApps.sh"
-    "安装 Tmux 插件"      "./tmux/install_plugins.sh"
+    "安装 Tmux 插件"      "./tmux/install_tpm.sh"
 )
 
 n=$(( ${#steps} / 2 ))

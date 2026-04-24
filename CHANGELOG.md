@@ -6,6 +6,17 @@
 
 - **新增 CLAUDE.md**：在仓库根目录创建项目级 Claude 指令文件，要求每次改动后必须在 `CHANGELOG.md` 中追加对应条目，格式遵循现有日期/主题/要点风格
 
+### 文档与脚本修正
+
+- **`setup.zsh`**：修正 tmux 步骤引用的脚本路径（`install_plugins.sh` → `install_tpm.sh`）
+- **`README.md` / `README-en.md`**：全面校对并同步为与代码库一致的状态
+  - 移除已废弃的 Neovim/LazyVim 功能描述
+  - 安装步骤改为使用 `./setup.zsh` 交互式向导
+  - 更新目录结构（新增 `bash/`、`git/` 等，移除 `nvim/`）
+  - 修正终端工具描述（eza/bat/zoxide/fd 均非命令替换别名）
+  - 修正 `dfu` 说明（快进同步，非强制覆盖）
+  - 英文版：修复语言切换链接、补充缺失的 `su` 步骤与手动安装指引、修正示例用户名
+
 ### 根目录配置文件整理
 
 - **新增 `bash/` 目录**：将 `bashrc`、`profile`、`inputrc` 从根目录迁入

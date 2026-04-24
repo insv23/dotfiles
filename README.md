@@ -12,8 +12,7 @@
   - 🔄 通过 [direnv](https://github.com/direnv/direnv) 实现自动化环境变量管理
   - 📂 搭配 [yazi](https://github.com/sxyazi/yazi) 提供现代化文件管理体验
   - 🌳 使用 [lazygit](https://github.com/jesseduffield/lazygit) 实现优雅的 Git 操作
-  - ⚡ 基于 [lazyvim](https://github.com/LazyVim/LazyVim) 的强大 Neovim 配置
-- 🔌 告别 submodules 依赖地狱，zsh/tmux/vim 插件管理简单直观
+- 🔌 zsh 与 tmux 插件管理简单直观，无需 submodule 开销
 - 🍺 Linux(x86) 采用 [Homebrew](https://brew.sh/)，享受与 macOS 一致的包管理体验
 - 🌐 开箱即用的智能代理配置（完美支持 macOS/WSL/Linux）
 - ⚙️ 现代化终端工具链集成（eza/bat/delta/yazi 等）
@@ -61,14 +60,16 @@
    source ~/.zshrc
    ```
 
+   使用交互式向导安装插件和工具：
+
    ```bash
-   ./zsh/install_plugins.sh
-   ./vim/install_plugins.sh
-   ./brew/0.install.sh
-   ./brew/1.brewInstallApps.sh
-   (⬇️ Ubuntu 系统交互式安装 Caddy/Docker 等)
+   ./setup.zsh
+   ```
+
+   Ubuntu 用户额外运行（交互式安装 Caddy/Docker 等）：
+
+   ```bash
    sudo ./brew/2.ubuntuInstall.sh
-   ./tmux/install_tpm.sh
    ```
 
    运行完成后，注销当前用户会话并重新登录，配置将自动生效。
@@ -92,7 +93,7 @@
 dfu
 ```
 
-将会以远程仓库的最新状态覆盖本地 dotfiles 仓库
+以快进方式将远程仓库最新改动同步到本地（基于 `git pull --ff-only`）
 
 ## 配置说明
 
@@ -100,14 +101,21 @@ dfu
 
 ```
 .
-├── brew/           # Homebrew 相关配置
-├── kitty/          # kitty 终端配置
-├── nvim/           # Neovim 配置(不再折腾 nvim)
-├── tmux/           # Tmux 配置
-├── vim/            # Vim 配置
+├── atuin/          # Atuin 命令历史配置
+├── bash/           # Bash 配置（bashrc、profile、inputrc）
+├── brew/           # Homebrew 安装脚本与应用列表
+├── claude/         # Claude Code 配置（agents、commands、settings）
+├── git/            # Git 配置（gitconfig、gitignore_global）
+├── hammerspoon/    # Hammerspoon 自动化配置
+├── karabiner/      # Karabiner 键位映射配置
+├── kitty/          # Kitty 终端配置
+├── lazygit/        # Lazygit 配置
+├── tmux/           # Tmux 配置与插件
+├── vim/            # Vim 配置与插件
 ├── yazi/           # Yazi 文件管理器配置
-└── zsh/            # Zsh 配置
-    └── hosts/      # 不同主机的特定配置
+├── zellij/         # Zellij 终端复用器配置
+└── zsh/            # Zsh 配置、插件、别名
+    └── hosts/      # 主机特定配置
 ```
 
 ### 主要功能
@@ -119,11 +127,11 @@ dfu
 
 #### 终端增强
 
-- 现代化的命令行替代品
-  - `ls` → `eza`
-  - `cat` → `bat`
-  - `cd` → `zoxide`
-  - `find` → `fd`
+- 预装现代化命令行工具
+  - `eza`：增强版文件列表（通过 `ll`、`lls` 调用）
+  - `bat`：语法高亮文件查看（在 fzf 预览中使用）
+  - `zoxide`：智能目录跳转（通过 `z` 命令调用）
+  - `fd`：更快的文件查找，`delta`：更好的 diff 展示
 - Git 集成
   - 美化的差异查看器 (delta)
   - 快捷命令别名

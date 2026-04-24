@@ -1,6 +1,6 @@
 # dotfiles
 
-[简体中文](README.zh-CN.md)
+[简体中文](README.md)
 
 My dotfiles configuration, focused on providing a clean, maintainable, and cross-platform development environment.
 
@@ -14,8 +14,7 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
   - 🔄 Automated environment variable management via [direnv](https://github.com/direnv/direnv)
   - 📂 Modern file management experience with [yazi](https://github.com/sxyazi/yazi)
   - 🌳 Elegant Git operations through [lazygit](https://github.com/jesseduffield/lazygit)
-  - ⚡ Powerful Neovim setup based on [lazyvim](https://github.com/LazyVim/LazyVim)
-- 🔌 Say goodbye to submodules dependency hell with simple and intuitive zsh/tmux/vim plugin management
+- 🔌 Simple and intuitive zsh/tmux plugin management without submodule overhead
 - 🍺 Consistent package management experience with [Homebrew](https://brew.sh/) on Linux(x86) and macOS
 - 🌐 Out-of-the-box smart proxy configuration (perfect support for macOS/WSL/Linux)
 - ⚙️ Modern terminal toolchain integration (eza/bat/delta/yazi and more)
@@ -36,9 +35,14 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 - ⚠️ Homebrew cannot be installed as root on Linux
 
   ```bash
-  # Create a new user if needed( zsh must be pre-installed!!)
-  NEW_USER_NAME=tony
+  # Create a new user if needed (zsh must be pre-installed)
+  NEW_USER_NAME=alex
   sudo useradd -m -s /bin/zsh -G users,sudo $NEW_USER_NAME && sudo passwd $NEW_USER_NAME
+  ```
+
+  Switch to the new user:
+  ```bash
+  su - alex
   ```
 
 ### Quick Start
@@ -58,19 +62,23 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
    source ~/.zshrc
    ```
 
+   Use the interactive wizard to install plugins and tools:
+
    ```zsh
-   ./zsh/install_plugins.sh
-   ./vim/install_plugins.sh
-   ./brew/0.install.sh
-   ./brew/1.brewInstallApps.sh
-   ./tmux/install_tpm.sh
+   ./setup.zsh
+   ```
+
+   Ubuntu users additionally run (interactive install of Caddy/Docker etc.):
+
+   ```zsh
    sudo ./brew/2.ubuntuInstall.sh
    ```
 
    After installation, log out of your current user session and log back in for the configuration to take effect automatically.
 
+3. For software that requires manual installation, refer to the [Manual Installation Guide](./brew/Manual-install.md).
 
-3. Host-specific Configuration
+4. Host-specific Configuration
 
    The system will automatically create a configuration file based on your hostname, for example: `~/.dotfiles/zsh/hosts/macmini.local.zshrc`
 
@@ -89,7 +97,7 @@ Execute from **any directory**:
 dfu
 ```
 
-This will overwrite the local repository with the latest state from the remote repository.
+This fast-forward syncs the latest remote changes to your local repo (uses `git pull --ff-only`).
 
 ## Configuration Details
 
@@ -97,14 +105,21 @@ This will overwrite the local repository with the latest state from the remote r
 
 ```
 .
-├── brew/           # Homebrew related configuration
-├── kitty/          # Kitty terminal configuration
-├── nvim/           # Neovim configuration (deprecated, no more nvim)
-├── tmux/           # Tmux configuration
-├── vim/            # Vim configuration
-├── yazi/           # Yazi file manager configuration
-└── zsh/            # Zsh configuration
-    └── hosts/      # Host-specific configurations
+├── atuin/          # Atuin shell history config
+├── bash/           # Bash config (bashrc, profile, inputrc)
+├── brew/           # Homebrew install scripts and app lists
+├── claude/         # Claude Code config (agents, commands, settings)
+├── git/            # Git config (gitconfig, gitignore_global)
+├── hammerspoon/    # Hammerspoon automation config
+├── karabiner/      # Karabiner key remapping config
+├── kitty/          # Kitty terminal config
+├── lazygit/        # Lazygit config
+├── tmux/           # Tmux config and plugins
+├── vim/            # Vim config and plugins
+├── yazi/           # Yazi file manager config
+├── zellij/         # Zellij terminal multiplexer config
+└── zsh/            # Zsh config, plugins, aliases
+    └── hosts/      # Per-host configuration files
 ```
 
 ### Main Features
@@ -116,11 +131,11 @@ This will overwrite the local repository with the latest state from the remote r
 
 #### Terminal Enhancements
 
-- Modern command-line alternatives
-  - `ls` → `eza`
-  - `cat` → `bat`
-  - `cd` → `zoxide`
-  - `find` → `fd`
+- Modern CLI tools available
+  - `eza`: enhanced file listing (via `ll` and `lls` aliases)
+  - `bat`: syntax-highlighted file viewer (used in fzf previews)
+  - `zoxide`: smarter directory jumping (via the `z` command)
+  - `fd`: faster file search, `delta`: better diff output
 - Git integration
   - Beautiful diff viewer (delta)
   - Command aliases
