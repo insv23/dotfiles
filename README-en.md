@@ -117,7 +117,6 @@ This fast-forward syncs the latest remote changes to your local repo (uses `git 
 ├── tmux/           # Tmux config and plugins
 ├── vim/            # Vim config and plugins
 ├── yazi/           # Yazi file manager config
-├── zellij/         # Zellij terminal multiplexer config
 └── zsh/            # Zsh config, plugins, aliases
     └── hosts/      # Per-host configuration files
 ```

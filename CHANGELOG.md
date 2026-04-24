@@ -28,8 +28,8 @@
 ### 废弃配置归档
 
 - **新增 `.deprecated/` 目录**：将不再使用的配置统一归档至此
-- **迁移目录**：`aider`、`ghostty`、`keyboard`、`kaku`、`nvim` 均移入 `.deprecated/`
-- **清理 `install.conf.yaml`**：移除 `ghostty` 的活跃链接条目，删除 `aider`、`nvim` 的注释残留行
+- **迁移目录**：`aider`、`ghostty`、`keyboard`、`kaku`、`nvim`、`zellij` 均移入 `.deprecated/`
+- **清理 `install.conf.yaml`**：移除 `ghostty`、`zellij` 的活跃链接条目，删除 `aider`、`nvim` 的注释残留行
 
 ## 2025-12-28
 

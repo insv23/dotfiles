@@ -113,7 +113,6 @@ dfu
 ├── tmux/           # Tmux 配置与插件
 ├── vim/            # Vim 配置与插件
 ├── yazi/           # Yazi 文件管理器配置
-├── zellij/         # Zellij 终端复用器配置
 └── zsh/            # Zsh 配置、插件、别名
     └── hosts/      # 主机特定配置
 ```

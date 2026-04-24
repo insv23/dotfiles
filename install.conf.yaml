@@ -16,7 +16,6 @@
     ~/.config/kitty/: ./kitty
     ~/.config/lazygit/: ./lazygit
     ~/.config/yazi/: ./yazi
-    ~/.config/zellij/: ./zellij
     ~/.gitconfig: ./git/gitconfig
     ~/.hammerspoon:
     ~/.inputrc: ./bash/inputrc
