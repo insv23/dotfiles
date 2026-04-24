@@ -6,7 +6,7 @@
 - clean: ["~"]
 
 - link:
-    ~/.bashrc:
+    ~/.bashrc: ./bash/bashrc
     ~/.claude/agents/: ./claude/agents
     ~/.claude/CLAUDE.md: ./claude/CLAUDE.md
     ~/.claude/commands/: ./claude/commands
@@ -17,18 +17,18 @@
     ~/.config/lazygit/: ./lazygit
     ~/.config/yazi/: ./yazi
     ~/.config/zellij/: ./zellij
-    ~/.gitconfig:
+    ~/.gitconfig: ./git/gitconfig
     ~/.hammerspoon:
-    ~/.inputrc:
-    ~/.profile:
-    ~/.p10k.zsh:
+    ~/.inputrc: ./bash/inputrc
+    ~/.profile: ./bash/profile
+    ~/.p10k.zsh: ./zsh/p10k.zsh
     ~/.tmux:
-    ~/.tmux.conf:
+    ~/.tmux.conf: ./tmux/tmux.conf
     ~/.vim:
-    ~/.vimrc:
+    ~/.vimrc: ./vim/vimrc
     ~/.zsh:
     ~/.zshenv: ./zsh/zshenv
-    ~/.zshrc:
+    ~/.zshrc: ./zsh/zshrc
 
 - shell:
     - touch ~/.hushlogin

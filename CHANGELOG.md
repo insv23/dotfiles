@@ -6,6 +6,14 @@
 
 - **新增 CLAUDE.md**：在仓库根目录创建项目级 Claude 指令文件，要求每次改动后必须在 `CHANGELOG.md` 中追加对应条目，格式遵循现有日期/主题/要点风格
 
+### 根目录配置文件整理
+
+- **新增 `bash/` 目录**：将 `bashrc`、`profile`、`inputrc` 从根目录迁入
+- **新增 `git/` 目录**：将 `gitconfig`、`gitignore_global` 从根目录迁入
+- **归位现有子目录**：`tmux.conf` → `tmux/`，`vimrc` → `vim/`，`zshrc` + `p10k.zsh` → `zsh/`
+- **更新 `install.conf.yaml`**：所有隐式链接条目改为显式路径，指向各自新位置
+- **更新 `gitconfig`**：`excludesfile` 路径同步修正为 `~/.dotfiles/git/gitignore_global`
+
 ### 废弃配置归档
 
 - **新增 `.deprecated/` 目录**：将不再使用的配置统一归档至此
