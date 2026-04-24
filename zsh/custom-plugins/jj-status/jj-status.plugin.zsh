@@ -1,3 +1,4 @@
+# 自定义插件：在提示符中显示 jj (Jujutsu VCS) 的仓库状态
 # jj-status: 在 powerlevel10k 提示符中显示 jujutsu 仓库状态
 # 自定义 p10k segment，不依赖外部插件
 #

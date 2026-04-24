@@ -1,4 +1,5 @@
 #!/bin/sh
+# 初始化脚本：检查登录 shell 是否为 zsh，若不是则通过 chsh 切换
 
 # ----- bash to zsh -----
 current_shell=`which "$SHELL"`

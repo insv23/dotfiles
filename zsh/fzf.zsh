@@ -1,3 +1,4 @@
+# fzf 配置：键位绑定、补全、预览效果及 fzf-git 插件集成
 # ---- FZF -----
 
 # Set up fzf key bindings and fuzzy completion

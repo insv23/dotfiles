@@ -1,4 +1,5 @@
 #!/bin/sh
+# 网络工具：代理开关（pxyon/pxyoff）及网络诊断命令
 
 # ---- proxy ----
 # macOS, WSL 使用 Clash/Mihomo Party

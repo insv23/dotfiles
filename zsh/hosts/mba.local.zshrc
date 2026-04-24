@@ -1,8 +1,9 @@
+# MacBook Air 专属配置
 # 一些不该暴露到 key, 例如 ai api key
 source ~/.dotfiles/zsh/hosts/mba.zshenv.secret
 
 # 只在当前主机中使用的快捷别名
-source ~/.dotfiles/zsh/aliases/claude-code.sh
+source ~/.dotfiles/zsh/aliases/claude.zsh
 
 # 查看应用程序的 Bundle ID，全称是 Bundle Identifier
 id() {

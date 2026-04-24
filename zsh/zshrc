@@ -1,3 +1,4 @@
+# 主配置文件：加载插件、主题、工具配置及别名模块
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -88,7 +89,7 @@ source ~/.dotfiles/zsh/zle.zsh
 ## (或者 cd/vim/以及其他操纵文件的命令 ctrl t, 因为 ctrl t 是模糊查找工作目录下的所有文件和子目录，并将选择输出到标准输出。)
 # kill **Tab: 杀死进程
 
-source ~/.dotfiles/zsh/fzf.zshrc
+source ~/.dotfiles/zsh/fzf.zsh
 
 
 # ---- kitty 设置窗口标题 ----
@@ -116,7 +117,7 @@ eval "$(zoxide init zsh)"
 
 
 # ---- nvm/node ---
-source ~/.dotfiles/zsh/nvm.zshrc
+source ~/.dotfiles/zsh/nvm.zsh
 
 
 # ---- uv run 自动补全----

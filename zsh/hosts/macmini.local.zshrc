@@ -1,3 +1,4 @@
+# Mac Mini 专属配置
 # Hostname: macmini
 source ~/.dotfiles/zsh/hosts/macmini.local.secret.zshrc
 
@@ -29,5 +30,3 @@ esac
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 # llvm end
 
-alias noad='uv run ~/.dotfiles/zsh/aliases/noad.py'
-alias rm_media='~/.dotfiles/zsh/aliases/rm_media.py'

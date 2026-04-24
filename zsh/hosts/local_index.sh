@@ -1,4 +1,5 @@
 #!/bin/sh
+# 主机配置分发器：根据主机名加载对应的 .local.zshrc，不存在则自动创建
 
 # 定义全局变量
 DOTFILES_ZSH_HOSTS="$HOME/.dotfiles/zsh/hosts"

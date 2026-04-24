@@ -1,4 +1,5 @@
 #!/bin/sh
+# 插件安装脚本：将所有第三方 zsh 插件 git clone 到 ~/.zsh/plugins/
 
 # 在 .gitignore 中添加 `zsh/plugins/` 将 zsh 插件全部不 track
 echo "🔄 安装 zsh 插件..."

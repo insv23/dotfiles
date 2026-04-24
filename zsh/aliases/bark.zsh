@@ -1,3 +1,4 @@
+# iOS 推送通知：通过 Bark App 在命令完成后发送通知
 # Bark 通知配置
 # 优先使用环境变量，如果没有则使用默认值（建议通过 bark_init 设置）
 BARK_KEY="${BARK_KEY:-}"
@@ -247,7 +248,7 @@ bark_init() {
   echo ""
   echo "📝 远程主机使用说明："
   echo "1. 在远程主机上也运行相同的配置："
-  echo "   • 将 bark_notify.zsh 复制到远程主机"
+  echo "   • 将 bark.zsh 复制到远程主机"
   echo "   • 在远程主机运行 bark_init 设置相同的 key"
   echo "   • 或者直接在远程主机的 ~/.envrc 中添加："
   echo "     export BARK_KEY=\"你的key\""

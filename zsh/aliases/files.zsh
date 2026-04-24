@@ -1,3 +1,4 @@
+# 文件与目录：安全的 cp/mv、基于 eza 的 ls 增强
 # 交互模式 -i 可以防止在复制过程中意外覆盖文件。
 alias cp='cp -i'
 alias mv='mv -i'

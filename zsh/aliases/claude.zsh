@@ -1,3 +1,4 @@
+# Claude Code CLI：cc/cco/ccs 等快捷命令及辅助函数
 # # ===== Claude Code =====
 alias cc="claude --dangerously-skip-permissions --model sonnet"
 alias cco="claude --dangerously-skip-permissions --model opus"

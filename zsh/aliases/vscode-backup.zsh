@@ -1,4 +1,5 @@
 #!/bin/bash
+# VS Code 备份：将扩展列表和配置文件同步保存到 dotfiles 仓库
 
 # vscode-backup - Backup VS Code configuration to dotfiles
 

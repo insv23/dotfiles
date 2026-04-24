@@ -1,3 +1,4 @@
+# 别名加载器：依次 source aliases/ 下的所有模块，并定义杂项函数
 # =============================================================================
 # aliases.sh — 全局别名与函数入口
 #
@@ -9,17 +10,17 @@
 
 # ---- 分类模块 ----
 # 各模块放在 ~/.dotfiles/zsh/aliases/ 目录下独立维护
-source ~/.dotfiles/zsh/aliases/fzf.sh          # fzf 模糊查找组合命令（fbrs、fkill、fgco 等）
-source ~/.dotfiles/zsh/aliases/network.sh       # 网络相关工具（ping、curl、端口检查等）
-source ~/.dotfiles/zsh/aliases/file_dir.sh      # 文件与目录操作
-source ~/.dotfiles/zsh/aliases/bark_notify.zsh  # Bark 推送通知（iOS 消息提醒）
-source ~/.dotfiles/zsh/aliases/ssh.sh           # SSH 快捷连接与管理
-source ~/.dotfiles/zsh/aliases/vscode-backup.sh # VS Code 配置备份
-source ~/.dotfiles/zsh/aliases/ffmpeg.sh        # ffmpeg 音视频处理快捷命令
-source ~/.dotfiles/zsh/aliases/code-remote.sh   # 远程开发连接相关
-source ~/.dotfiles/zsh/aliases/run_log.sh       # 带日志输出的命令运行工具
-source ~/.dotfiles/zsh/aliases/tts.sh           # 文字转语音（TTS）
-source ~/.dotfiles/zsh/aliases/paste.sh         # 剪贴板粘贴相关工具
+source ~/.dotfiles/zsh/aliases/fzf.zsh           # fzf 模糊查找组合命令（fbrs、fkill、fgco 等）
+source ~/.dotfiles/zsh/aliases/network.zsh       # 网络相关工具（ping、curl、端口检查等）
+source ~/.dotfiles/zsh/aliases/files.zsh         # 文件与目录操作
+source ~/.dotfiles/zsh/aliases/bark.zsh          # Bark 推送通知（iOS 消息提醒）
+source ~/.dotfiles/zsh/aliases/ssh.zsh           # SSH 快捷连接与管理
+source ~/.dotfiles/zsh/aliases/vscode-backup.zsh # VS Code 配置备份
+source ~/.dotfiles/zsh/aliases/claude.zsh        # Claude Code CLI 快捷命令
+source ~/.dotfiles/zsh/aliases/vscode-remote.zsh # 远程开发连接相关
+source ~/.dotfiles/zsh/aliases/log.zsh           # 带日志输出的命令运行工具
+source ~/.dotfiles/zsh/aliases/tts.zsh           # 文字转语音（TTS）
+source ~/.dotfiles/zsh/aliases/clipboard.zsh     # 剪贴板粘贴相关工具
 
 
 # ---- 系统工具 ----

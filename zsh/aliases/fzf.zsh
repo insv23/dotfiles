@@ -1,8 +1,9 @@
 #!/bin/zsh
+# fzf 交互函数：模糊搜索安装 Brew 包、终止进程、切换 Git 分支等
 
 # fls: 展示本文件所有 fzf 别名及其说明
 fls() {
-    grep '^# f' ~/.dotfiles/zsh/aliases/fzf.sh | sed 's/^# //' | fzf
+    grep '^# f' ~/.dotfiles/zsh/aliases/fzf.zsh | sed 's/^# //' | fzf
 }
 
 # ---- Brew ----

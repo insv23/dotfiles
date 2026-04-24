@@ -6,6 +6,18 @@
 
 - **新增 CLAUDE.md**：在仓库根目录创建项目级 Claude 指令文件，要求每次改动后必须在 `CHANGELOG.md` 中追加对应条目，格式遵循现有日期/主题/要点风格
 
+### zsh 目录整理
+
+- **删除**：`aliases/ffmpeg.sh`、`aliases/noad.py`、`aliases/rm_media.py`（不再需要）
+- **迁移**：`zsh/ssh.example.config` → 新建顶层 `ssh/config.example`，SSH 模板与 zsh 目录解耦
+- **扩展名统一**：`fzf.zshrc` → `fzf.zsh`、`nvm.zshrc` → `nvm.zsh`（与 `zle.zsh`、`p10k.zsh` 保持一致）
+- **`aliases/` 文件重命名**：统一扩展名为 `.zsh`，并优化部分文件名（`file_dir` → `files`、`bark_notify` → `bark`、`paste` → `clipboard`、`run_log` → `log`、`code-remote` → `vscode-remote`、`claude-code` → `claude`）
+- **`aliases.sh`**：更新所有 source 路径，补充原缺失的 `claude.zsh` 加载项
+
+### zsh 目录文件注释
+
+- 为 `zsh/` 目录下所有文件（含 `aliases/`、`hosts/`、`custom-plugins/`）的顶部添加中文说明注释，共 32 个文件
+
 ### 文档与脚本修正
 
 - **`setup.zsh`**：修正 tmux 步骤引用的脚本路径（`install_plugins.sh` → `install_tpm.sh`）

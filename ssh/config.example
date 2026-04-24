@@ -1,3 +1,4 @@
+# SSH 配置模板：推荐的 Host 配置示例，手动复制到 ~/.ssh/config 使用
 Host ycy
     HostName [ip or domain]
     User alex

@@ -1,3 +1,4 @@
+# VS Code 远程开发：通过 Remote-SSH 在远程服务器上打开目录
 function coder() {
   # 检查是否提供了主机名和路径
   if [ -z "$1" ] || [ -z "$2" ]; then
