@@ -6,6 +6,12 @@
 
 - **新增 CLAUDE.md**：在仓库根目录创建项目级 Claude 指令文件，要求每次改动后必须在 `CHANGELOG.md` 中追加对应条目，格式遵循现有日期/主题/要点风格
 
+### 废弃配置归档
+
+- **新增 `.deprecated/` 目录**：将不再使用的配置统一归档至此
+- **迁移目录**：`aider`、`ghostty`、`keyboard`、`kaku`、`nvim` 均移入 `.deprecated/`
+- **清理 `install.conf.yaml`**：移除 `ghostty` 的活跃链接条目，删除 `aider`、`nvim` 的注释残留行
+
 ## 2025-12-28
 
 ### Zsh 缩写管理增强
