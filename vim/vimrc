@@ -129,9 +129,12 @@ endif
 nnoremap H 0
 nnoremap L $
 nnoremap <C-e> %    " 跳转到匹配的括号、括弧或引号
-nnoremap yie :%y+<CR>   " 复制整个文件的内容到系统剪贴板
-nnoremap die :%d+<CR>   " 剪切整个文件的内容到系统剪贴板
-nnoremap cie :%d_<CR>i  " 清空整个文件并进入插入模式（送入黑洞寄存器，不污染剪贴板）
+" 复制整个文件的内容到系统剪贴板
+nnoremap yie :%y+<CR>
+" 剪切整个文件的内容到系统剪贴板
+nnoremap die :%d+<CR>
+" 清空整个文件并进入插入模式（送入黑洞寄存器，不污染剪贴板）
+nnoremap cie :%d_<CR>i
 nnoremap yte VGy        " 复制从当前行到最后一行
 
 " 复制当前文件的完整绝对路径（从根目录起），右下角弹出通知确认
