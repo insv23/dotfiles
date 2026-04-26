@@ -83,10 +83,13 @@ nnoremap O O<Space><BS>
 " Basic editing config
 "---------------------
 set clipboard=unnamed           " system clipboard
-" c 操作不污染系统剪贴板，删除内容送入黑洞寄存器
+" c/d 操作不污染系统剪贴板，删除内容送入黑洞寄存器
 nnoremap c "_c
 nnoremap C "_C
 xnoremap c "_c
+nnoremap d "_d
+nnoremap D "_D
+xnoremap d "_d
 set noswapfile                  " no swap file
 set shortmess+=I                " disable startup message
 set incsearch                   " incremental search (as string is being typed)
