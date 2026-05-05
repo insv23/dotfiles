@@ -108,8 +108,8 @@ eval "$(atuin init zsh)"
 
 
 # ---- direnv -----
+export DIRENV_LOG_FORMAT="-"    # 关闭 direnv 普通日志输出，避免新终端提示 loading ~/.envrc
 eval "$(direnv hook zsh)"
-export DIRENV_LOG_FORMAT=""     # 关闭 direnv 加载信息，使其不出现在终端中
 
 
 # ---- zoxide ----
