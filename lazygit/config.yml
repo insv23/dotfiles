@@ -4,8 +4,7 @@ gui:
   commitHashLength: 3
   shortTimeFormat: "15:04"
   timeFormat: "06.01.02"
-
 git:
-  paging:
-    colorArg: always
-    pager: /opt/homebrew/bin/delta --paging=never --no-gitconfig --dark --line-numbers
+  pagers:
+    - colorArg: always
+      pager: /opt/homebrew/bin/delta --paging=never --no-gitconfig --dark --line-numbers
