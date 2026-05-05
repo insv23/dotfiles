@@ -71,6 +71,30 @@ alias e=exit
 
 # ---- Homebrew ----
 
+brew() {
+  if [[ "${1-}" == "upgrade" ]]; then
+    shift
+    local has_named_target=0
+    local arg
+
+    for arg in "$@"; do
+      [[ "$arg" == -* ]] || {
+        has_named_target=1
+        break
+      }
+    done
+
+    if [[ "$has_named_target" -eq 0 ]]; then
+      echo "全量 brew upgrade 已禁用。请使用 brew upgrade <包名> 或 fbrup。"
+      return 1
+    fi
+
+    set -- upgrade "$@"
+  fi
+
+  command brew "$@"
+}
+
 # 搜索包（提示：fbrs 可直接在 fzf 中浏览并安装，无需分两步）
 brs() { echo "💡 试试 fbrs：fzf 交互选择 + 直接安装，一步到位"; brew search "$@"; }
 
@@ -82,8 +106,11 @@ bric() { echo "💡 试试 fbrs：fzf 同时列出 formulae 和 casks"; brew ins
 
 # 查看包信息
 alias bro='brew info'
-# 升级所有已安装的包
-alias brup='brew upgrade'
+# 定向升级入口：全量升级已禁用
+brup() {
+  echo "全量 brew upgrade 已禁用。请使用 fbrup 或 brew upgrade <包名>。"
+  return 1
+}
 # 强制卸载（不检查依赖）
 alias brui='brew uninstall --force'
 
