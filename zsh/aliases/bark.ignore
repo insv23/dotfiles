@@ -1,0 +1,16 @@
+# 一行一个命令前缀；按完整命令行前缀匹配
+ssh
+kitten
+k
+autossh
+vi
+vim
+nvim
+nv
+zja
+y
+claude
+cc
+ccc
+ti
+tmat
