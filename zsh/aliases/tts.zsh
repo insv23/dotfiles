@@ -1,97 +1,123 @@
-# 文字转语音：支持 macOS（say）与 Linux（espeak/edge-tts）
-# --------------------------------------------------
-# 文字转语音工具 (macOS 和 Linux)
+# 文字转语音工具
 # --------------------------------------------------
 
-# (ttsd) - 将文字转换为语音并【下载】到 Downloads 文件夹
-# 用法: ttsd "你要转换的文字"
-ttsd() {
-  # 检查用户是否提供了文字参数
-  if [ -z "$1" ]; then
-    echo "错误: 请提供要转换的文字。"
-    echo "用法: ttsd \"你要转换的文字\""
-    return 1
-  fi
+_tts_help() {
+  cat <<'EOF'
+用法:
+  tts '要朗读的内容'
+  tts -d '要保存成 mp3 的内容'
 
+选项:
+  -d, --download   保存音频到当前目录
+  -h, --help       显示帮助
+
+示例:
+  tts 'Codex 输出已结束!'
+  tts -d 'Codex 输出已结束!'
+EOF
+}
+
+_tts_download_audio() {
   local text_to_speak="$1"
-  local output_dir="$HOME/Downloads"
-  local output_filename="${text_to_speak}.mp3"
-  local output_path="${output_dir}/${output_filename}"
+  local output_path="$2"
   local voice="zh-CN-XiaoshuangNeural"
   local rate="0"
   local pitch="0"
   local base_url="https://libretts.is-an.org/api/tts"
 
-  echo "正在转换文字: \"${text_to_speak}\""
-  echo "准备下载到: ${output_path}"
-  
-  # 使用 curl 下载文件
-  curl -L -G \
+  curl -sS -L -G \
     -o "${output_path}" \
     --data-urlencode "t=${text_to_speak}" \
     --data-urlencode "v=${voice}" \
     --data-urlencode "r=${rate}" \
     --data-urlencode "p=${pitch}" \
     "${base_url}"
-
-  if [ $? -eq 0 ]; then
-    echo "✅ 成功！文件已保存到: ${output_path}"
-  else
-    echo "❌ 下载失败。请检查网络连接或 API 是否可用。"
-    return 1
-  fi
 }
 
+_tts_output_path() {
+  local timestamp
+  timestamp="$(date +%Y%m%d-%H%M%S)"
+  echo "${PWD}/tts-${timestamp}.mp3"
+}
 
-# (tts) - 将文字转换为语音并【直接播放】(需要 afplay, 仅限 macOS)
-# 用法: tts "你要转换的文字"
 tts() {
-  # 检查 afplay 命令是否存在
-  if ! command -v afplay &> /dev/null; then
-    echo "错误: 'afplay' 命令未找到。此功能仅适用于 macOS。"
-    echo "如需下载文件，请改用 'ttsd' 命令。"
-    return 1
-  fi
-  
-  # 检查用户是否提供了文字参数
-  if [ -z "$1" ]; then
-    echo "错误: 请提供要转换的文字。"
-    echo "用法: tts \"你要转换的文字\""
-    return 1
+  local mode="play"
+  local text_to_speak
+  local output_path
+  local temp_file
+
+  if [ "$#" -eq 0 ]; then
+    _tts_help
+    return 0
   fi
 
-  local text_to_speak="$1"
-  local voice="zh-CN-XiaoshuangNeural"
-  local rate="0"
-  local pitch="0"
-  local base_url="https://libretts.is-an.org/api/tts"
-  
-  # 创建一个临时文件来存放音频
-  # mktemp 会创建一个唯一的临时文件，并返回其路径
-  # trap 命令确保脚本退出时（无论成功失败），临时文件都会被删除
-  local temp_file=$(mktemp /tmp/tts_audio.XXXXXX.mp3)
-  trap 'rm -f "$temp_file"' EXIT
+  case "$1" in
+    -h|--help)
+      if [ "$#" -ne 1 ]; then
+        echo "错误: 帮助选项不接受额外参数。"
+        _tts_help
+        return 1
+      fi
+      _tts_help
+      return 0
+      ;;
+    -d|--download)
+      mode="download"
+      shift
+      ;;
+    -*)
+      echo "错误: 未知选项: $1"
+      _tts_help
+      return 1
+      ;;
+  esac
 
-  echo "正在转换文字并准备播放: \"${text_to_speak}\""
+  if [ "$#" -ne 1 ]; then
+    echo "错误: 请提供一个文本字符串。"
+    _tts_help
+    return 1
+  fi
 
-  # 使用 curl 下载音频到临时文件
-  # -s: 静默模式，不显示进度条
-  # -S: 在静默模式下，如果发生错误，仍然显示错误信息
-  curl -sS -L -G \
-    -o "${temp_file}" \
-    --data-urlencode "t=${text_to_speak}" \
-    --data-urlencode "v=${voice}" \
-    --data-urlencode "r=${rate}" \
-    --data-urlencode "p=${pitch}" \
-    "${base_url}"
+  text_to_speak="$1"
 
-  # 检查下载是否成功
-  if [ $? -eq 0 ] && [ -s "$temp_file" ]; then
-    # 使用 afplay 播放临时文件中的音频
+  if [ -z "$text_to_speak" ]; then
+    echo "错误: 文本不能为空。"
+    _tts_help
+    return 1
+  fi
+
+  if [ "$mode" = "download" ]; then
+    output_path="$(_tts_output_path)"
+    echo "正在转换文字: '${text_to_speak}'"
+    echo "保存到: ${output_path}"
+
+    if _tts_download_audio "$text_to_speak" "$output_path" && [ -s "$output_path" ]; then
+      echo "成功: 文件已保存到 ${output_path}"
+      return 0
+    fi
+
+    rm -f "$output_path"
+    echo "错误: 转换失败。请检查网络连接或 API 是否可用。"
+    return 1
+  fi
+
+  if ! command -v afplay >/dev/null 2>&1; then
+    echo "错误: 未找到 afplay，当前播放模式仅适用于 macOS。"
+    echo "可以使用: tts -d '要保存成 mp3 的内容'"
+    return 1
+  fi
+
+  temp_file="$(mktemp /tmp/tts-audio.XXXXXX.mp3)"
+  echo "正在转换并播放: '${text_to_speak}'"
+
+  if _tts_download_audio "$text_to_speak" "$temp_file" && [ -s "$temp_file" ]; then
     afplay "$temp_file"
-    echo "✅ 播放完成。"
-  else
-    echo "❌ 转换失败。请检查网络连接或 API 是否可用。"
-    return 1
+    rm -f "$temp_file"
+    echo "播放完成。"
+    return 0
   fi
+
+  rm -f "$temp_file"
+  echo "错误: 转换失败。请检查网络连接或 API 是否可用。"
+  return 1
 }

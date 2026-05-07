@@ -31,7 +31,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay $HOME/music/sound-effects/wait_input.mp3"
+            "command": "afplay $HOME/music/sound-effects/cc_wait_input.mp3"
           }
         ]
       }
@@ -41,7 +41,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay $HOME/music/sound-effects/output_end.mp3"
+            "command": "afplay $HOME/music/sound-effects/cc_output_end.mp3"
           }
         ]
       }
