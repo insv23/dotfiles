@@ -13,6 +13,7 @@
 source ~/.dotfiles/zsh/aliases/fzf.zsh           # fzf 模糊查找组合命令（fbrs、fkill、fgco 等）
 source ~/.dotfiles/zsh/aliases/network.zsh       # 网络相关工具（ping、curl、端口检查等）
 source ~/.dotfiles/zsh/aliases/files.zsh         # 文件与目录操作
+source ~/.dotfiles/zsh/aliases/vim.zsh           # Vim/vi 草稿工作流
 source ~/.dotfiles/zsh/aliases/bark.zsh          # Bark 推送通知（iOS 消息提醒）
 source ~/.dotfiles/zsh/aliases/ssh.zsh           # SSH 快捷连接与管理
 source ~/.dotfiles/zsh/aliases/vscode-backup.zsh # VS Code 配置备份
