@@ -274,9 +274,3 @@ function sleepto() {
     echo "等待 $sleep_seconds 秒 ($(($sleep_seconds / 3600))h $(($sleep_seconds % 3600 / 60))m $(($sleep_seconds % 60))s)"
     sleep $sleep_seconds
 }
-
-
-# ---- Cursor ----
-
-# 用 Cursor 编辑器打开文件或目录（需先在编辑器内执行 install cursor command）
-alias cr='cursor'

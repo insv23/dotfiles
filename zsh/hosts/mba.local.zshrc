@@ -50,3 +50,14 @@ source <(carapace _carapace)
 eval "$(leetcode completions)"
 alias lcd="uv run --project ~/.leetcode -m lcd.cli --"
 
+# 用 Rebased 打开文件或目录
+# 社区有人将 Jetbrains 家 git 功能单独拆出来做的一个软件
+# https://github.com/DetachHead/rebased
+# 用法:
+# rb .
+# rb README.md
+# rb --line 20 ~/.zshrc
+rb() {
+  /Applications/Rebased.app/Contents/MacOS/idea "$@"
+}
+
