@@ -52,10 +52,6 @@ source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # 必须在 zsh-abbr 和 zsh-autosuggestions 之后加载
 source ~/.zsh/plugins/zsh-autosuggestions-abbreviations-strategy/zsh-autosuggestions-abbreviations-strategy.zsh
 
-# 配置建议策略：优先建议缩写，然后是历史命令
-ZSH_AUTOSUGGEST_STRATEGY=( abbreviations history )
-
-
 # ---- zsh-syntax-highlighting ----
 # 可执行命令是 绿色的, 不可执行命令是 红色的
 # MUST be sourced at the END of the .zshrc file
@@ -105,6 +101,17 @@ precmd() {
 # ---- autin ----
 # 放在 fzf 和 auto-complete 下面才能保证 上方向键 和 Ctrl r 使用 atuin 来查找历史命令
 eval "$(atuin init zsh)"
+
+# 覆盖 atuin init 注入的 autosuggestion strategy：
+# 默认 history 策略查 zsh 原生全局历史；这里优先用 atuin 查当前目录历史，再回退到 atuin 全局历史。
+_zsh_autosuggest_strategy_atuin_cwd() {
+  suggestion=$(atuin search --cmd-only --limit 1 --search-mode prefix --cwd "$PWD" -- "$1" 2>/dev/null)
+}
+_zsh_autosuggest_strategy_atuin_global() {
+  suggestion=$(atuin search --cmd-only --limit 1 --search-mode prefix -- "$1" 2>/dev/null)
+}
+# autosuggestion 查找顺序：先查 zsh-abbr 缩写，再查当前目录 atuin 历史，然后查 atuin 全局历史，最后查 zsh 原生 history。
+ZSH_AUTOSUGGEST_STRATEGY=( abbreviations atuin_cwd atuin_global history )
 
 
 # ---- direnv -----
