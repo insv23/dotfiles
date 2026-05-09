@@ -9,7 +9,6 @@
 - 🔧 完整的终端开发环境：
   - 💻 使用 zsh + [Powerlevel10k](https://github.com/romkatv/powerlevel10k) 打造美观高效的 shell
   - 📝 集成 [atuin](https://github.com/atuinsh/atuin) 实现智能命令历史搜索与同步
-  - 🔄 通过 [direnv](https://github.com/direnv/direnv) 实现自动化环境变量管理
   - 📂 搭配 [yazi](https://github.com/sxyazi/yazi) 提供现代化文件管理体验
   - 🌳 使用 [lazygit](https://github.com/jesseduffield/lazygit) 实现优雅的 Git 操作
 - 🔌 zsh 与 tmux 插件管理简单直观，无需 submodule 开销
@@ -152,22 +151,6 @@ dfu
   pxyon > /dev/null
   ```
 
-- 如果你的机器默认开启了全局代理，但想让某些项目目录自动关闭代理，可以使用 direnv.
-
-  1. 在该目录下创建 `.envrc` 文件:
-
-  ```bash
-  source_env ~/.dotfiles/zsh/aliases.sh
-  pxyoff
-  ```
-
-  2. 允许 direnv 加载该配置:
-
-  ```bash
-  direnv allow
-  ```
-
-  这样每次进入该目录时会自动关闭代理，离开时则恢复全局代理设置。
 
 ## 常见问题
 

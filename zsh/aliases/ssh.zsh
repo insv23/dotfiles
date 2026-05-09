@@ -293,9 +293,6 @@ alias k="kitten ssh"
 #       return 1
 #     fi
     
-#     # 将密码保存到环境变量中，存储在 ~/.envrc 中
-#     echo "export ${password_var}=\"${input_password}\"" >> ~/.envrc && cd ~ && direnv allow
-    
 #     # 更新当前环境变量，这样就不用退出重进
 #     export "${password_var}=${input_password}"
     

@@ -115,11 +115,6 @@ _zsh_autosuggest_strategy_atuin_global() {
 ZSH_AUTOSUGGEST_STRATEGY=( abbreviations atuin_cwd atuin_global history )
 
 
-# ---- direnv -----
-export DIRENV_LOG_FORMAT="-"    # 关闭 direnv 普通日志输出，避免新终端提示 loading ~/.envrc
-eval "$(direnv hook zsh)"
-
-
 # ---- zoxide ----
 eval "$(zoxide init zsh)"
 

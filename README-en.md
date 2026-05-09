@@ -11,7 +11,6 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 - 🔧 Complete terminal development environment:
   - 💻 Beautiful and efficient shell with zsh + [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
   - 📝 Smart command history search and sync with [atuin](https://github.com/atuinsh/atuin)
-  - 🔄 Automated environment variable management via [direnv](https://github.com/direnv/direnv)
   - 📂 Modern file management experience with [yazi](https://github.com/sxyazi/yazi)
   - 🌳 Elegant Git operations through [lazygit](https://github.com/jesseduffield/lazygit)
 - 🔌 Simple and intuitive zsh/tmux plugin management without submodule overhead
@@ -156,22 +155,6 @@ This fast-forward syncs the latest remote changes to your local repo (uses `git 
   pxyon > /dev/null
   ```
 
-- If your machine has global proxy enabled by default but you want to automatically disable it for certain project directories, you can use direnv:
-
-  1. Create a `.envrc` file in the directory:
-
-  ```bash
-  source_env ~/.dotfiles/zsh/aliases.sh
-  pxyoff
-  ```
-
-  2. Allow direnv to load the configuration:
-
-  ```bash
-  direnv allow
-  ```
-
-  This will automatically disable the proxy when entering the directory and restore the global proxy settings when leaving.
 
 ## Common Issues
 
