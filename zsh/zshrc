@@ -111,8 +111,8 @@ _zsh_autosuggest_strategy_atuin_cwd() {
 _zsh_autosuggest_strategy_atuin_global() {
   suggestion=$(atuin search --cmd-only --limit 1 --search-mode prefix -- "$1" 2>/dev/null)
 }
-# autosuggestion 查找顺序：先查 zsh-abbr 缩写，再查当前目录 atuin 历史，然后查 atuin 全局历史，最后查 zsh 原生 history。
-ZSH_AUTOSUGGEST_STRATEGY=( abbreviations atuin_cwd atuin_global history )
+# autosuggestion 查找顺序: 当前目录 atuin 历史，atuin 全局历史，zsh 原生 history，zsh-abbr 缩写。
+ZSH_AUTOSUGGEST_STRATEGY=( atuin_cwd atuin_global history abbreviations)
 
 
 # ---- zoxide ----
