@@ -1,13 +1,13 @@
 # ZLE 配置：自定义 Zsh 行编辑器快捷键
 # ---- ZLE 快捷键配置 ----
-# 基于 emacs 模式，复杂编辑用 Ctrl-V 进入 vim
+# 基于 emacs 模式，复杂编辑用 Ctrl-G 进入 vim
 #
 # 快捷键速查:
 #   ^A  行首
 #   ^E  行尾
 #   ^F  删除到上一个目录层级
 #   ^D  清空引号内容
-#   ^V  进入 vim 编辑
+#   ^G  进入 vim 编辑
 # -------------------------
 
 bindkey -e # 使用 emacs 模式
@@ -65,7 +65,7 @@ clear-quote-content () {
 zle -N clear-quote-content
 bindkey '^d' clear-quote-content
 
-# ^V: 进入 vim 编辑当前命令
+# ^G: 进入 vim 编辑当前命令
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey '^v' edit-command-line
+bindkey '^g' edit-command-line
