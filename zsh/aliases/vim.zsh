@@ -4,5 +4,14 @@
 vv() {
   mkdir -p "$HOME/.vimdrafts"
   cd "$HOME/.vimdrafts" || return
-  vi
+  vi "$@"
+}
+
+vvls() {
+  mkdir -p "$HOME/.vimdrafts"
+  if alias ll >/dev/null 2>&1; then
+    ll "$HOME/.vimdrafts"
+  else
+    ls -la "$HOME/.vimdrafts"
+  fi
 }
