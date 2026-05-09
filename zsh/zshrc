@@ -39,6 +39,7 @@ source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
 # 文档: https://zsh-abbr.olets.dev/
 export ABBR_USER_ABBREVIATIONS_FILE="$HOME/.dotfiles/zsh/abbreviations"
 source ~/.zsh/plugins/zsh-abbr/zsh-abbr.zsh
+source ~/.dotfiles/zsh/abbr-shell-integration.zsh
 
 
 # ---- zsh-autosuggestions ----
