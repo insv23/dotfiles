@@ -128,6 +128,10 @@ endif
 
 nnoremap H 0
 nnoremap L $
+onoremap H 0
+onoremap L $
+xnoremap H 0
+xnoremap L $
 nnoremap <C-e> %    " 跳转到匹配的括号、括弧或引号
 " 复制整个文件的内容到系统剪贴板
 nnoremap yie :%y+<CR>
