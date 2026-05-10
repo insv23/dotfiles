@@ -22,6 +22,7 @@ source ~/.dotfiles/zsh/aliases/vscode-remote.zsh # 远程开发连接相关
 source ~/.dotfiles/zsh/aliases/log.zsh           # 带日志输出的命令运行工具
 source ~/.dotfiles/zsh/aliases/tts.zsh           # 文字转语音（TTS）
 source ~/.dotfiles/zsh/aliases/clipboard.zsh     # 剪贴板粘贴相关工具
+source ~/.dotfiles/zsh/aliases/codename.zsh      # 随机项目代号生成器（如 DH-09）
 
 
 # ---- 系统工具 ----
