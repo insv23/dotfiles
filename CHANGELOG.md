@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-05-14
+
+### Pi
+
+- **简化完成通知扩展**：将 `pi/extensions/notify.ts` 调整为仅在 agent 结束时发送 `Task complete` 通知并播放 `pi_output_end.mp3`，移除基于关键词的等待确认判断，避免误触发
+- **纳入全局指令管理**：新增 `pi/AGENTS.md`，并在 `install.conf.yaml` 注册 `~/.pi/agent/AGENTS.md → ./pi/AGENTS.md` symlink，让 pi 的全局上下文指令也由 dotfiles 统一管理
+- **清理重复全局指令**：删除散落在 home 目录的 `~/AGENTS.md`，统一改由 `~/.pi/agent/AGENTS.md` 提供 pi 全局上下文，避免从 home 父目录重复加载
+
+## 2026-05-13
+
+### Pi
+
+- **editorPaddingX 设为 1**：增加输入编辑器水平内边距，文字不再贴边框
+- **纳入 dotfiles 管理**：创建 `~/.dotfiles/pi/extensions/`，在 `install.conf.yaml` 注册 `~/.pi/agent/extensions/ → ./pi/extensions` symlink，后续所有 pi 扩展统一在此 git 管理
+- **启用任务完成通知扩展**：将 pi 官方 `notify.ts` 扩展安装到 `~/.pi/agent/extensions/`，agent 停止后根据末尾文本智能区分音效：检测到确认等待模式（请确认/要继续吗等）播放 `pi_wait_input.mp3`，否则播放 `pi_output_end.mp3`；同时发送终端原生通知，支持 Ghostty / iTerm2 / WezTerm / Kitty / Windows Terminal
+- **新增模型思考强度自动同步扩展**：添加 `pi/extensions/model-thinking-sync.ts`，将 `openai-codex/gpt-5.5` 自动切换为 `medium`、`deepseek/deepseek-v4-pro` 自动切换为 `high`；在启动/恢复会话和切换模型时都会重新应用，减少手动调整 thinking level
+
 ## 2026-04-26
 
 ### Vim

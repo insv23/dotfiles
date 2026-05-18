@@ -29,6 +29,8 @@
     ~/.zsh:
     ~/.zshenv: ./zsh/zshenv
     ~/.zshrc: ./zsh/zshrc
+    ~/.pi/agent/AGENTS.md: ./pi/AGENTS.md
+    ~/.pi/agent/extensions/: ./pi/extensions
 
 - shell:
     - touch ~/.hushlogin
