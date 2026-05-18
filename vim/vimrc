@@ -137,6 +137,8 @@ xnoremap L $
 nnoremap <C-e> %    " 跳转到匹配的括号、括弧或引号
 " 复制整个文件的内容到系统剪贴板
 nnoremap yie :%y+<CR>
+" 复制当前行内容，不包含行尾换行符
+nnoremap Y 0y$
 " 剪切整个文件的内容到系统剪贴板
 nnoremap die :%d+<CR>
 " 清空整个文件并进入插入模式（送入黑洞寄存器，不污染剪贴板）
@@ -171,6 +173,51 @@ if &term =~ '^screen'
 endif
 set nofoldenable             " disable folding by default
 
+function! s:FoldJsonValue() abort
+    let l:start_line = line('.')
+    let l:line_text = getline('.')
+    let l:value_col = match(l:line_text, '"timed_words"\s*:\s*\zs[\[{]')
+
+    if l:value_col >= 0
+        call cursor(l:start_line, l:value_col + 1)
+    else
+        let l:key_col = match(l:line_text, '"timed_words"\s*:')
+        if l:key_col < 0
+            return
+        endif
+
+        call cursor(l:start_line, l:key_col + 1)
+        if search('[\[{]', 'W', min([line('$'), l:start_line + 5])) == 0
+            return
+        endif
+    endif
+
+    silent! normal! zf%
+endfunction
+
+function! FoldTimedWords() abort
+    let l:view = winsaveview()
+    let l:timed_word_lines = []
+
+    setlocal foldmethod=manual
+    setlocal foldenable
+    normal! zE
+
+    for l:lnum in range(1, line('$'))
+        if getline(l:lnum) =~# '"timed_words"\s*:'
+            call add(l:timed_word_lines, l:lnum)
+        endif
+    endfor
+
+    for l:lnum in reverse(l:timed_word_lines)
+        call cursor(l:lnum, 1)
+        call s:FoldJsonValue()
+    endfor
+
+    call winrestview(l:view)
+endfunction
+command! FoldTimedWords call FoldTimedWords()
+
 "--------------------
 " Misc configurations
 "--------------------
@@ -180,6 +227,10 @@ nnoremap <Leader>ve :e $MYVIMRC<CR>
 "   编辑完后 :w 保存（自动 reload）→ :bd 关闭 buffer 回到原文件
 "   或用 Ctrl-^ 在两个 buffer 间来回切换
 nnoremap <Leader>vr :source $MYVIMRC \| redraw \| call popup_notification('  vimrc reloaded ✓ ', #{time: 800, highlight: 'Normal', pos: 'botright', line: &lines - 1, col: &columns})<CR>
+nnoremap <silent> <Leader>zt :FoldTimedWords<CR>
+nnoremap <Leader>za za
+nnoremap <Leader>zR zR
+nnoremap <Leader>zM zM
 
 " 保存 vimrc 时自动重载
 augroup ReloadVimrc
@@ -298,6 +349,12 @@ let g:which_key_map['v']['r'] = '重载 vimrc'
 
 let g:which_key_map['y'] = { 'name': '+yank' }
 let g:which_key_map['y']['p'] = '复制文件完整路径'
+
+let g:which_key_map['z'] = { 'name': '+fold' }
+let g:which_key_map['z']['t'] = '折叠 JSON timed_words'
+let g:which_key_map['z']['a'] = '展开/折叠当前块'
+let g:which_key_map['z']['R'] = '展开全部'
+let g:which_key_map['z']['M'] = '折叠全部'
 
 let g:which_key_map['h'] = { 'name': '+git hunk' }
 let g:which_key_map['h']['j'] = '下一个 hunk'

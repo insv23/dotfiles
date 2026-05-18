@@ -22,6 +22,13 @@
 - **启用任务完成通知扩展**：将 pi 官方 `notify.ts` 扩展安装到 `~/.pi/agent/extensions/`，agent 停止后根据末尾文本智能区分音效：检测到确认等待模式（请确认/要继续吗等）播放 `pi_wait_input.mp3`，否则播放 `pi_output_end.mp3`；同时发送终端原生通知，支持 Ghostty / iTerm2 / WezTerm / Kitty / Windows Terminal
 - **新增模型思考强度自动同步扩展**：添加 `pi/extensions/model-thinking-sync.ts`，将 `openai-codex/gpt-5.5` 自动切换为 `medium`、`deepseek/deepseek-v4-pro` 自动切换为 `high`；在启动/恢复会话和切换模型时都会重新应用，减少手动调整 thinking level
 
+## 2026-05-17
+
+### Vim
+
+- **新增 JSON timed_words 折叠**：新增 `:FoldTimedWords` 与 `<Leader>zt`，可一键折叠当前 JSON 文件中的 `"timed_words"` 字段数组；同时将 `<Leader>za`、`<Leader>zR`、`<Leader>zM` 纳入 which-key 折叠提示，方便记忆常用折叠操作
+- **新增当前行无换行复制**：将 `Y` 映射为 `0y$`，用于复制当前行内容且不包含行尾换行符，保留 `yy` 的整行复制默认行为
+
 ## 2026-05-15
 
 ### Vim
