@@ -22,6 +22,12 @@
 - **启用任务完成通知扩展**：将 pi 官方 `notify.ts` 扩展安装到 `~/.pi/agent/extensions/`，agent 停止后根据末尾文本智能区分音效：检测到确认等待模式（请确认/要继续吗等）播放 `pi_wait_input.mp3`，否则播放 `pi_output_end.mp3`；同时发送终端原生通知，支持 Ghostty / iTerm2 / WezTerm / Kitty / Windows Terminal
 - **新增模型思考强度自动同步扩展**：添加 `pi/extensions/model-thinking-sync.ts`，将 `openai-codex/gpt-5.5` 自动切换为 `medium`、`deepseek/deepseek-v4-pro` 自动切换为 `high`；在启动/恢复会话和切换模型时都会重新应用，减少手动调整 thinking level
 
+## 2026-05-15
+
+### Vim
+
+- **优化括号匹配高亮**：为 `MatchParen` 设置暗灰蓝背景和暖色前景，降低默认青绿色块状高亮的遮挡感，提升暗色主题下的可读性
+
 ## 2026-04-26
 
 ### Vim

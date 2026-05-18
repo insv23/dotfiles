@@ -33,6 +33,8 @@ augroup CursorLineStyle
     autocmd ColorScheme,VimEnter * highlight LineNr ctermfg=243 guifg=#767676 cterm=NONE gui=NONE
     " 去掉当前行号的下划线
     autocmd ColorScheme,VimEnter * highlight CursorLineNr term=NONE cterm=NONE
+    " 括号匹配高亮：用暗灰蓝背景和暖色前景，避免默认青绿色块遮挡字符
+    autocmd ColorScheme,VimEnter * highlight MatchParen ctermfg=223 ctermbg=238 guifg=#ffd7af guibg=#44475a cterm=bold gui=bold
     " sign 列背景与编辑区保持一致，避免 gitgutter 的 gutter 显示为浅灰色
     autocmd ColorScheme,VimEnter * highlight SignColumn ctermbg=NONE guibg=NONE
     " gitgutter 改动标记：用低饱和度的绿/黄/红，在暗色背景上不刺眼
