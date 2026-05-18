@@ -8,6 +8,10 @@
 - **纳入全局指令管理**：新增 `pi/AGENTS.md`，并在 `install.conf.yaml` 注册 `~/.pi/agent/AGENTS.md → ./pi/AGENTS.md` symlink，让 pi 的全局上下文指令也由 dotfiles 统一管理
 - **清理重复全局指令**：删除散落在 home 目录的 `~/AGENTS.md`，统一改由 `~/.pi/agent/AGENTS.md` 提供 pi 全局上下文，避免从 home 父目录重复加载
 
+### Codex
+
+- **纳入全局指令管理**：新增 `codex/AGENTS.md`，并在 `install.conf.yaml` 注册 `~/.codex/AGENTS.md → ./codex/AGENTS.md` symlink，让 Codex 全局行为规则由 dotfiles 统一管理
+
 ## 2026-05-13
 
 ### Pi

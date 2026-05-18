@@ -11,6 +11,7 @@
     ~/.claude/CLAUDE.md: ./claude/CLAUDE.md
     ~/.claude/commands/: ./claude/commands
     ~/.claude/settings.json: ./claude/settings.json
+    ~/.codex/AGENTS.md: ./codex/AGENTS.md
     ~/.config/atuin/: ./atuin
     ~/.config/karabiner/: ./karabiner
     ~/.config/ghostty/: ./ghostty
