@@ -4,6 +4,7 @@
 
 ### Pi
 
+- **新增 Agent Browser 文档**：新增 `docs/agent-browser.md`，记录上游 `agent-browser` 与 Pi 扩展 `pi-agent-browser-native` 的安装、检查、基础调用和常见使用注意事项
 - **简化完成通知扩展**：将 `pi/extensions/notify.ts` 调整为仅在 agent 结束时发送 `Task complete` 通知并播放 `pi_output_end.mp3`，移除基于关键词的等待确认判断，避免误触发
 - **纳入全局指令管理**：新增 `pi/AGENTS.md`，并在 `install.conf.yaml` 注册 `~/.pi/agent/AGENTS.md → ./pi/AGENTS.md` symlink，让 pi 的全局上下文指令也由 dotfiles 统一管理
 - **清理重复全局指令**：删除散落在 home 目录的 `~/AGENTS.md`，统一改由 `~/.pi/agent/AGENTS.md` 提供 pi 全局上下文，避免从 home 父目录重复加载
