@@ -4,6 +4,7 @@
 
 ### Tmux
 
+- **新增持久化浮动终端**：将 `prefix + p` 绑定为按当前 session 与 window ID 隔离的持久 popup，关闭后进程继续运行，再次按 `prefix + p` 可关闭 popup 视图，方便快速召回 pi、Codex 或 Claude Code
 - **优化鼠标滚轮速度**：覆盖 tmux 默认滚轮行为，将每格滚动调整为 2 行，让鼠标滚动历史记录更接近终端原生手感
 - **调整左右分屏快捷键**：将左右分屏从 `prefix + |` 改为 `prefix + v`，降低按键复杂度；copy mode 中的 `v` 选择文本保持不变
 
