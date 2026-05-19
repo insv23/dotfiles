@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-05-19
+
+### Tmux
+
+- **调整 Yazi 启动方式**：将 `prefix + e` 从 tmux popup 改为 `new-window -S` 复用当前 session 中名为 `yazi` 的独立 window；已存在时直接跳转，未存在时在当前目录创建，规避 yazi 与 tmux popup 的终端探测和图片协议兼容性问题
+- **调整 Lazygit 启动方式**：将 `prefix + g` 改为 `new-window -S` 复用当前 session 中名为 `lazygit` 的独立 window；已存在时直接跳转，未存在时在当前目录创建，避免重复打开多个 lazygit
+- **重整工具窗口说明**：将原 `Floating Windows` 注释扩展为 `Tool Windows / Popups`，区分短时 popup 与复用式工具 window，并记录 yazi 避开 tmux popup 兼容性问题、lazygit 保留目录上下文的原因
+
 ## 2026-05-18
 
 ### Tmux
