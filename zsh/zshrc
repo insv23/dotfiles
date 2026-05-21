@@ -24,7 +24,15 @@ fpath=(~/.zsh/plugins/zsh-completions/src $fpath)
 
 # ---- compinit ----
 # 初始化 zsh 补全系统，扫描 fpath 并注册所有补全定义，必须在修改 fpath 之后调用
-autoload -Uz compinit && compinit
+# ~/.zcompdump 新鲜时走 -C 快路径，跳过昂贵的检查和缓存重建；超过 24 小时再正常刷新。
+autoload -Uz compinit
+_comp_dumpfile="${ZDOTDIR:-$HOME}/.zcompdump"
+if [[ ! -s "$_comp_dumpfile" || -n ${_comp_dumpfile}(N.mh+24) ]]; then
+  compinit -d "$_comp_dumpfile"
+else
+  compinit -C -d "$_comp_dumpfile"
+fi
+unset _comp_dumpfile
 
 
 # ---- fzf-tab ----
@@ -134,5 +142,11 @@ _uv_run_mod() {
     fi
 }
 compdef _uv_run_mod uv
-# bun completions
-[ -s "/Users/tony/.bun/_bun" ] && source "/Users/tony/.bun/_bun"
+
+
+# ============================================================================
+# 系统自动追加区域 / Auto-managed append-only area
+# ============================================================================
+# 我们自己的 Zsh 功能配置都放在这条警戒线上方。
+# 安装器、语言工具链或 CLI 自动追加的内容可以留在下方，方便之后快速识别外部改动。
+# ============================================================================
