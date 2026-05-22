@@ -17,7 +17,6 @@ source ~/.dotfiles/zsh/aliases/vim.zsh           # Vim/vi 草稿工作流
 source ~/.dotfiles/zsh/aliases/bark.zsh          # Bark 推送通知（iOS 消息提醒）
 source ~/.dotfiles/zsh/aliases/ssh.zsh           # SSH 快捷连接与管理
 source ~/.dotfiles/zsh/aliases/vscode-backup.zsh # VS Code 配置备份
-source ~/.dotfiles/zsh/aliases/claude.zsh        # Claude Code CLI 快捷命令
 source ~/.dotfiles/zsh/aliases/vscode-remote.zsh # 远程开发连接相关
 source ~/.dotfiles/zsh/aliases/log.zsh           # 带日志输出的命令运行工具
 source ~/.dotfiles/zsh/aliases/tts.zsh           # 文字转语音（TTS）

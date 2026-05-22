@@ -36,8 +36,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 # bun end
 
-# ===== go binary: 便直接运行安装的 Go 工具
-export PATH="$PATH:$(go env GOPATH)/bin"
 
 # ===== carapace 名字自动补全: 内置了上百个常见 CLI 的补全（git、docker、kubectl、gh、ffmpeg、aws…）
 # 可使用 `carapace --list` 查看可补全命令列表
