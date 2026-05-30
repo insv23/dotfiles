@@ -10,6 +10,12 @@ on = "<Enter>"
 run = "plugin smart-enter"
 desc = "Enter the child directory, or open the file"
 
+##### what-size：计算选中项或当前目录大小 #####
+[[mgr.prepend_keymap]]
+on = [ ",", "d" ]
+run = "plugin what-size"
+desc = "Calc size of selection or cwd"
+
 ##### projects 插件快捷键 #####
 [[mgr.prepend_keymap]]
 on = ["P", "s"]
