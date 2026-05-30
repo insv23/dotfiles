@@ -41,6 +41,9 @@ abbr ....="cd ../../.."
 # ===== 文件和目录管理 =====
 abbr dsize="du -sh * | sort -hr"
 
+# ===== Pi / AI 工具 =====
+abbr pn="pi -n"
+
 # ===== 网络工具 =====
 abbr pingg="ping 8.8.8.8"
 abbr pingc="ping 1.1.1.1"
