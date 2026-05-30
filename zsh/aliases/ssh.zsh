@@ -203,7 +203,7 @@ ssh-ck () {
 # 1. 使用 `k 主机名` 登录。有 key 的自动登录，没有 key 的输入密码
 # 2. 需要持久的任务 + 连接易断开的任务，使用 zja 创建/重新进入到持久会话
 # 3. 意外断开后，使用 上方向键 输入上一条 `k 主机名` 命令再次登录
-alias k="kitten ssh"
+# `k` 缩写定义在 zsh/abbreviations 中。
 
 
 # SSH connect: try key first, then password from env var

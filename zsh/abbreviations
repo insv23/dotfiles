@@ -10,6 +10,12 @@
 #
 # 文档: https://zsh-abbr.olets.dev/
 
+# ===== 系统工具 =====
+# 显示文件或路径的绝对路径
+abbr pwf="realpath"
+# 将 PATH 按行打印，方便排查路径顺序
+abbr echopath='echo $PATH | tr ":" "\n"'
+
 # ===== Git 相关缩写 =====
 abbr gst="git status"
 abbr gco="git checkout"
@@ -31,7 +37,15 @@ abbr gbd="git branch -d"
 abbr gm="git merge"
 abbr gr="git rebase"
 abbr gri="git rebase -i"
-
+# 在 git 仓库中调用 ag 搜索
+abbr gag="git exec ag"
+# 设置当前仓库 git 用户信息为 insv
+abbr ginsv='git config user.name "insv";git config user.email "insv23@outlook.com"'
+# 设置全局 git 用户信息为 insv
+abbr gginsv='git config --global user.name "insv";git config --global user.email "insv23@outlook.com"'
+# 跳转到当前 git 仓库根目录
+abbr cdgr='cd "$(git root)"'
+abbr lg="lazygit"
 
 # ===== 目录导航 =====
 abbr ..="cd .."
@@ -41,8 +55,51 @@ abbr ....="cd ../../.."
 # ===== 文件和目录管理 =====
 abbr dsize="du -sh * | sort -hr"
 
+# ===== Zsh 会话 =====
+# 完整重启当前 zsh 进程
+abbr re="exec zsh"
+abbr rezsh="exec zsh"
+# 重新加载 zshrc，适合热更新配置
+abbr szsh="source ~/.zshrc"
+abbr e="exit"
+
+# ===== Homebrew =====
+abbr bro="brew info"
+# 强制卸载包，跳过依赖检查
+abbr brui="brew uninstall --force"
+
+# ===== Python =====
+abbr py="python"
+# 以模块方式运行，例如：pym http.server 8080
+abbr pym="py -m"
+
+# ===== Docker =====
+abbr ld="lazydocker"
+abbr dc="docker compose"
+abbr dcd="docker compose down"
+abbr dcu="docker compose up"
+abbr dcud="docker compose up -d"
+# 以表格列出容器名称、ID、镜像、命令、创建时间、状态、端口
+abbr dcls='docker container ls --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}"'
+
+# ===== Tmux =====
+# 创建或附加到指定名称的 session，例如：tmat work
+abbr tmat="tmux new-session -A -s"
+abbr tmkt="tmux kill-session -t"
+abbr tmls="tmux ls"
+
+# ===== Zellij =====
+abbr zj="zellij ls"
+# 附加到已有 session；不存在则创建
+abbr zja="zellij attach --create"
+abbr zjd="zellij delete-session --force"
+
 # ===== Pi / AI 工具 =====
 abbr pn="pi -n"
+
+# ===== SSH =====
+# 使用 Kitty SSH 集成连接主机
+abbr k="kitten ssh"
 
 # ===== 网络工具 =====
 abbr pingg="ping 8.8.8.8"

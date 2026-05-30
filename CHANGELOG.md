@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-05-30
+
+### Zsh
+
+- **迁移常用别名到 abbr**：将 Docker、Tmux、Zellij、Brew、Python、Git 辅助命令等短命令从 alias 迁移到 `zsh/abbreviations`，让输入后展开为完整命令并保留更清晰的历史记录
+
 ## 2026-05-22
 
 ### Yazi
