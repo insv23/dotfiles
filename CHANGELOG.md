@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-05-31
+
+### Yazi
+
+- **新增 lazygit 插件**：通过 `ya pkg add Lil-Dank/lazygit` 安装 `lazygit.yazi`，并绑定 `g i` 在当前 Git 仓库中打开 lazygit
+
 ## 2026-05-30
 
 ### Zsh
