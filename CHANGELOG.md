@@ -8,6 +8,7 @@
 
 ### Yazi
 
+- **视频文件默认走系统 App**：新增 `{ mime = "video/*", use = "open" }` 规则，Yazi 回车打开视频时不再调 mpv，改为走 macOS LaunchServices 默认 App（例如 LosslessCut）
 - **恢复 Reveal + Zed 菜单项**：修复自定义 `[open]` 规则使用错误字段 `name`（应为 `url`），统一改为 MIME + URL 扩展名双规则，`Shift+O` 菜单在所有常见代码文件上正确显示 Reveal 和 Zed
 
 ## 2026-05-31

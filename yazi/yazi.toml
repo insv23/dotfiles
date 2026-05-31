@@ -45,6 +45,8 @@ zed = [
 
 [open]
 prepend_rules = [
+    # 视频文件 - 走 macOS 系统默认 App（例如 LosslessCut）
+    { mime = "video/*", use = "open" },
     # 文本文件和代码文件 - 可用 Zed 打开（按 O 选择）
     { mime = "text/*", use = [ "edit", "zed", "open", "reveal" ] },
     { url = "*.{js,ts,jsx,tsx,json,jsonc,md,mdx,yml,yaml,toml,rs,go,py,lua,sh,zsh,bash,fish,html,css,scss,sql,xml,vue,svelte,lock}", use = [ "edit", "zed", "open", "reveal" ] },
