@@ -2,6 +2,12 @@
 
 ## 2026-05-31
 
+### Raycast
+
+- **新增 Excalidraw Live Room 脚本**：添加 Raycast Script Command，一键生成并打开新的 Excalidraw live collaboration 房间链接，省去手动点击 Share
+- **移除 Raycast 脚本 Node 依赖**：将 Excalidraw Live Room 的随机链接生成改为使用系统 Python，避免 Raycast 环境加载不到 nvm Node
+- **补充 Raycast 使用文档**：新增 Raycast README，记录 Script Commands 目录添加、重载、运行和快捷键绑定方式，方便后续维护脚本
+
 ### Yazi
 
 - **新增 lazygit 插件**：通过 `ya pkg add Lil-Dank/lazygit` 安装 `lazygit.yazi`，并绑定 `g i` 在当前 Git 仓库中打开 lazygit
