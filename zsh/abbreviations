@@ -96,6 +96,8 @@ abbr zjd="zellij delete-session --force"
 
 # ===== Pi / AI 工具 =====
 abbr pn="pi -n"
+abbr pc="pi -c"
+abbr pr="pi -r"
 
 # ===== SSH =====
 # 使用 Kitty SSH 集成连接主机
