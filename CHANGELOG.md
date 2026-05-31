@@ -5,6 +5,9 @@
 ### Zsh
 
 - **迁移常用别名到 abbr**：将 Docker、Tmux、Zellij、Brew、Python、Git 辅助命令等短命令从 alias 迁移到 `zsh/abbreviations`，让输入后展开为完整命令并保留更清晰的历史记录
+- **延迟加载 NVM**：将 NVM 初始化改为 lazy-load，启动时仅把默认 Node 版本加入 PATH，首次调用 `nvm` 或进入含 `.nvmrc` 的目录时再加载完整 NVM，降低新建终端冷启动耗时
+- **减少冷启动外部命令**：将 Homebrew 环境初始化改为静态变量，并缓存 Carapace zsh 初始化脚本，减少新建终端时的外部命令 fork 开销
+- **补充 Homebrew 初始化回滚说明**：在 `zshenv` 中完整保留 `brew shellenv` 原始代码块注释，说明原始写法的作用、启动影响、改用静态变量的性能原因和出现兼容问题时的恢复方式
 
 ## 2026-05-22
 

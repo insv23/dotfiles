@@ -33,15 +33,54 @@
 # ========================================
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# ---- 启动加速：lazy-load NVM ----
+# NVM 启动时会扫描版本并执行默认版本切换，是新建终端最主要的耗时来源。
+# 这里先把默认 Node 版本的 bin 放进 PATH，首次显式调用 nvm 或进入含 .nvmrc 的目录时再加载完整 NVM。
+_nvm_add_default_to_path() {
+  local default_version node_bin
+  local -a candidate_bins
+
+  [[ -r "$NVM_DIR/alias/default" ]] || return
+  default_version="$(<"$NVM_DIR/alias/default")"
+
+  case "$default_version" in
+    v*) candidate_bins=("$NVM_DIR/versions/node/${default_version}"*/bin(Nn)) ;;
+    [0-9]*) candidate_bins=("$NVM_DIR/versions/node/v${default_version}"*/bin(Nn)) ;;
+    *) return ;;
+  esac
+
+  for node_bin in ${(On)candidate_bins}; do
+    [[ -x "$node_bin/node" ]] || continue
+    case ":$PATH:" in
+      *":$node_bin:"*) ;;
+      *) export PATH="$node_bin:$PATH" ;;
+    esac
+    break
+  done
+}
+
+_nvm_lazy_load() {
+  unfunction nvm 2>/dev/null
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
+
+nvm() {
+  _nvm_lazy_load
+  nvm "$@"
+}
+
+_nvm_add_default_to_path
 
 # ---- 自动切换 Node 版本 ----
-# 进入含有 .nvmrc 的目录时，自动切换到对应 Node 版本
+# 进入含有 .nvmrc 的目录时，加载 NVM 并自动切换到对应 Node 版本。
 autoload -U add-zsh-hook
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc() {
   if [ -f .nvmrc ]; then
+    _nvm_lazy_load
     nvm use
   fi
 }
+load-nvmrc

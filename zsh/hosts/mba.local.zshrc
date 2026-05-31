@@ -42,7 +42,15 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # 配置样式: https://carapace-sh.github.io/carapace-bin/style.html
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
-source <(carapace _carapace)
+if (( $+commands[carapace] )); then
+  _carapace_cache="${XDG_CACHE_HOME:-$HOME/.cache}/carapace/init.zsh"
+  if [[ ! -r "$_carapace_cache" || "$_carapace_cache" -ot "$commands[carapace]" ]]; then
+    mkdir -p "${_carapace_cache:h}"
+    carapace _carapace >| "$_carapace_cache" 2>/dev/null
+  fi
+  [[ -r "$_carapace_cache" ]] && source "$_carapace_cache"
+  unset _carapace_cache
+fi
 
 # leetcode-cli
 eval "$(leetcode completions)"

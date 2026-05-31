@@ -2,15 +2,47 @@
 # 每次启动 Zsh 进程时，都会加载（读取并执行）此文件，无论是登录shell、交互式 shell，还是非交互式 shell（例如运行脚本时）。
 # 由于其通用性，`.zshenv` 只应包含环境变量定义。
 
+# Homebrew
+# 原始写法：调用 Homebrew 官方 `brew shellenv` 输出并执行环境变量配置。
+# macOS 下 `brew shellenv` 还会间接调用 `/usr/libexec/path_helper` 计算 PATH/MANPATH。
+# 这套写法语义最完整，但每次 zsh 启动都会 fork 外部命令；冷启动时会增加新终端卡顿。
+# 如果将来出现 Homebrew 路径、MANPATH 或 shellenv 行为兼容问题，可以恢复下面这一整块原始写法。
+#
+# macOS Homebrew 原始写法：
+# if [ -x "/opt/homebrew/bin/brew" ]; then
+#   eval "$(/opt/homebrew/bin/brew shellenv)"
+# fi
+#
+# Linux Homebrew 原始写法：
+# if [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+#   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# fi
+
+# Homebrew 当前写法：静态设置标准安装路径下的环境变量，避免每次启动 zsh 都 fork `brew shellenv` 和 `path_helper`。
 # macOS Homebrew
-# -x 选项用于测试一个路径是否是可执行文件
 if [ -x "/opt/homebrew/bin/brew" ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  export HOMEBREW_PREFIX="/opt/homebrew"
+  export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+  export HOMEBREW_REPOSITORY="/opt/homebrew"
+  case ":$PATH:" in
+    *":/opt/homebrew/bin:/opt/homebrew/sbin:"*) ;;
+    *) export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" ;;
+  esac
+  export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
+  export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 fi
 
 # Linux Homebrew
 if [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+  export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+  export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+  case ":$PATH:" in
+    *":/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:"*) ;;
+    *) export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH" ;;
+  esac
+  export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
+  export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
 fi
 
 # XDG Base Directory Specification
