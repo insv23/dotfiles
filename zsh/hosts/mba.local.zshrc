@@ -67,3 +67,8 @@ rb() {
   /Applications/Rebased.app/Contents/MacOS/idea "$@"
 }
 
+# ===== Pi agent =====
+# 允许 pi vision proxy 读取 home 目录下的文件
+# https://github.com/nicedoc/pi-vision-proxy
+export PI_VISION_PROXY_ALLOW_HOME=1
+

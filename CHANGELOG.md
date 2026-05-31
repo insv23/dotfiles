@@ -16,6 +16,7 @@
 
 - **保留 vv 调用目录**：将 `vv` 的草稿目录切换限制在子 shell 中，保持 Vim 内默认保存到 `~/.vimdrafts`，退出后回到原工作目录
 - **新增 DeepSeek Pi 缩写**：添加 `pdf` 与 `pdp`，分别用于快速以 DeepSeek Flash 和 Pro 模型启动 pi，方便低成本处理轻量任务
+- **允许 Pi vision proxy 读取 home 目录**：在 `zsh/hosts/mba.local.zshrc` 中添加 `PI_VISION_PROXY_ALLOW_HOME=1`，只在本地机器生效，不泄漏到远程主机
 
 ## 2026-05-30
 
