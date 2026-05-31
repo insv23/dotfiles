@@ -1,6 +1,7 @@
 require("reload")
 -- require("autoPlayClickToKeepJamoAlive")
 require("HoldCmdQ")
+require("BlockAppHotkeys")
 -- require("NotiClipboard")
 require("AlertClipboard")
 require("FinderCopyPath")

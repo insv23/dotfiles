@@ -2,6 +2,10 @@
 
 ## 2026-06-01
 
+### Hammerspoon
+
+- **新增应用级快捷键屏蔽**：添加 Kooky 前台专用的 `Cmd+W` 和 `Cmd+Shift+W` 拦截，避免误关标签或工作区，同时保持其他应用的快捷键正常工作
+
 ### Yazi
 
 - **恢复 Reveal + Zed 菜单项**：修复自定义 `[open]` 规则使用错误字段 `name`（应为 `url`），统一改为 MIME + URL 扩展名双规则，`Shift+O` 菜单在所有常见代码文件上正确显示 Reveal 和 Zed
