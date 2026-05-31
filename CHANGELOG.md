@@ -9,6 +9,7 @@
 ### Zsh
 
 - **保留 vv 调用目录**：将 `vv` 的草稿目录切换限制在子 shell 中，保持 Vim 内默认保存到 `~/.vimdrafts`，退出后回到原工作目录
+- **新增 DeepSeek Pi 缩写**：添加 `pdf` 与 `pdp`，分别用于快速以 DeepSeek Flash 和 Pro 模型启动 pi，方便低成本处理轻量任务
 
 ## 2026-05-30
 

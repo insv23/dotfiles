@@ -98,6 +98,9 @@ abbr zjd="zellij delete-session --force"
 abbr pn="pi -n"
 abbr pc="pi -c"
 abbr pr="pi -r"
+abbr pns="pi --no-session"
+abbr pdf="pi --model deepseek/deepseek-v4-flash"
+abbr pdp="pi --model deepseek/deepseek-v4-pro"
 
 # ===== SSH =====
 # 使用 Kitty SSH 集成连接主机
