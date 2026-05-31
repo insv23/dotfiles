@@ -1,10 +1,12 @@
 # Vim/vi 快捷工作流
 
-# 进入统一草稿目录并打开 vi；用 :new 创建 buffer，保存时文件会落在 ~/.vimdrafts
+# 在统一草稿目录中打开 vi；保存默认落在 ~/.vimdrafts，退出后保留原工作目录
 vv() {
   mkdir -p "$HOME/.vimdrafts"
-  cd "$HOME/.vimdrafts" || return
-  vi "$@"
+  (
+    cd "$HOME/.vimdrafts" || exit
+    vi "$@"
+  )
 }
 
 vvls() {

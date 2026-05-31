@@ -6,6 +6,10 @@
 
 - **新增 lazygit 插件**：通过 `ya pkg add Lil-Dank/lazygit` 安装 `lazygit.yazi`，并绑定 `g i` 在当前 Git 仓库中打开 lazygit
 
+### Zsh
+
+- **保留 vv 调用目录**：将 `vv` 的草稿目录切换限制在子 shell 中，保持 Vim 内默认保存到 `~/.vimdrafts`，退出后回到原工作目录
+
 ## 2026-05-30
 
 ### Zsh
