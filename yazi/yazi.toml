@@ -46,6 +46,6 @@ zed = [
 [open]
 prepend_rules = [
     # 文本文件和代码文件 - 可用 Zed 打开（按 O 选择）
-    { mime = "text/*", use = [ "edit", "zed", "open" ] },
-    { name = "*.{js,ts,jsx,tsx,json,md,yml,yaml,toml,rs,go,py,lua,sh}", use = [ "edit", "zed", "open" ] },
+    { mime = "text/*", use = [ "edit", "zed", "open", "reveal" ] },
+    { url = "*.{js,ts,jsx,tsx,json,jsonc,md,mdx,yml,yaml,toml,rs,go,py,lua,sh,zsh,bash,fish,html,css,scss,sql,xml,vue,svelte,lock}", use = [ "edit", "zed", "open", "reveal" ] },
 ]

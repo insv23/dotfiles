@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-06-01
+
+### Yazi
+
+- **恢复 Reveal + Zed 菜单项**：修复自定义 `[open]` 规则使用错误字段 `name`（应为 `url`），统一改为 MIME + URL 扩展名双规则，`Shift+O` 菜单在所有常见代码文件上正确显示 Reveal 和 Zed
+
 ## 2026-05-31
 
 ### Raycast
