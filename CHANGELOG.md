@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-06-06
+
+### Zsh
+
+- **调整 Tab 补全心智模型**：将单次 `Tab` 绑定为接受 zsh-autosuggestions 灰色建议，将 `Tab Tab` 绑定为触发 fzf 补全，减少对方向键的依赖
+
 ## 2026-06-01
 
 ### Hammerspoon

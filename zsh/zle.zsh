@@ -14,6 +14,10 @@ bindkey -e # 使用 emacs 模式
 
 # ^A ^E: 行首/行尾 (emacs 内置，无需额外绑定)
 
+# Tab: 接受 zsh-autosuggestions 的灰色建议；Tab Tab: 触发 fzf --zsh 的补全
+bindkey '^I' autosuggest-accept
+bindkey '^I^I' fzf-completion
+
 # ^F: 删除光标左侧的一个目录层级
 backward-kill-dir () {
     local WORDCHARS=${WORDCHARS/\/}

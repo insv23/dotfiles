@@ -84,7 +84,6 @@ source ~/.zsh/aliases.sh
 
 source ~/.zsh/hosts/local_index.sh
 
-source ~/.dotfiles/zsh/zle.zsh
 # fzf 还是用不太习惯
 # 使用参考: https://www.notion.so/fzf-b15582832ee449dbbec50c0b0481852b?pvs=4
 # `任何命令 **Tab`: 触发 fzf 的模糊查找，并将其结果作为命令的参数
@@ -95,6 +94,9 @@ source ~/.dotfiles/zsh/zle.zsh
 # kill **Tab: 杀死进程
 
 source ~/.dotfiles/zsh/fzf.zsh
+
+# ZLE 快捷键放在 fzf 后加载，确保自定义 Tab 绑定覆盖 fzf --zsh 的默认绑定。
+source ~/.dotfiles/zsh/zle.zsh
 
 
 # ---- kitty 设置窗口标题 ----
