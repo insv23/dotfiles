@@ -9,7 +9,7 @@ export PATH="/opt/homebrew/opt/trash/bin:$PATH"
 alias del='trash'
 
 # ----- auto proxy -----
-pxyon > /dev/null
+# pxyon > /dev/null
 
 # envman(serviceman)
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
