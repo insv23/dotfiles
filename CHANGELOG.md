@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-06-18
+
+### Zsh
+
+- **启用 MBA 自动代理**：在 MBA 本机 zsh 启动时自动执行 `pxyon`，并移除 host-local 的 `PI_VISION_PROXY_ALLOW_HOME` 配置。
+
 ## 2026-06-06
 
 ### Zsh

@@ -15,7 +15,7 @@ id() {
 }
 
 # ---- auto proxy ----
-# pxyon > /dev/null
+pxyon > /dev/null
 
 # ===== pnpm configuration =====
 # 这个一般都是在本地机器上使用，应该都是 mac，所以统一使用 brew: https://pnpm.io/installation#using-homebrew
@@ -66,9 +66,3 @@ alias lcd="uv run --project ~/.leetcode -m lcd.cli --"
 rb() {
   /Applications/Rebased.app/Contents/MacOS/idea "$@"
 }
-
-# ===== Pi agent =====
-# 允许 pi vision proxy 读取 home 目录下的文件
-# https://github.com/nicedoc/pi-vision-proxy
-export PI_VISION_PROXY_ALLOW_HOME=1
-
