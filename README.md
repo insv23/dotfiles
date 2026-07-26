@@ -101,9 +101,9 @@ dfu
 ```
 .
 ├── atuin/          # Atuin 命令历史配置
+├── agents/         # Claude、Codex、Pi 共享指令
 ├── bash/           # Bash 配置（bashrc、profile、inputrc）
 ├── brew/           # Homebrew 安装脚本与应用列表
-├── claude/         # Claude Code 配置（agents、commands、settings）
 ├── git/            # Git 配置（gitconfig、gitignore_global）
 ├── hammerspoon/    # Hammerspoon 自动化配置
 ├── karabiner/      # Karabiner 键位映射配置

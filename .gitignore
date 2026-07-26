@@ -30,3 +30,8 @@ vim/pack/vendor/start
 
 # claude code runtime directory (local only, not for version control)
 .claude/
+
+# Agent runtime configuration is maintained by each tool
+/claude/
+/codex/
+/pi/

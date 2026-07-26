@@ -7,11 +7,10 @@
 
 - link:
     ~/.bashrc: ./bash/bashrc
-    ~/.claude/agents/: ./claude/agents
-    ~/.claude/CLAUDE.md: ./claude/CLAUDE.md
-    ~/.claude/commands/: ./claude/commands
-    ~/.claude/settings.json: ./claude/settings.json
-    ~/.codex/AGENTS.md: ./codex/AGENTS.md
+    ~/.claude/CLAUDE.md: ./agents/CLAUDE.md
+    ~/.codex/AGENTS.md:
+      path: ./agents/CODEX.md
+      canonicalize: false
     ~/.config/atuin/: ./atuin
     ~/.config/karabiner/: ./karabiner
     ~/.config/ghostty/: ./ghostty
@@ -30,8 +29,9 @@
     ~/.zsh:
     ~/.zshenv: ./zsh/zshenv
     ~/.zshrc: ./zsh/zshrc
-    ~/.pi/agent/AGENTS.md: ./pi/AGENTS.md
-    ~/.pi/agent/extensions/: ./pi/extensions
+    ~/.pi/agent/AGENTS.md:
+      path: ./agents/PI.md
+      canonicalize: false
 
 - shell:
     - touch ~/.hushlogin

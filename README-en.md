@@ -105,9 +105,9 @@ This fast-forward syncs the latest remote changes to your local repo (uses `git 
 ```
 .
 ├── atuin/          # Atuin shell history config
+├── agents/         # Shared instructions for Claude, Codex, and Pi
 ├── bash/           # Bash config (bashrc, profile, inputrc)
 ├── brew/           # Homebrew install scripts and app lists
-├── claude/         # Claude Code config (agents, commands, settings)
 ├── git/            # Git config (gitconfig, gitignore_global)
 ├── hammerspoon/    # Hammerspoon automation config
 ├── karabiner/      # Karabiner key remapping config

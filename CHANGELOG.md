@@ -6,6 +6,13 @@
 
 - **新增 pnpm dev 缩写**：添加 `pd` 缩写，用于在项目中快速执行 `pnpm dev`。
 
+### Agents
+
+- **统一全局指令**：新增 `agents/STYLE.md` 作为共享规则源，并通过 `CLAUDE.md`、`CODEX.md`、`PI.md` 三个适配入口连接 Claude、Codex、Pi 的全局指令文件。
+- **精简 Claude 适配层**：将官方文档核对规则迁入共享风格，Claude 入口只保留共享规则与 RTK 两项导入。
+- **统一项目指令入口**：新增根目录 `AGENTS.md` 承载项目规则，根目录 `CLAUDE.md` 改为通过 `@AGENTS.md` 引用。
+- **还原工具运行目录**：Claude、Codex、Pi 的插件、扩展、模型和 settings 迁回各工具本地目录，由工具自行维护，避免运行时更新进入 dotfiles。
+
 ## 2026-06-18
 
 ### Zsh
