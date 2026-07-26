@@ -113,3 +113,6 @@ abbr pinga="ping 223.5.5.5"
 abbr pingt="ping 119.29.29.29"
 abbr myip="curl cip.cc"
 abbr pc="proxychains"
+
+# ===== pnpm =====
+abbr pd="pnpm dev"
