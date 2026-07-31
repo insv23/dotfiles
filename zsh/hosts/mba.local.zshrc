@@ -36,6 +36,12 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 # bun end
 
+# ===== Deno-installed executables =====
+case ":$PATH:" in
+  *":$HOME/.deno/bin:"*) ;;
+  *) export PATH="$HOME/.deno/bin:$PATH" ;;
+esac
+
 
 # ===== carapace 名字自动补全: 内置了上百个常见 CLI 的补全（git、docker、kubectl、gh、ffmpeg、aws…）
 # 可使用 `carapace --list` 查看可补全命令列表

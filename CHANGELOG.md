@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-07-31
+
+### Zsh
+
+- **启用 Deno 安装的命令**：在 MBA 主机配置中将 `~/.deno/bin` 加入 `PATH`，使 SilverBullet 等由 `deno install` 生成的命令可以直接执行。
+
 ## 2026-07-26
 
 ### Zsh
