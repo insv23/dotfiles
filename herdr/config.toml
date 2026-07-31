@@ -1,0 +1,9 @@
+onboarding = false
+
+[ui.toast]
+delivery = "terminal"
+
+[experimental]
+kitty_graphics = true
+reveal_hidden_cursor_for_cjk_ime = true
+cjk_ime_agents = ["claude", "pi", "codex"]

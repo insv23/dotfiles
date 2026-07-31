@@ -2,6 +2,10 @@
 
 ## 2026-07-31
 
+### Herdr
+
+- **纳入配置管理**：将 `~/.config/herdr/config.toml` 收录到 dotfiles，并保留 Herdr 的运行时文件在用户配置目录中。
+
 ### Zsh
 
 - **启用 Deno 安装的命令**：在 MBA 主机配置中将 `~/.deno/bin` 加入 `PATH`，使 SilverBullet 等由 `deno install` 生成的命令可以直接执行。
