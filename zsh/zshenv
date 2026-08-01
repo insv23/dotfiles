@@ -49,6 +49,9 @@ fi
 # 让 macOS 上的工具（如 lazygit）使用 ~/.config 而不是 ~/Library/Application Support
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# Pi Coding Agent and web-search share Pi's default config directory
+export PI_CODING_AGENT_DIR="$HOME/.pi/agent"
+
 # 设置系统语言环境为美式英语, 字符编码为 UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8

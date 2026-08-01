@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-01
+
+### Zsh
+
+- **统一 Pi 配置目录**：在 `zsh/zshenv` 中设置 `PI_CODING_AGENT_DIR`，让 Pi Web Access 的 `web-search.json` 等配置统一落在 `~/.pi/agent/`。
+
 ## 2026-07-31
 
 ### Herdr
