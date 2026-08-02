@@ -9,6 +9,7 @@
 ### Zsh
 
 - **新增 Codex 高权限缩写**：添加 `cx` 缩写，快速启动 `codex --dangerously-bypass-approvals-and-sandbox`。
+- **新增 Codex 模型缩写**：添加 `cxl`、`cxt`、`cxs`，分别以高权限启动 GPT-5.6 Luna、Terra、Sol。
 
 ## 2026-08-01
 

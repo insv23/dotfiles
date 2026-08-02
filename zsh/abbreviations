@@ -103,6 +103,9 @@ abbr pdf="pi --model deepseek/deepseek-v4-flash"
 abbr pdp="pi --model deepseek/deepseek-v4-pro"
 # 跳过 Codex 确认并关闭沙箱；仅在完全信任当前环境时使用
 abbr cx="codex --dangerously-bypass-approvals-and-sandbox"
+abbr cxl="codex --dangerously-bypass-approvals-and-sandbox -m gpt-5.6-luna"
+abbr cxt="codex --dangerously-bypass-approvals-and-sandbox -m gpt-5.6-terra"
+abbr cxs="codex --dangerously-bypass-approvals-and-sandbox -m gpt-5.6-sol"
 
 # ===== SSH =====
 # 使用 Kitty SSH 集成连接主机
