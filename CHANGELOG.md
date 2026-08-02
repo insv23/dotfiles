@@ -2,6 +2,10 @@
 
 ## 2026-08-02
 
+### Kitty
+
+- **启用 Cmd+V 智能粘贴**：新增 Kitty 剪贴板脚本，文本交由 Kitty 原生粘贴，图片转存到系统临时目录后粘贴 PNG 路径。维护文档与脚本：[GitHub Gist](https://gist.github.com/insv23/bedee84ee3425ce952224b2c4781286c)。
+
 ### Zsh
 
 - **新增 Codex 高权限缩写**：添加 `cx` 缩写，快速启动 `codex --dangerously-bypass-approvals-and-sandbox`。
