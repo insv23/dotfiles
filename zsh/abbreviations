@@ -101,6 +101,8 @@ abbr pr="pi -r"
 abbr pns="pi --no-session"
 abbr pdf="pi --model deepseek/deepseek-v4-flash"
 abbr pdp="pi --model deepseek/deepseek-v4-pro"
+# 跳过 Codex 确认并关闭沙箱；仅在完全信任当前环境时使用
+abbr cx="codex --dangerously-bypass-approvals-and-sandbox"
 
 # ===== SSH =====
 # 使用 Kitty SSH 集成连接主机

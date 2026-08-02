@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-02
+
+### Zsh
+
+- **新增 Codex 高权限缩写**：添加 `cx` 缩写，快速启动 `codex --dangerously-bypass-approvals-and-sandbox`。
+
 ## 2026-08-01
 
 ### Zsh
