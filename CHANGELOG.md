@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-03
+
+### Herdr
+
+- **关闭输入法光标锚点**：禁用 `reveal_hidden_cursor_for_cjk_ime`，恢复 Vim 在 Codex 窗格中按模式切换的原生光标形状。
+
 ## 2026-08-02
 
 ### Kitty
