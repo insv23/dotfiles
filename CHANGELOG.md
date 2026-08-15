@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-08-15
+
+### Herdr
+
+- **绑定 Pane Mover**：将 `prefix+m` 映射为 `osamahbeig.pane-mover.open`，用插件 overlay 移动窗格。
+- **bootstrap 安装插件**：在 `install.conf.yaml` 中于本机已有 `herdr` 时安装 `osamahbeig/herdr-pane-mover`；已安装则跳过，不把插件 checkout 和 `plugins.json` 纳入仓库。
+
+## 2026-08-07
+
+### Kitty
+
+- **提高背景不透明度**：将 `background_opacity` 从 `0.8` 调整为 `0.92`，减少底层画面对终端文字阅读的干扰。
+
 ## 2026-08-03
 
 ### Herdr
