@@ -1,0 +1,64 @@
+{
+  "providers": {
+    "opencode-go": {
+      "baseUrl": "https://opencode.ai/zen/go/v1",
+      "apiKey": "$OPENCODE_API_KEY",
+      "compat": {
+        "supportsDeveloperRole": false,
+        "thinkingFormat": "openai",
+        "supportsReasoningEffort": true
+      },
+      "models": [
+        {
+          "id": "glm-5.2",
+          "name": "GLM-5.2",
+          "api": "openai-completions",
+          "reasoning": true,
+          "input": ["text"],
+          "contextWindow": 1000000,
+          "maxTokens": 131072,
+          "thinkingLevelMap": {
+            "off": "none",
+            "minimal": null,
+            "low": null,
+            "medium": null,
+            "high": "high",
+            "xhigh": "max"
+          },
+          "cost": {
+            "input": 1.4,
+            "output": 4.4,
+            "cacheRead": 0.26,
+            "cacheWrite": 0
+          }
+        }
+      ]
+    },
+    "openai-codex": {
+      "modelOverrides": {
+        "gpt-5.6-luna": {
+          "thinkingLevelMap": {
+            "off": null,
+            "minimal": null,
+            "low": null,
+            "medium": "medium",
+            "high": null,
+            "xhigh": null,
+            "max": "max"
+          }
+        },
+        "gpt-5.6-sol": {
+          "thinkingLevelMap": {
+            "off": null,
+            "minimal": null,
+            "low": null,
+            "medium": "medium",
+            "high": null,
+            "xhigh": null,
+            "max": "max"
+          }
+        }
+      }
+    }
+  }
+}

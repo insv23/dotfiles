@@ -33,6 +33,27 @@
     ~/.pi/agent/AGENTS.md:
       path: ./agents/PI.md
       canonicalize: false
+    ~/.pi/agent/settings.json:
+      path: ./agents/pi/settings.json
+      force: true
+    ~/.pi/agent/web-search.json:
+      path: ./agents/pi/web-search.json
+      force: true
+    ~/.pi/agent/models.json:
+      path: ./agents/pi/models.json
+      force: true
+    ~/.pi/agent/extensions:
+      path: ./agents/pi/extensions
+      force: true
+    ~/.pi/agent/prompts:
+      path: ./agents/pi/prompts
+      force: true
+    ~/.pi/agent/skills/download-music:
+      path: ./agents/pi/skills/download-music
+      force: true
+    ~/.pi/agent/skills/web-clipping:
+      path: ./agents/pi/skills/web-clipping
+      force: true
 
 - shell:
     - touch ~/.hushlogin

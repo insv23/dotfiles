@@ -2,6 +2,10 @@
 
 ## 2026-08-15
 
+### Pi
+
+- **纳入全局配置管理**：将 `settings.json`、`models.json`、`web-search.json`、手写 `extensions/`、`prompts/`，以及本机技能 `download-music`、`web-clipping` 收入 `agents/pi/`，由 dotbot 链到 `~/.pi/agent/`。安装产物 `npm/`、`git/` 和 `auth.json` 仍留本机；缺包由 Pi 按 `settings.json` 的 `packages` 在启动时补装。
+
 ### Herdr
 
 - **绑定 Pane Mover**：将 `prefix+m` 映射为 `osamahbeig.pane-mover.open`，用插件 overlay 移动窗格。

@@ -1,0 +1,117 @@
+/**
+ * Codex Status – minimal footer extension showing Codex usage % and reset times.
+ * Input: reads OAuth credentials from ~/.pi/agent/auth.json
+ * Output: sets footer status via ctx.ui.setStatus
+ * Pos: single-file pi extension, no dependencies
+ *
+ * 一旦我被更新，务必更新我的开头注释，以及所属的文件夹的 md。
+ */
+
+import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { promises as fs } from "node:fs";
+import os from "node:os";
+import path from "node:path";
+
+const EXTENSION_ID = "codex-status";
+const REFRESH_MS = 60_000;
+const USAGE_URL = "https://chatgpt.com/backend-api/wham/usage";
+
+const agentDir = process.env.PI_CODING_AGENT_DIR?.trim() || path.join(os.homedir(), ".pi", "agent");
+const AUTH_FILE = path.join(agentDir, "auth.json");
+
+async function readAuth(): Promise<{ token: string; accountId: string }> {
+	const raw = JSON.parse(await fs.readFile(AUTH_FILE, "utf8"));
+	const entry = raw["openai-codex"];
+	if (!entry) throw new Error("no openai-codex in auth.json");
+	const token = entry.type === "oauth" && typeof entry.access === "string" ? entry.access.trim() : undefined;
+	const accountId = (entry.accountId ?? entry.account_id)?.trim?.();
+	if (!token || !accountId) throw new Error("missing access/accountId");
+	return { token, accountId };
+}
+
+async function fetchUsage(): Promise<{ primary: { used: number; resetAt: number }; secondary: { used: number; resetAt: number } }> {
+	const { token, accountId } = await readAuth();
+	const res = await fetch(USAGE_URL, {
+		headers: { accept: "*/*", authorization: `Bearer ${token}`, "chatgpt-account-id": accountId },
+	});
+	if (!res.ok) throw new Error(`usage API ${res.status}`);
+	const data = await res.json() as any;
+	const rl = data.rate_limit ?? {};
+	const pw = rl.primary_window ?? {};
+	const sw = rl.secondary_window ?? {};
+	return {
+		primary: { used: pw.used_percent ?? 0, resetAt: resolveResetAt(pw) },
+		secondary: { used: sw.used_percent ?? 0, resetAt: resolveResetAt(sw) },
+	};
+}
+
+function resolveResetAt(w: any): number {
+	if (typeof w.reset_at === "number") return w.reset_at > 1e12 ? w.reset_at / 1000 : w.reset_at;
+	if (typeof w.reset_after_seconds === "number") return Date.now() / 1000 + w.reset_after_seconds;
+	return 0;
+}
+
+function pad(n: number): string {
+	return n < 10 ? `0${n}` : `${n}`;
+}
+
+function formatTime(unix: number): string {
+	if (!unix) return "--:--";
+	const d = new Date(unix * 1000);
+	return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function formatDateTime(unix: number): string {
+	if (!unix) return "--/-- --:--";
+	const d = new Date(unix * 1000);
+	return `${pad(d.getMonth() + 1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function buildStatus(ctx: ExtensionContext, data: Awaited<ReturnType<typeof fetchUsage>>): string {
+	const t = ctx.ui.theme;
+	const pLeft = Math.max(0, Math.min(100, 100 - data.primary.used));
+	const sLeft = Math.max(0, Math.min(100, 100 - data.secondary.used));
+	const pColor = pLeft <= 10 ? "error" : pLeft <= 25 ? "warning" : "success";
+	const sColor = sLeft <= 10 ? "error" : sLeft <= 25 ? "warning" : "success";
+	return [
+		t.fg("dim", "Codex"),
+		`${t.fg("dim", "5h: ")}${t.fg(pColor, `${pLeft}%`)} ${t.fg("dim", `↗${formatTime(data.primary.resetAt)}`)}`,
+		t.fg("dim", "|"),
+		`${t.fg("dim", "7d: ")}${t.fg(sColor, `${sLeft}%`)} ${t.fg("dim", `↗${formatDateTime(data.secondary.resetAt)}`)}`,
+	].join(" ");
+}
+
+export default function (pi: ExtensionAPI) {
+	let timer: ReturnType<typeof setInterval> | undefined;
+	let generation = 0;
+	let ctxRef: ExtensionContext | undefined;
+
+	async function refresh(ctx = ctxRef) {
+		if (!ctx?.hasUI) return;
+		try {
+			const data = await fetchUsage();
+			if (ctx === ctxRef) ctx.ui.setStatus(EXTENSION_ID, buildStatus(ctx, data));
+		} catch {
+			if (ctx === ctxRef) ctx.ui.setStatus(EXTENSION_ID, ctx.ui.theme.fg("warning", "Codex: unavailable"));
+		}
+	}
+
+	pi.on("session_start", (_e, ctx) => {
+		generation++;
+		ctxRef = ctx;
+		if (timer) clearInterval(timer);
+		timer = setInterval(() => refresh(), REFRESH_MS);
+		timer.unref?.();
+		void refresh(ctx);
+	});
+
+	pi.on("turn_end", () => void refresh());
+
+	pi.on("session_shutdown", (_e, ctx) => {
+		if (timer) clearInterval(timer);
+		timer = undefined;
+		ctxRef = undefined;
+		generation++;
+		if (ctx.hasUI) ctx.ui.setStatus(EXTENSION_ID, undefined);
+	});
+}
