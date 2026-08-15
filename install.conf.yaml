@@ -33,9 +33,6 @@
     ~/.pi/agent/AGENTS.md:
       path: ./agents/PI.md
       canonicalize: false
-    ~/.pi/agent/settings.json:
-      path: ./agents/pi/settings.json
-      force: true
     ~/.pi/agent/web-search.json:
       path: ./agents/pi/web-search.json
       force: true
@@ -62,6 +59,9 @@
     - >
       git clean -fdx
       vim/pack/vendor/start/
+    - command: python3 agents/pi/merge-settings.py
+      description: Merge portable Pi settings into live settings.json
+      stdout: true
     - command: >
         if command -v herdr >/dev/null 2>&1; then
         herdr plugin list --json | grep -q 'osamahbeig.pane-mover'

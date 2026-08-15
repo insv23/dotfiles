@@ -1,16 +1,4 @@
 {
-  "lastChangelogVersion": "0.84.2",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.6-luna",
-  "defaultThinkingLevel": "medium",
-  "enabledModels": [
-    "cursor/composer-2.5:fast",
-    "openai-codex/gpt-5.6-luna",
-    "openai-codex/gpt-5.6-sol",
-    "deepseek/deepseek-v4-flash",
-    "cursor/grok-4.6",
-    "openai-codex/gpt-5.6-terra"
-  ],
   "packages": [
     "npm:pi-web-access",
     "npm:pi-agent-browser-native",

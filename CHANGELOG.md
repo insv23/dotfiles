@@ -5,6 +5,7 @@
 ### Pi
 
 - **纳入全局配置管理**：将 `settings.json`、`models.json`、`web-search.json`、手写 `extensions/`、`prompts/`，以及本机技能 `download-music`、`web-clipping` 收入 `agents/pi/`，由 dotbot 链到 `~/.pi/agent/`。安装产物 `npm/`、`git/` 和 `auth.json` 仍留本机；缺包由 Pi 按 `settings.json` 的 `packages` 在启动时补装。
+- **拆开本机模型设置**：`agents/pi/settings.json` 只保留 `packages` 和共享 UI；不再 symlink 到 `~/.pi/agent/settings.json`。`./install` 用 `agents/pi/merge-settings.py` 把便携键 merge 进本机文件，保留 `defaultProvider` / `defaultModel` / `enabledModels` / `lastChangelogVersion`。换机模型列表和切模型写回不再弄脏 git。
 
 ### Herdr
 
