@@ -6,6 +6,7 @@
 
 - **绑定 Pane Mover**：将 `prefix+m` 映射为 `osamahbeig.pane-mover.open`，用插件 overlay 移动窗格。
 - **bootstrap 安装插件**：在 `install.conf.yaml` 中于本机已有 `herdr` 时安装 `osamahbeig/herdr-pane-mover`；已安装则跳过，不把插件 checkout 和 `plugins.json` 纳入仓库。
+- **修正插件安装参数顺序**：`herdr plugin install` 的 `--yes` 必须放在 `owner/repo` 后面，放前面会直接 usage 退出；本机因插件已装而未踩中。失败时输出 stderr，方便下次排错。
 
 ### Lazygit
 

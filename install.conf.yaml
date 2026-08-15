@@ -41,9 +41,11 @@
     - >
       git clean -fdx
       vim/pack/vendor/start/
-    - >
-      if command -v herdr >/dev/null 2>&1; then
-      herdr plugin list --json | grep -q 'osamahbeig.pane-mover'
-      || herdr plugin install --yes osamahbeig/herdr-pane-mover;
-      fi
+    - command: >
+        if command -v herdr >/dev/null 2>&1; then
+        herdr plugin list --json | grep -q 'osamahbeig.pane-mover'
+        || herdr plugin install osamahbeig/herdr-pane-mover --yes;
+        fi
+      description: Install herdr pane-mover plugin if missing
+      stderr: true
   # the following have to run after linking ~/.gitconfig
