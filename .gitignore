@@ -10,6 +10,9 @@ karabiner.json
 # nvim
 lazy-lock.json
 
+# lazygit
+lazygit/state.yml
+
 # tmux plugins
 tmux/plugins
 

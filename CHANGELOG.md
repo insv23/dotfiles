@@ -7,6 +7,10 @@
 - **绑定 Pane Mover**：将 `prefix+m` 映射为 `osamahbeig.pane-mover.open`，用插件 overlay 移动窗格。
 - **bootstrap 安装插件**：在 `install.conf.yaml` 中于本机已有 `herdr` 时安装 `osamahbeig/herdr-pane-mover`；已安装则跳过，不把插件 checkout 和 `plugins.json` 纳入仓库。
 
+### Lazygit
+
+- **忽略运行时状态**：将 `lazygit/state.yml` 加入 `.gitignore`。该文件由 lazygit 写入 `~/.config/lazygit/`，因整个目录 symlink 进仓库而显示为未跟踪，从未进入 git 历史。
+
 ## 2026-08-07
 
 ### Kitty
