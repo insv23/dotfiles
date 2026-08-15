@@ -3,6 +3,10 @@ onboarding = false
 [ui.toast]
 delivery = "terminal"
 
+[theme.custom]
+# Make the active workspace row easier to distinguish.
+surface_dim = "#585b70"
+
 [experimental]
 kitty_graphics = true
 reveal_hidden_cursor_for_cjk_ime = false
