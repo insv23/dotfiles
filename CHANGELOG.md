@@ -1,11 +1,25 @@
 # Changelog
 
+## 2026-08-16
+
+### Pi
+
+- **删除 install-pi-package**：装包用 `pi install`，写回仓库用 `export-pi-settings`，双写 skill 多余。
+- **同步本机便携 UI**：从活文件导出 `terminal.showImages`、`imageWidthCells`、`tuiMode`、`steeringMode`、`treeFilterMode`、`images.autoResize`。本机不必再跑 `./install`。
+- **导出便携 Pi 设置**：`merge-settings.py --export` 把活文件去掉机器键后写回仓库 `settings.json`。新增 `export-pi-settings` skill 跑这一步；`./install` 仍只做仓库 → 活文件。
+- **整目录链 Pi 手写技能**：`~/.pi/agent/skills` 改为指向 `agents/pi/skills/`。该目录只放仓库里的真技能，不再逐条写 yaml；共享技能继续放 `~/.agents/skills/`。
+- **迁出 web-clipping**：该技能只服务 Ob2026 vault，改放到 `~/Documents/Ob2026/.agents/skills/`。Pi 在 vault 内会扫项目 `.agents/skills/`，不必再经 dotbot 链到 `~/.pi/agent/skills/`。
+- **auto-caveman 改读共享路径**：扩展改为加载 `~/.agents/skills/caveman/SKILL.md`。Pi 本就会扫该目录，不必再在 `~/.pi/agent/skills/` 留一层指向 `~/.agents` 的 symlink。
+- **卸载 pi-btw**：从本机活文件和仓库 `packages` 去掉 `npm:pi-btw`。该包久未更新，且无法配合 Cursor 模型做 `/btw` 侧聊。本机不必再跑 `./install`。
+
 ## 2026-08-15
 
 ### Pi
 
 - **纳入全局配置管理**：将 `settings.json`、`models.json`、`web-search.json`、手写 `extensions/`、`prompts/`，以及本机技能 `download-music`、`web-clipping` 收入 `agents/pi/`，由 dotbot 链到 `~/.pi/agent/`。安装产物 `npm/`、`git/` 和 `auth.json` 仍留本机；缺包由 Pi 按 `settings.json` 的 `packages` 在启动时补装。
 - **拆开本机模型设置**：`agents/pi/settings.json` 只保留 `packages` 和共享 UI；不再 symlink 到 `~/.pi/agent/settings.json`。`./install` 用 `agents/pi/merge-settings.py` 把便携键 merge 进本机文件，保留 `defaultProvider` / `defaultModel` / `enabledModels` / `lastChangelogVersion`。换机模型列表和切模型写回不再弄脏 git。
+- **装包双写技能**：新增 `install-pi-package` skill。Pi 用 `pi install` 写本机活文件后，同时把 `npm:` / `git:` spec 追加进仓库 `packages`。本机不必再跑 `./install`；换机靠 git pull 后 `./install`。
+- **安装 pi-btw**：把 `npm:pi-btw` 写入本机活文件和仓库 `packages`，给 Pi 加 `/btw` 旁路侧聊。本机不必再跑 `./install`。
 - **去掉自定义 OpenCode Go**：从 `agents/pi/models.json` 删除 `opencode-go` 及 `glm-5.2` 覆盖。Pi 已内置该 provider，自定义块多余且会改 thinking/compat。要用 Go 走 `/login`。
 
 ### Herdr

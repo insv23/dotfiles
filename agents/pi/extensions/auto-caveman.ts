@@ -1,4 +1,4 @@
-// input: Pi before_agent_start event and ~/.pi/agent/skills/caveman/SKILL.md
+// input: Pi before_agent_start event and ~/.agents/skills/caveman/SKILL.md
 // output: System prompt augmented with Caveman full-mode instructions
 // pos: Global Pi extension that auto-enables Caveman full for every agent turn
 // If this file changes, update this header comment and parent folder docs if present.
@@ -19,13 +19,14 @@ export default function (pi: ExtensionAPI) {
       return { systemPrompt: event.systemPrompt };
     }
 
-    const skillPath = join(home, ".pi/agent/skills/caveman/SKILL.md");
+    const skillDir = join(home, ".agents/skills/caveman");
+    const skillPath = join(skillDir, "SKILL.md");
 
     try {
       const skillBody = stripFrontmatter(readFileSync(skillPath, "utf8"));
       const cavemanPrompt = [
         `<skill name="caveman" location="${skillPath}">`,
-        `References are relative to ${join(home, ".pi/agent/skills/caveman")}.`,
+        `References are relative to ${skillDir}.`,
         "",
         skillBody,
         "</skill>",

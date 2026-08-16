@@ -45,11 +45,8 @@
     ~/.pi/agent/prompts:
       path: ./agents/pi/prompts
       force: true
-    ~/.pi/agent/skills/download-music:
-      path: ./agents/pi/skills/download-music
-      force: true
-    ~/.pi/agent/skills/web-clipping:
-      path: ./agents/pi/skills/web-clipping
+    ~/.pi/agent/skills:
+      path: ./agents/pi/skills
       force: true
 
 - shell:

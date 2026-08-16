@@ -7,11 +7,18 @@
   ],
   "editorPaddingX": 1,
   "terminal": {
-    "showImages": false,
-    "showTerminalProgress": true
+    "showImages": true,
+    "showTerminalProgress": true,
+    "imageWidthCells": 60
   },
   "collapseChangelog": true,
   "quietStartup": false,
   "doubleEscapeAction": "tree",
-  "theme": "dark"
+  "theme": "dark",
+  "tuiMode": "fullscreen",
+  "steeringMode": "all",
+  "treeFilterMode": "default",
+  "images": {
+    "autoResize": true
+  }
 }

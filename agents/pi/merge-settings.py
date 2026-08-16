@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""Merge portable Pi settings into the live ~/.pi/agent/settings.json.
+"""Move portable Pi settings between the live file and the repo file.
+
+Default: repo → live (used by ./install).
+--export: live → repo, dropping machine-only keys.
 
 The live file stays a regular file so model switches do not dirty git.
-Repo settings.json is the source of truth for packages and shared UI keys.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
@@ -32,9 +35,12 @@ def dump_json(path: Path, data: dict) -> None:
     path.write_text(json.dumps(data, indent=2) + "\n")
 
 
-def portable_from_repo() -> dict:
-    data = load_json(REPO_PATH)
+def portable_keys(data: dict) -> dict:
     return {key: value for key, value in data.items() if key not in MACHINE_KEYS}
+
+
+def portable_from_repo() -> dict:
+    return portable_keys(load_json(REPO_PATH))
 
 
 def merge_live() -> dict:
@@ -49,7 +55,27 @@ def merge_live() -> dict:
     return live
 
 
+def export_repo() -> dict:
+    if not LIVE_PATH.exists() and not LIVE_PATH.is_symlink():
+        raise SystemExit(f"missing live settings: {LIVE_PATH}")
+    portable = portable_keys(load_json(LIVE_PATH))
+    dump_json(REPO_PATH, portable)
+    return portable
+
+
 if __name__ == "__main__":
-    merged = merge_live()
-    print(f"merged {len(portable_from_repo())} portable keys into {LIVE_PATH}")
-    print("packages:", ", ".join(merged.get("packages", [])))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--export",
+        action="store_true",
+        help="write portable keys from the live file into the repo file",
+    )
+    args = parser.parse_args()
+    if args.export:
+        portable = export_repo()
+        print(f"exported {len(portable)} portable keys to {REPO_PATH}")
+        print("packages:", ", ".join(portable.get("packages", [])))
+    else:
+        merged = merge_live()
+        print(f"merged {len(portable_from_repo())} portable keys into {LIVE_PATH}")
+        print("packages:", ", ".join(merged.get("packages", [])))
