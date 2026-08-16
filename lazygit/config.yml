@@ -7,4 +7,4 @@ gui:
 git:
   pagers:
     - colorArg: always
-      pager: /opt/homebrew/bin/delta --paging=never --no-gitconfig --dark --line-numbers
+      pager: /opt/homebrew/bin/hunk pager

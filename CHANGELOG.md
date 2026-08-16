@@ -2,6 +2,22 @@
 
 ## 2026-08-16
 
+### Hunk
+
+- **纳入配置管理**：将 `~/.config/hunk/config.toml` 收录到 dotfiles，只链这一份文件。`state.json` 等运行时文件仍留本机。默认打开 `watch`，`hunk diff` 跟工作区走。
+
+### Git
+
+- **命令行 pager 改用 hunk**：`core.pager` 从 `delta` 换成 `hunk pager`。去掉 `[delta]` 和 `interactive.diffFilter`（`git add -p` 不能接 hunk TUI）。`brew-both.txt` 同时去掉 `git-delta`。
+
+### Brew
+
+- **通用清单加入 hunk**：`brew-both.txt` 增加 `hunk`。Homebrew core 对 macOS 和 Linux（x86_64 / ARM64）都有 bottle，`brew install hunk` 两边都能装。
+
+### Lazygit
+
+- **右栏改用 hunk pager**：Files 预览从 Delta 换成 `hunk pager`（本机 0.18.2）。lazygit 里是静态 Pierre 着色，不是完整 hunk TUI。
+
 ### Herdr
 
 - **popup 快捷键**：`prefix+g` 开 lazygit 浮窗，`prefix+t` 开临时 scratch 终端。默认 `goto`（session navigator）腾出 `g`，设成空。

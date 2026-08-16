@@ -1,0 +1,4 @@
+# ~/.config/hunk/config.toml
+# https://hunk.dev/docs/reference/config/
+
+watch = true

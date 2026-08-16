@@ -23,7 +23,7 @@
 [core]
 	editor = micro
 	autocrlf = input
-	pager = delta
+	pager = hunk pager
 	excludesfile = ~/.dotfiles/git/gitignore_global
 [user]
 	name = insv
@@ -33,25 +33,6 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[interactive]
-	diffFilter = delta --color-only
-
-[delta]
-	navigate = true
-	side-by-side = true
-	pager = less --mouse --wheel-lines=3 -R -F -X
-	line-numbers = true
-	line-fill-method = spaces
-	syntax-theme = Coldark-Dark
-	file-style = omit
-	file-decoration-style = omit
-	hunk-header-style = file line-number syntax
-
-
-    # delta detects terminal colors automatically; set one of these to disable auto-detection
-    # dark = true
-    # light = true
-
 [merge]
     conflictstyle = diff3
 
