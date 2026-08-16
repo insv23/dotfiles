@@ -2,6 +2,10 @@
 
 ## 2026-08-16
 
+### Herdr
+
+- **popup 快捷键**：`prefix+g` 开 lazygit 浮窗，`prefix+t` 开临时 scratch 终端。默认 `goto`（session navigator）腾出 `g`，设成空。
+
 ### Pi
 
 - **删除 install-pi-package**：装包用 `pi install`，写回仓库用 `export-pi-settings`，双写 skill 多余。

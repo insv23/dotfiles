@@ -12,8 +12,28 @@ kitty_graphics = true
 reveal_hidden_cursor_for_cjk_ime = false
 cjk_ime_agents = ["claude", "pi", "codex"]
 
+[keys]
+# Free prefix+g for the lazygit popup. Default goto picker is prefix+g.
+goto = ""
+
 [[keys.command]]
 key = "prefix+m"
 type = "plugin_action"
 command = "osamahbeig.pane-mover.open"
 description = "move this pane"
+
+[[keys.command]]
+key = "prefix+g"
+type = "popup"
+command = "lazygit"
+description = "run lazygit"
+width = "80%"
+height = "80%"
+
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = 'exec "${SHELL:-sh}"'
+description = "open scratch terminal"
+width = "80%"
+height = "80%"
