@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-17
+
+### Yazi
+
+- **禁用 Shift+S**：用 `noop` 覆盖 Yazi 默认 `Shift+S` 快捷键，避免误触排序操作。
+
+### Herdr
+
+- **重命名 Tab 快捷键**：将 `prefix+r` 从 `resize_mode` 改为重命名当前 Tab。
+
 ## 2026-08-16
 
 ### Hunk

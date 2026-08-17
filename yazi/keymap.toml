@@ -1,3 +1,9 @@
+##### 禁用默认快捷键 #####
+[[mgr.prepend_keymap]]
+on = "S"
+run = "noop"
+desc = "Disable Shift+S"
+
 ##### chmod 插件快捷键 #####
 [[mgr.prepend_keymap]]
 on   = [ "c", "m" ]

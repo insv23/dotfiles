@@ -15,6 +15,7 @@ cjk_ime_agents = ["claude", "pi", "codex"]
 [keys]
 # Free prefix+g for the lazygit popup. Default goto picker is prefix+g.
 goto = ""
+rename_tab = "prefix+r"
 
 [[keys.command]]
 key = "prefix+m"
