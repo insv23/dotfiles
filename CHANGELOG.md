@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-18
+
+### Kitty / Ghostty
+
+- **光标形状改为竖杠**：在 `kitty/kitty.conf` 添加 `cursor_shape beam`（kitty 无 bar 值，竖杠即 beam），在 `ghostty/config` 添加 `cursor-style = bar`，替代默认的 block（box）光标。
+
 ## 2026-08-17
 
 ### Yazi

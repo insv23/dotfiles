@@ -34,3 +34,6 @@ window-padding-color = extend
 
 # 将 Option 键作为 Meta/Alt，以支持 alt+p 等快捷键
 macos-option-as-alt = true
+
+# 光标形状改为竖杠（bar），替代默认的 block（box）
+cursor-style = bar
