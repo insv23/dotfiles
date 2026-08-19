@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-19
+
+### Zsh
+
+- **zoxide 与 fzf 跳转**：`z` 默认改用 zoxide 交互选择；所有 fd 候选命令加入 `--no-ignore`，使 fzf 可见 Git ignore 文件。
+
+### Yazi
+
+- **交换跳转快捷键**：`z` 改为 zoxide 目录跳转，`Z` 改为 fzf 文件和目录跳转。
+
 ## 2026-08-18
 
 ### Pi

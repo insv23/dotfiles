@@ -127,6 +127,7 @@ ZSH_AUTOSUGGEST_STRATEGY=( atuin_cwd atuin_global history abbreviations)
 
 # ---- zoxide ----
 eval "$(zoxide init zsh)"
+z() { zi "$@"; }
 
 
 # ---- nvm/node ---
