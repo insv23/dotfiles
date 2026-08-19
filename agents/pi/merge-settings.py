@@ -16,13 +16,15 @@ from pathlib import Path
 LIVE_PATH = Path.home() / ".pi/agent/settings.json"
 REPO_PATH = Path(__file__).resolve().parent / "settings.json"
 
-# Pi writes these on model / changelog changes. Never copy them from git.
-MACHINE_KEYS = {
+# Pi writes these locally, or they intentionally point at local-only resources.
+# Never copy them to or from git-managed settings.
+LOCAL_ONLY_KEYS = {
     "lastChangelogVersion",
     "defaultProvider",
     "defaultModel",
     "defaultThinkingLevel",
     "enabledModels",
+    "skills",
 }
 
 
@@ -36,7 +38,7 @@ def dump_json(path: Path, data: dict) -> None:
 
 
 def portable_keys(data: dict) -> dict:
-    return {key: value for key, value in data.items() if key not in MACHINE_KEYS}
+    return {key: value for key, value in data.items() if key not in LOCAL_ONLY_KEYS}
 
 
 def portable_from_repo() -> dict:

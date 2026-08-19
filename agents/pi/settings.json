@@ -3,7 +3,9 @@
     "npm:pi-web-access",
     "npm:pi-agent-browser-native",
     "git:github.com/DietrichGebert/ponytail",
-    "npm:pi-cursor-sdk"
+    "npm:pi-cursor-sdk",
+    "npm:pi-mcp-extension",
+    "npm:pi-codex-search"
   ],
   "editorPaddingX": 1,
   "terminal": {
@@ -16,9 +18,10 @@
   "doubleEscapeAction": "tree",
   "theme": "dark",
   "tuiMode": "fullscreen",
-  "steeringMode": "all",
+  "steeringMode": "one-at-a-time",
   "treeFilterMode": "default",
   "images": {
     "autoResize": true
-  }
+  },
+  "showHardwareCursor": false
 }

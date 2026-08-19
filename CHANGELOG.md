@@ -2,6 +2,16 @@
 
 ## 2026-08-18
 
+### Pi
+
+- **搜索规则改为 skill**：新建 `agents/pi/skills/web-search/` skill（经软链 `~/.pi/agent/skills` 生效），规定默认用 `codex_search` 搜索、`web_search` 兜底；共享风格 `agents/STYLE.md` 不加 pi 专属规则。
+- **搜索规则限本机**：将 `web-search` 移到 `~/.pi/agent/local-skills/`，仅当前 Pi 加载；`merge-settings.py` 将 `skills` 视为本机键，阻止 `--export` 把本机路径写入 Git。
+- **同步便携设置**：导出本机 Pi 的 `pi-mcp-extension`、`pi-codex-search`、`steeringMode` 和硬件光标设置，供其他机器执行 `./install` 后复用。
+
+### Zsh
+
+- **API Key 引号规范**：在 mba 主机私密环境变量文件说明三种引号写法；所有 `*_API_KEY` 改用单引号，避免意外变量或命令替换。
+
 ### Kitty / Ghostty
 
 - **光标形状改为竖杠**：在 `kitty/kitty.conf` 添加 `cursor_shape beam`（kitty 无 bar 值，竖杠即 beam），在 `ghostty/config` 添加 `cursor-style = bar`，替代默认的 block（box）光标。
