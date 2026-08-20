@@ -1,11 +1,17 @@
 onboarding = false
 
+[ui]
+status_indicators = "symbols"
+tab_bar_right = [
+  { type = "command", command = "~/.config/herdr/codex-usage.py", interval_seconds = 60, timeout_seconds = 10 },
+]
+
 [ui.toast]
 delivery = "terminal"
 
 [theme.custom]
-# Make the active workspace row easier to distinguish.
-surface_dim = "#585b70"
+# Make the active Space and focused Agent rows easier to distinguish.
+active_row_bg = "#585b70"
 
 [experimental]
 kitty_graphics = true

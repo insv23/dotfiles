@@ -15,6 +15,7 @@
     ~/.config/karabiner/: ./karabiner
     ~/.config/ghostty/: ./ghostty
     ~/.config/herdr/config.toml: ./herdr/config.toml
+    ~/.config/herdr/codex-usage.py: ./herdr/codex-usage.py
     ~/.config/hunk/config.toml: ./hunk/config.toml
     ~/.config/kitty/: ./kitty
     ~/.config/lazygit/: ./lazygit

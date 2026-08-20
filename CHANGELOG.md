@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-08-20
+
+### Herdr
+
+- **显示 Codex 周额度**：升级至 Herdr 0.8.2，使用 Tab 栏右侧命令状态区展示 Codex 剩余额度与重置时间；脚本纳入仓库并由安装配置链接。Herdr 超时延长至 10 秒，给脚本 5 秒网络超时后的 last-good cache fallback 留出执行时间，避免状态栏消失。
+- **状态指示符**：设置 `ui.status_indicators = "symbols"`，以不同静态符号区分 blocked、working、done、idle 与 unknown agent 状态。
+- **恢复当前行高亮**：Herdr 0.8.2 将普通模式当前 Space 与焦点 Agent 行改用 `theme.custom.active_row_bg`；以 `#585b70` 覆盖此专用颜色，并移除误用于分隔线和滚动条轨道的 `surface_dim`。
+
 ## 2026-08-19
 
 ### Zsh
