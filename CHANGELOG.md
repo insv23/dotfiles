@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-21
+
+### Pi
+
+- **独立全局指令**：移除 Dotbot 对 `~/.pi/agent/AGENTS.md` 的同步，改由独立 private 仓库 `pi-agent-mba` 管理，避免 Pi Agent 配置依赖 dotfiles。
+
 ## 2026-08-20
 
 ### Herdr

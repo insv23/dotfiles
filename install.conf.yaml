@@ -32,9 +32,6 @@
     ~/.zsh:
     ~/.zshenv: ./zsh/zshenv
     ~/.zshrc: ./zsh/zshrc
-    ~/.pi/agent/AGENTS.md:
-      path: ./agents/PI.md
-      canonicalize: false
 
 - shell:
     - touch ~/.hushlogin
