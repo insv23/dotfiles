@@ -151,6 +151,13 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+# 先用 zoxide 选择目录，再启动 yazi
+function yz() {
+	local dir
+	dir="$(zoxide query --interactive)" || return
+	[ -n "$dir" ] && y "$dir"
+}
+
 
 # ---- 定时执行 ----
 

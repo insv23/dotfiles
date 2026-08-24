@@ -8,3 +8,6 @@ __pycache__/
 *.log
 *.tmp
 
+context.md
+research.md
+

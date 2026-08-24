@@ -19,6 +19,7 @@ reveal_hidden_cursor_for_cjk_ime = false
 cjk_ime_agents = ["claude", "pi", "codex"]
 
 [keys]
+prefix = "ctrl+a"
 # Free prefix+g for the lazygit popup. Default goto picker is prefix+g.
 goto = ""
 rename_tab = "prefix+r"

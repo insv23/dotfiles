@@ -1,10 +1,36 @@
 # Changelog
 
+## 2026-08-24
+
+### Herdr
+
+- **Codex 用量请求健壮性**：改用官方 `codex app-server` 获取额度，启动前检查 Codex CLI；覆盖进程、RPC、认证、超时与响应错误，并保留脱敏诊断、上次有效缓存与更新时间。
+
+### Git
+
+- **全局忽略上下文文件**：将 `context.md` 与 `research.md` 加入全局 Git ignore，避免本地工作上下文进入版本控制。
+
+## 2026-08-23
+
+### Mihomo
+
+- **AnyTLS 测试配置**：新增 `test.yaml`，通过 `proxy-providers` 加载 AnyTLS 订阅并修正代理组 YAML 缩进，便于在远程 Omarchy 主机上验证。
+
+## 2026-08-22
+
+### Karabiner
+
+- **Complex Modifications**: 新增 `DoubleTapOptionToShiftCmdV.json`，仅双击左 Option 的两次短按才发出 ⇧⌘V（用于呼出 CleanClip 剪贴板历史）。采用变量状态记录双击窗口，并修正候选规则优先级，确保第二次短按触发快捷键；长按不会触发快捷键；lazy 修饰键保留 Option 在组合键中的原功能。
+
 ## 2026-08-21
 
 ### Pi
 
 - **独立全局指令**：移除 Dotbot 对 `~/.pi/agent/AGENTS.md` 的同步，改由独立 private 仓库 `pi-agent-mba` 管理，避免 Pi Agent 配置依赖 dotfiles。
+
+### Zsh
+
+- **Yazi zoxide 启动**：增加 `yz` 命令，先通过 zoxide 选择目录，再启动 Yazi。
 
 ## 2026-08-20
 
