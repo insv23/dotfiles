@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-25
+
+### Herdr
+
+- **Codex 双窗口用量**：显示 Free 计划标识、5 小时与周额度窗口，扩展缓存并兼容旧缓存格式；错误回退继续显示 Last updated。
+
+### Zsh
+
+- **Bark 通知按需启用**：自动通知默认关闭，设置 `BARK_ENABLED=1` 或运行 `bark enable` 后启用；支持 `长命令; bark notify` 仅通知单次命令结果。
+
 ## 2026-08-24
 
 ### Herdr

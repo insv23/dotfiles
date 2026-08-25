@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Print current Codex weekly subscription quota for Herdr's tab bar."""
+"""Print current Codex subscription quotas for Herdr's tab bar."""
 
 from datetime import datetime
 import json
@@ -15,6 +15,7 @@ from typing import Any, Optional
 
 CACHE_PATH = Path.home() / ".cache" / "herdr" / "codex-usage.json"
 DIAGNOSTIC_PATH = CACHE_PATH.with_name("codex-usage-error.json")
+FIVE_HOUR_MINUTES = 5 * 60
 WEEK_MINUTES = 7 * 24 * 60
 TOTAL_TIMEOUT = 8.0
 TERMINATE_GRACE = 0.25
@@ -35,9 +36,18 @@ class ProviderError(Exception):
         self.exception = exception
 
 
-def display(left: float, reset_at: float, prefix: str = "") -> str:
-    reset = datetime.fromtimestamp(reset_at).astimezone()
-    return f"{prefix}Codex {left:.0f}% left・Reset at {reset:%m/%d %H:%M}"
+def display(usage: dict[str, Any], prefix: str = "") -> str:
+    label = "Codex Free:" if usage.get("plan") == "free" else "Codex:"
+    parts = []
+    for name, window in (("5H", usage.get("five_hour")), ("Week", usage.get("week"))):
+        if window is None:
+            continue
+        reset = datetime.fromtimestamp(window["reset_at"]).astimezone()
+        reset_format = "%H:%M" if name == "5H" else "%m/%d %H:%M"
+        parts.append(
+            f"{name} {window['left']:.0f}% left・Reset at {reset:{reset_format}}"
+        )
+    return f"{prefix}{label} {' | '.join(parts)}"
 
 
 def atomic_write(path: Path, content: str) -> None:
@@ -60,29 +70,77 @@ def atomic_write(path: Path, content: str) -> None:
         raise
 
 
-def cached_usage() -> tuple[float, float, float]:
+def validate_window(window: Any) -> Optional[dict[str, float]]:
+    if not isinstance(window, dict):
+        return None
+    used_percent = float(window["usedPercent"])
+    reset_at = float(window["resetsAt"])
+    if not 0 <= used_percent <= 100 or reset_at <= 0:
+        raise ValueError
+    if not all(math.isfinite(value) for value in (used_percent, reset_at)):
+        raise ValueError
+    datetime.fromtimestamp(reset_at)
+    return {"left": 100 - used_percent, "reset_at": reset_at}
+
+
+def cached_usage() -> tuple[dict[str, Any], float]:
     cached = json.loads(CACHE_PATH.read_text())
     if not isinstance(cached, dict):
         raise ValueError
-    left = float(cached["left"])
-    reset_at = float(cached["reset_at"])
     updated_at = float(cached.get("updated_at", CACHE_PATH.stat().st_mtime))
-    if (
-        not 0 <= left <= 100
-        or reset_at <= 0
-        or updated_at <= 0
-        or not all(math.isfinite(value) for value in (left, reset_at, updated_at))
-    ):
+    if updated_at <= 0 or not math.isfinite(updated_at):
         raise ValueError
-    datetime.fromtimestamp(reset_at)
     datetime.fromtimestamp(updated_at)
-    return left, reset_at, updated_at
+    usage: dict[str, Any] = {"plan": cached.get("plan")}
+    if "windows" in cached:
+        windows = cached["windows"]
+        if not isinstance(windows, dict):
+            raise ValueError
+        for name in ("five_hour", "week"):
+            if name in windows:
+                window = windows[name]
+                if not isinstance(window, dict):
+                    raise ValueError
+                left = float(window["left"])
+                reset_at = float(window["reset_at"])
+                if not 0 <= left <= 100 or reset_at <= 0:
+                    raise ValueError
+                if not all(math.isfinite(value) for value in (left, reset_at)):
+                    raise ValueError
+                datetime.fromtimestamp(reset_at)
+                usage[name] = {"left": left, "reset_at": reset_at}
+    elif "left" in cached and "reset_at" in cached:
+        usage["week"] = {
+            "left": float(cached["left"]),
+            "reset_at": float(cached["reset_at"]),
+        }
+        validate_window(
+            {
+                "usedPercent": 100 - usage["week"]["left"],
+                "resetsAt": usage["week"]["reset_at"],
+            }
+        )
+    else:
+        raise ValueError
+    if not any(usage.get(name) for name in ("five_hour", "week")):
+        raise ValueError
+    return usage, updated_at
 
 
-def save_usage(left: float, reset_at: float) -> None:
+def save_usage(usage: dict[str, Any]) -> None:
     atomic_write(
         CACHE_PATH,
-        json.dumps({"left": left, "reset_at": reset_at, "updated_at": time.time()}),
+        json.dumps(
+            {
+                "plan": usage.get("plan"),
+                "windows": {
+                    name: usage[name]
+                    for name in ("five_hour", "week")
+                    if usage.get(name) is not None
+                },
+                "updated_at": time.time(),
+            }
+        ),
     )
 
 
@@ -186,7 +244,7 @@ def stop_process(process: subprocess.Popen[bytes]) -> None:
         pass
 
 
-def read_usage(codex_path: str) -> tuple[float, float]:
+def read_usage(codex_path: str) -> dict[str, Any]:
     try:
         process = subprocess.Popen(
             [codex_path, "app-server", "--stdio"],
@@ -236,26 +294,23 @@ def read_usage(codex_path: str) -> tuple[float, float]:
         limits = limits_result.get("rateLimits")
         if not isinstance(limits, dict):
             raise ProviderError("Invalid response")
-        windows = (limits.get("primary"), limits.get("secondary"))
-        weekly = next(
-            (
-                window
-                for window in windows
-                if isinstance(window, dict)
-                and window.get("windowDurationMins") == WEEK_MINUTES
-            ),
-            None,
+        plan = (
+            account.get("planType")
+            or account_result.get("planType")
+            or limits_result.get("planType")
+            or limits.get("planType")
         )
-        if weekly is None:
+        usage: dict[str, Any] = {"plan": plan}
+        for window in (limits.get("primary"), limits.get("secondary")):
+            if not isinstance(window, dict):
+                continue
+            duration = window.get("windowDurationMins")
+            name = {FIVE_HOUR_MINUTES: "five_hour", WEEK_MINUTES: "week"}.get(duration)
+            if name is not None and name not in usage:
+                usage[name] = validate_window(window)
+        if not any(usage.get(name) for name in ("five_hour", "week")):
             raise ProviderError("Invalid response")
-        used_percent = float(weekly["usedPercent"])
-        reset_at = float(weekly["resetsAt"])
-        if not 0 <= used_percent <= 100 or reset_at <= 0:
-            raise ValueError
-        if not all(math.isfinite(value) for value in (used_percent, reset_at)):
-            raise ValueError
-        datetime.fromtimestamp(reset_at)
-        return 100 - used_percent, reset_at
+        return usage
     except ProviderError:
         raise
     except (KeyError, TypeError, ValueError, OverflowError, OSError) as error:
@@ -275,9 +330,10 @@ def render_failure(error: ProviderError) -> None:
     except OSError:
         pass
     if cached is not None:
-        updated = datetime.fromtimestamp(cached[2]).astimezone()
+        usage, updated_at = cached
+        updated = datetime.fromtimestamp(updated_at).astimezone()
         prefix = f"({error.reason}・Last updated at {updated:%m/%d %H:%M}) "
-        print(display(cached[0], cached[1], prefix))
+        print(display(usage, prefix))
     else:
         print(f"Codex --・{error.reason}")
 
@@ -288,16 +344,16 @@ def main() -> None:
         render_failure(ProviderError("Codex CLI not found"))
         return
     try:
-        left, reset_at = read_usage(codex_path)
+        usage = read_usage(codex_path)
     except ProviderError as error:
         render_failure(error)
         return
     try:
-        save_usage(left, reset_at)
+        save_usage(usage)
         clear_error()
     except OSError:
         pass
-    print(display(left, reset_at))
+    print(display(usage))
 
 
 if __name__ == "__main__":

@@ -1,4 +1,6 @@
 # 一行一个命令前缀；按完整命令行前缀匹配
+# BARK_ENABLED=1 时，bark.ignore 内匹配的命令前缀仍不会自动通知。
+# 但 `被忽略的命令; bark notify` 仍会通知，因为单词通知会跳过忽略列表
 ssh
 kitten
 k
@@ -9,8 +11,10 @@ nvim
 nv
 zja
 y
+yz
 claude
 cc
 ccc
 ti
 tmat
+z

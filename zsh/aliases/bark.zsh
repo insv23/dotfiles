@@ -1,8 +1,13 @@
 # iOS 推送通知：通过 Bark App 在长命令结束后发送通知
+# 当前终端：所有超过阈值命令自动通知：`export BARK_ENABLED=1`，新终端默认 BARK_ENABLED=0，不会自动通知。
+# 等价 `bark enable`
+# 关闭 `bark disable`
+# 单次命令(不受开关和阈值影响)：`你的命令; bark notify`
+# 查看状态：`bark status`
 
 BARK_KEY="${BARK_KEY:-}"
 BARK_THRESHOLD="${BARK_THRESHOLD:-10}"
-BARK_ENABLED="${BARK_ENABLED:-true}"
+BARK_ENABLED="${BARK_ENABLED:-0}"
 BARK_IGNORE_FILE="${BARK_IGNORE_FILE:-$HOME/.dotfiles/zsh/aliases/bark.ignore}"
 
 typeset -g BARK_CMD_START
@@ -140,7 +145,7 @@ _bark_print_status() {
   [[ -n "$BARK_KEY" ]] && key_status="已配置"
 
   print "Bark 状态:"
-  print "  启用状态: $BARK_ENABLED"
+  print "  自动通知: $([[ "$BARK_ENABLED" == "1" ]] && print 启用 || print 禁用) (BARK_ENABLED=$BARK_ENABLED)"
   print "  时间阈值: ${BARK_THRESHOLD}秒"
   print "  BARK_KEY: $key_status"
   print "  当前主机: $(hostname -s)"
@@ -154,8 +159,9 @@ _bark_print_help() {
   print "  bark help                    显示帮助"
   print "  bark status                  显示当前状态"
   print "  bark test                    发送测试通知"
-  print "  bark enable                  启用自动通知"
-  print "  bark disable                 禁用自动通知"
+  print "  bark enable                  启用自动通知 (BARK_ENABLED=1)"
+  print "  bark disable                 禁用自动通知 (BARK_ENABLED=0)"
+  print "  长命令; bark notify          仅通知该命令结果"
   print "  bark threshold               显示当前阈值"
   print "  bark threshold <秒数>        设置当前会话的通知阈值"
   print "  bark ignore list             显示忽略列表"
@@ -244,26 +250,13 @@ _bark_preexec() {
   [[ ${#BARK_CMD_SHORT} -gt 80 ]] && BARK_CMD_SHORT="${BARK_CMD_SHORT:0:80}..."
 }
 
-_bark_precmd() {
-  local exit_code=$?
-
-  [[ "$BARK_ENABLED" == "true" ]] || return
-  [[ -n "$BARK_CMD_START" ]] || return
-  [[ "$BARK_THRESHOLD" == <-> ]] || return
-
-  local duration=$((SECONDS - BARK_CMD_START))
-  local cmd_raw="$BARK_CMD_RAW"
-  local cmd_short="$BARK_CMD_SHORT"
-
-  unset BARK_CMD_START
-  unset BARK_CMD_RAW
-  unset BARK_CMD_SHORT
-
-  [[ "$duration" -lt "$BARK_THRESHOLD" ]] && return
-  _bark_is_ignored "$cmd_raw" && return
-
+_bark_notify_result() {
+  local exit_code="$1"
+  local duration="$2"
+  local cmd_short="$3"
   local host="[$(hostname -s)]"
   local title sound group
+
   if [[ "$exit_code" -eq 0 ]]; then
     title="${host}✅ 命令完成"
     sound="glass"
@@ -283,7 +276,34 @@ _bark_precmd() {
   _bark_send "$title" "$body" "$sound" "$group"
 }
 
+_bark_precmd() {
+  local exit_code=$?
+
+  if [[ "$BARK_ENABLED" != "1" ]]; then
+    unset BARK_CMD_START BARK_CMD_RAW BARK_CMD_SHORT
+    return
+  fi
+  [[ -n "$BARK_CMD_START" ]] || return
+  if [[ "$BARK_THRESHOLD" != <-> ]]; then
+    unset BARK_CMD_START BARK_CMD_RAW BARK_CMD_SHORT
+    return
+  fi
+
+  local duration=$((SECONDS - BARK_CMD_START))
+  local cmd_raw="$BARK_CMD_RAW"
+  local cmd_short="$BARK_CMD_SHORT"
+
+  unset BARK_CMD_START
+  unset BARK_CMD_RAW
+  unset BARK_CMD_SHORT
+
+  [[ "$duration" -lt "$BARK_THRESHOLD" ]] && return
+  _bark_is_ignored "$cmd_raw" && return
+  _bark_notify_result "$exit_code" "$duration" "$cmd_short"
+}
+
 bark() {
+  local previous_exit_code=$?
   local cmd="${1:-}"
 
   case "$cmd" in
@@ -311,12 +331,26 @@ bark() {
 发送时间: $(date '+%H:%M:%S')" "bell" "$(hostname -s)-test"
       print "如果配置正确，你应该会收到通知"
       ;;
+    notify)
+      local exit_code="$previous_exit_code"
+      [[ -n "$BARK_CMD_START" ]] || return "$exit_code"
+
+      local duration=$((SECONDS - BARK_CMD_START))
+      local cmd_short="${BARK_CMD_RAW%; bark notify}"
+      [[ ${#cmd_short} -gt 80 ]] && cmd_short="${cmd_short:0:80}..."
+
+      unset BARK_CMD_START
+      unset BARK_CMD_RAW
+      unset BARK_CMD_SHORT
+      _bark_notify_result "$exit_code" "$duration" "$cmd_short"
+      return "$exit_code"
+      ;;
     enable)
-      export BARK_ENABLED="true"
+      export BARK_ENABLED="1"
       print "Bark 通知已启用"
       ;;
     disable)
-      export BARK_ENABLED="false"
+      export BARK_ENABLED="0"
       print "Bark 通知已禁用"
       ;;
     threshold)
