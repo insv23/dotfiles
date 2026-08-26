@@ -1,14 +1,26 @@
 # Changelog
 
+## 2026-08-26
+
+### Herdr
+
+- **Workspace 快捷键**：新增 `Option+1` 至 `Option+9` 直接切换 workspace，新增 `Option+Tab` 循环切换 workspace。
+- **Mac 功率状态**：新增 `mac-power.py`，读取 Apple Silicon 总功率；通过主机分发脚本让 Mac mini 显示功率、MBA 保留 Codex 用量。
+
 ## 2026-08-25
 
 ### Herdr
 
 - **Codex 双窗口用量**：显示 Free 计划标识、5 小时与周额度窗口，扩展缓存并兼容旧缓存格式；错误回退继续显示 Last updated。
+- **Tab 快捷键**：新增 `Ctrl+1` 至 `Ctrl+9` 直接切换 Herdr Tab。
 
 ### Zsh
 
 - **Bark 通知按需启用**：自动通知默认关闭，设置 `BARK_ENABLED=1` 或运行 `bark enable` 后启用；支持 `长命令; bark notify` 仅通知单次命令结果。
+
+### Vim
+
+- **Herdr Scrollback 初始光标**：Vim 启动时主动初始化 Normal 模式的块状光标，退出时恢复终端默认光标，修复 Herdr `prefix+e` 打开 scrollback 后继承竖杠光标的问题。
 
 ## 2026-08-24
 

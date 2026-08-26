@@ -3,7 +3,7 @@ onboarding = false
 [ui]
 status_indicators = "symbols"
 tab_bar_right = [
-  { type = "command", command = "~/.config/herdr/codex-usage.py", interval_seconds = 60, timeout_seconds = 10 },
+  { type = "command", command = "~/.config/herdr/host-status.sh", interval_seconds = 60, timeout_seconds = 10 },
 ]
 
 [ui.toast]
@@ -20,6 +20,9 @@ cjk_ime_agents = ["claude", "pi", "codex"]
 
 [keys]
 prefix = "ctrl+a"
+switch_tab = "ctrl+1..9"
+switch_workspace = "alt+1..9"
+next_workspace = "alt+tab"
 # Free prefix+g for the lazygit popup. Default goto picker is prefix+g.
 goto = ""
 rename_tab = "prefix+r"
