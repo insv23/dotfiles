@@ -5,7 +5,7 @@
 ### Herdr
 
 - **Workspace 快捷键**：新增 `Option+1` 至 `Option+9` 直接切换 workspace，新增 `Option+Tab` 循环切换 workspace。
-- **Mac 功率状态**：新增 `mac-power.py`，读取 Apple Silicon 总功率；通过主机分发脚本让 Mac mini 显示功率、MBA 保留 Codex 用量。
+- **Mac 功率状态**：新增 `mac-power.py`，读取 Apple Silicon 总功率；通过主机分发脚本仅让 Mac mini 以 2 秒刷新功率、MBA 以 60 秒刷新 Codex 用量。
 
 ## 2026-08-25
 
