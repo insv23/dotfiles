@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-05
+
+### Kitty
+
+- **Herdr 提示符搜索宏**：新增 `Ctrl+A` 后按 `u` 的原生多键映射，进入 Herdr Copy mode 并向上搜索 `❯`，确认后可用 `n/N` 继续导航；不依赖插件或剪贴板，仅适用于 Herdr 正常模式。同步更新 Kitty 配置及快捷键索引。
+
 ## 2026-08-29
 
 ### Hammerspoon
