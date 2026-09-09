@@ -27,6 +27,7 @@ split_horizontal = "prefix+d"
 switch_tab = "ctrl+1..9"
 switch_workspace = "alt+1..9"
 next_workspace = "alt+tab"
+previous_workspace = "alt+shift+tab"
 # Free prefix+g for the lazygit popup. Default goto picker is prefix+g.
 goto = ""
 rename_tab = "prefix+r"

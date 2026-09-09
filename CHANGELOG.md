@@ -4,7 +4,11 @@
 
 ### Yazi
 
-- **插件匹配规则兼容性**：将 Git fetcher 与 eza 目录 previewer 的过期 `name` 字段改为 Yazi 26.1.22 支持的 `url`，恢复 Git 状态标记和目录预览。
+- **官方图标插件**：通过 `ya pkg delete yazi-rs/plugins:git` 卸载。
+
+### Herdr
+
+- **Workspace 快捷键**：新增 `Option+Shift+Tab` 切换到上一个 Workspace。
 
 ## 2026-09-06
 
