@@ -34,8 +34,8 @@ prepend_previewers = [
 ]
 
 prepend_fetchers = [
-    { id = "git", url = "*", run = "git" },
-    { id = "git", url = "*/", run = "git" },
+    { id = "git-status", url = "*", run = "git-status", group = "git-status" },
+    { id = "git-status", url = "*/", run = "git-status", group = "git-status" },
 ]
 
 [opener]
