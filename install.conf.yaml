@@ -33,6 +33,7 @@
     ~/.vimrc: ./vim/vimrc
     ~/.zsh:
     ~/.zshenv: ./zsh/zshenv
+    ~/.zprofile: ./zsh/zprofile
     ~/.zshrc: ./zsh/zshrc
 
 - shell:

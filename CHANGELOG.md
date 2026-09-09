@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-09
+
+### Yazi
+
+- **插件匹配规则兼容性**：将 Git fetcher 与 eza 目录 previewer 的过期 `name` 字段改为 Yazi 26.1.22 支持的 `url`，恢复 Git 状态标记和目录预览。
+
 ## 2026-09-06
 
 ### Zsh

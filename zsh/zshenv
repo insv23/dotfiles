@@ -19,15 +19,15 @@
 # fi
 
 # Homebrew 当前写法：静态设置标准安装路径下的环境变量，避免每次启动 zsh 都 fork `brew shellenv` 和 `path_helper`。
+# `path` 与 `PATH` 绑定；`-U` 去重并保留首次出现的路径。
+typeset -U path PATH
+
 # macOS Homebrew
 if [ -x "/opt/homebrew/bin/brew" ]; then
   export HOMEBREW_PREFIX="/opt/homebrew"
   export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
   export HOMEBREW_REPOSITORY="/opt/homebrew"
-  case ":$PATH:" in
-    *":/opt/homebrew/bin:/opt/homebrew/sbin:"*) ;;
-    *) export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" ;;
-  esac
+  path=(/opt/homebrew/bin /opt/homebrew/sbin $path)
   export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
   export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 fi
@@ -37,13 +37,12 @@ if [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
   export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
   export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
   export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
-  case ":$PATH:" in
-    *":/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:"*) ;;
-    *) export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH" ;;
-  esac
+  path=(/home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin $path)
   export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
   export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
 fi
+
+export PATH
 
 # XDG Base Directory Specification
 # 让 macOS 上的工具（如 lazygit）使用 ~/.config 而不是 ~/Library/Application Support

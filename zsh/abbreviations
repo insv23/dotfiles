@@ -56,9 +56,9 @@ abbr ....="cd ../../.."
 abbr dsize="du -sh * | sort -hr"
 
 # ===== Zsh 会话 =====
-# 完整重启当前 zsh 进程
-abbr re="exec zsh"
-abbr rezsh="exec zsh"
+# 完整重启当前 interactive login zsh 进程
+abbr re="exec zsh -il"
+abbr rezsh="exec zsh -il"
 # 重新加载 zshrc，适合热更新配置
 abbr szsh="source ~/.zshrc"
 abbr e="exit"

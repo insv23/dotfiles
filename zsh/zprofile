@@ -1,0 +1,5 @@
+# macOS /etc/zprofile runs path_helper before this file and puts system paths first.
+# Keep Homebrew commands ahead of Apple-provided versions in login shells.
+typeset -U path PATH
+path=(/opt/homebrew/bin /opt/homebrew/sbin $path)
+export PATH
