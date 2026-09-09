@@ -8,6 +8,7 @@
 #   ^F  删除到上一个目录层级
 #   ^D  清空引号内容
 #   ^G  进入 vim 编辑
+#   ^X  复制并清空完整输入缓冲区
 # -------------------------
 
 bindkey -e # 使用 emacs 模式
@@ -17,6 +18,20 @@ bindkey -e # 使用 emacs 模式
 # Tab: 接受 zsh-autosuggestions 的灰色建议；Tab Tab: 触发 fzf --zsh 的补全
 bindkey '^I' autosuggest-accept
 bindkey '^I^I' fzf-completion
+
+# ^X: 复制完整输入后清空；仅在 pbcopy 成功时才删除，避免剪贴板失败导致内容丢失。
+copy-and-clear-buffer () {
+    local input=$BUFFER
+    if print -rn -- "$input" | pbcopy; then
+        BUFFER=''
+        CURSOR=0
+    else
+        zle beep
+        return 1
+    fi
+}
+zle -N copy-and-clear-buffer
+bindkey '^x' copy-and-clear-buffer
 
 # ^F: 删除光标左侧的一个目录层级
 backward-kill-dir () {

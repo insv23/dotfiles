@@ -2,11 +2,13 @@ onboarding = false
 
 [ui]
 status_indicators = "symbols"
+prompt_new_tab_name = false
 tab_bar_right = [
   { type = "command", command = "~/.config/herdr/host-status.sh codex", interval_seconds = 60, timeout_seconds = 10 },
   { type = "command", command = "~/.config/herdr/host-status.sh power", interval_seconds = 2, timeout_seconds = 10 },
 ]
 
+agent_panel_sort = "spaces"
 [ui.toast]
 delivery = "terminal"
 
@@ -21,6 +23,7 @@ cjk_ime_agents = ["claude", "pi", "codex"]
 
 [keys]
 prefix = "ctrl+a"
+split_horizontal = "prefix+d"
 switch_tab = "ctrl+1..9"
 switch_workspace = "alt+1..9"
 next_workspace = "alt+tab"
@@ -49,3 +52,15 @@ command = 'exec "${SHELL:-sh}"'
 description = "open scratch terminal"
 width = "80%"
 height = "80%"
+
+[[keys.command]]
+key = "prefix+f"
+type = "plugin_action"
+command = "herdr-file-viewer.open-file-viewer"
+description = "open file viewer in split"
+
+[[keys.command]]
+key = "prefix+shift+f"
+type = "plugin_action"
+command = "herdr-file-viewer.open-file-viewer-tab"
+description = "open file viewer in tab"
