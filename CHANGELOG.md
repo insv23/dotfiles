@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-09-17
+
+### Zsh
+
+- **命令耗时归属**：`command_execution_time` 从 `POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS` 移除，新增 `zsh/command-duration.zsh`：在 `precmd` 里先于提示符打印一行 `U+F252 21s`，耗时贴着刚跑完那条命令的输出，不再挂在下一条命令旁边。图标用 Nerd Font 沙漏 U+F252（p10k `nerdfont-v3` 模式下该 segment 的内置图标），非 emoji；已解析 `MapleMono-NF-CN-Regular.ttf` 的 cmap 确认该码点有字形，未选 U+F017（时钟）是因为它与 `time` segment 的内置图标同形。
+- **虚线留在目录行**：先试过把耗时做成 p10k 左侧首行 segment，但 `POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR` 的 `·` 只在提示符首行生效，耗时一占首行虚线就被搬上去，右侧 `status`/`time` 也跟着错位（左右行数不等时 p10k 把缺的行补在右侧末尾，见 `internal/p10k.zsh` 的 `_p9k_init_lines`）。改成在提示符之前打印后，提示符结构保持原样。
+- **空行位置**：`POWERLEVEL9K_PROMPT_ADD_NEWLINE` 保持 `true`。空行来自 PROMPT 自身开头，钩子的 `print` 在 PROMPT 之前写出，顺序固定为「输出 → 耗时行 → 空行 → 苹果行」。
+- **时钟改为开始时间**：`POWERLEVEL9K_TIME_UPDATE_ON_COMMAND` 由 `false` 改为 `true`，按回车时刷新，每条命令行右侧的时间是该命令自己的开始时间。
+- **阈值、格式与退出码**：`COMMAND_DURATION_THRESHOLD` 默认 3 秒以下不打印，时长格式沿用 p10k 的 `d h m s`；`_command_duration_precmd` 进入即存住并用 `return $ret` 还原 `$?`，否则算术会改写退出码，污染 p10k 的 `status` segment。`zsh/zshrc` 在 jj-status 之后 source 该文件。
+
 ## 2026-09-16
 
 ### Hammerspoon

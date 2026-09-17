@@ -16,6 +16,11 @@ source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.zsh/custom-plugins/jj-status/jj-status.plugin.zsh
 
 
+# ---- command-duration (自定义) ----
+# 在提示符之前打印上一条命令的耗时，让它紧贴自己的输出（p10k 的 segment 做不到这一点）
+source ~/.zsh/command-duration.zsh
+
+
 # ---- zsh-completions ----
 # 一个补全规则的集合, 提供了各种命令、选项、文件名、目录名、变量名等的补全规则。
 # 支持的列表: https://github.com/zsh-users/zsh-completions/tree/master/src
