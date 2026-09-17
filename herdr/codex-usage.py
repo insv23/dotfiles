@@ -7,14 +7,37 @@ import math
 from pathlib import Path
 import selectors
 import shutil
+import sqlite3
 import subprocess
 import tempfile
 import time
 from typing import Any, Optional
 
 
-CACHE_PATH = Path.home() / ".cache" / "herdr" / "codex-usage.json"
-DIAGNOSTIC_PATH = CACHE_PATH.with_name("codex-usage-error.json")
+STATE_DIR = Path.home() / ".cache" / "herdr"
+DIAGNOSTIC_PATH = STATE_DIR / "codex-usage-error.json"
+DB_PATH = STATE_DIR / "codex-usage.db"
+DB_SCHEMA = """
+CREATE TABLE IF NOT EXISTS usage_samples (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    sampled_at REAL NOT NULL,
+    plan TEXT,
+    five_hour_left REAL,
+    five_hour_reset_at REAL,
+    weekly_left REAL,
+    weekly_reset_at REAL
+)
+"""
+DB_INDEX = (
+    "CREATE INDEX IF NOT EXISTS usage_samples_sampled_at ON usage_samples (sampled_at)"
+)
+SAMPLE_FIELDS = (
+    "plan",
+    "five_hour_left",
+    "five_hour_reset_at",
+    "weekly_left",
+    "weekly_reset_at",
+)
 FIVE_HOUR_MINUTES = 5 * 60
 WEEK_MINUTES = 7 * 24 * 60
 TOTAL_TIMEOUT = 8.0
@@ -83,65 +106,73 @@ def validate_window(window: Any) -> Optional[dict[str, float]]:
     return {"left": 100 - used_percent, "reset_at": reset_at}
 
 
+def record_sample(usage: dict[str, Any], sampled_at: float) -> None:
+    """Store a Codex usage sample only when a measured value changed."""
+    five_hour = usage.get("five_hour") or {}
+    week = usage.get("week") or {}
+    row = (
+        sampled_at,
+        usage.get("plan"),
+        five_hour.get("left"),
+        five_hour.get("reset_at"),
+        week.get("left"),
+        week.get("reset_at"),
+    )
+    DB_PATH.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+    connection = sqlite3.connect(DB_PATH, timeout=2.0)
+    try:
+        connection.execute(DB_SCHEMA)
+        connection.execute(DB_INDEX)
+        last = connection.execute(
+            "SELECT " + ", ".join(SAMPLE_FIELDS)
+            + " FROM usage_samples ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+        if last is None or tuple(last) != row[1:]:
+            connection.execute(
+                "INSERT INTO usage_samples (sampled_at, "
+                + ", ".join(SAMPLE_FIELDS)
+                + ") VALUES (?, ?, ?, ?, ?, ?)",
+                row,
+            )
+            connection.commit()
+    finally:
+        connection.close()
+
+
 def cached_usage() -> tuple[dict[str, Any], float]:
-    cached = json.loads(CACHE_PATH.read_text())
-    if not isinstance(cached, dict):
+    connection = sqlite3.connect(DB_PATH, timeout=2.0)
+    try:
+        row = connection.execute(
+            "SELECT sampled_at, " + ", ".join(SAMPLE_FIELDS)
+            + " FROM usage_samples ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+    finally:
+        connection.close()
+    if row is None:
         raise ValueError
-    updated_at = float(cached.get("updated_at", CACHE_PATH.stat().st_mtime))
+    updated_at, plan, five_left, five_reset, week_left, week_reset = row
+    updated_at = float(updated_at)
     if updated_at <= 0 or not math.isfinite(updated_at):
         raise ValueError
     datetime.fromtimestamp(updated_at)
-    usage: dict[str, Any] = {"plan": cached.get("plan")}
-    if "windows" in cached:
-        windows = cached["windows"]
-        if not isinstance(windows, dict):
+    usage: dict[str, Any] = {"plan": plan}
+    for name, left, reset_at in (
+        ("five_hour", five_left, five_reset),
+        ("week", week_left, week_reset),
+    ):
+        if left is None or reset_at is None:
+            continue
+        left = float(left)
+        reset_at = float(reset_at)
+        if not 0 <= left <= 100 or reset_at <= 0:
             raise ValueError
-        for name in ("five_hour", "week"):
-            if name in windows:
-                window = windows[name]
-                if not isinstance(window, dict):
-                    raise ValueError
-                left = float(window["left"])
-                reset_at = float(window["reset_at"])
-                if not 0 <= left <= 100 or reset_at <= 0:
-                    raise ValueError
-                if not all(math.isfinite(value) for value in (left, reset_at)):
-                    raise ValueError
-                datetime.fromtimestamp(reset_at)
-                usage[name] = {"left": left, "reset_at": reset_at}
-    elif "left" in cached and "reset_at" in cached:
-        usage["week"] = {
-            "left": float(cached["left"]),
-            "reset_at": float(cached["reset_at"]),
-        }
-        validate_window(
-            {
-                "usedPercent": 100 - usage["week"]["left"],
-                "resetsAt": usage["week"]["reset_at"],
-            }
-        )
-    else:
-        raise ValueError
+        if not all(math.isfinite(value) for value in (left, reset_at)):
+            raise ValueError
+        datetime.fromtimestamp(reset_at)
+        usage[name] = {"left": left, "reset_at": reset_at}
     if not any(usage.get(name) for name in ("five_hour", "week")):
         raise ValueError
     return usage, updated_at
-
-
-def save_usage(usage: dict[str, Any]) -> None:
-    atomic_write(
-        CACHE_PATH,
-        json.dumps(
-            {
-                "plan": usage.get("plan"),
-                "windows": {
-                    name: usage[name]
-                    for name in ("five_hour", "week")
-                    if usage.get(name) is not None
-                },
-                "updated_at": time.time(),
-            }
-        ),
-    )
 
 
 def record_error(error: ProviderError) -> None:
@@ -323,7 +354,7 @@ def read_usage(codex_path: str) -> dict[str, Any]:
 def render_failure(error: ProviderError) -> None:
     try:
         cached = cached_usage()
-    except (OSError, TypeError, ValueError, OverflowError, json.JSONDecodeError):
+    except (OSError, TypeError, ValueError, OverflowError, sqlite3.Error):
         cached = None
     try:
         record_error(error)
@@ -349,9 +380,9 @@ def main() -> None:
         render_failure(error)
         return
     try:
-        save_usage(usage)
+        record_sample(usage, time.time())
         clear_error()
-    except OSError:
+    except (OSError, sqlite3.Error):
         pass
     print(display(usage))
 

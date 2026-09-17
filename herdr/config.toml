@@ -4,7 +4,7 @@ onboarding = false
 status_indicators = "symbols"
 prompt_new_tab_name = false
 tab_bar_right = [
-  { type = "command", command = "~/.config/herdr/host-status.sh codex", interval_seconds = 60, timeout_seconds = 10 },
+  { type = "command", command = "~/.config/herdr/host-status.sh codex", interval_seconds = 30, timeout_seconds = 10 },
   { type = "command", command = "~/.config/herdr/host-status.sh power", interval_seconds = 2, timeout_seconds = 10 },
 ]
 
