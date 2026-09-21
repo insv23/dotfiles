@@ -154,7 +154,8 @@ def display(usage: dict[str, Any], prefix: str = "") -> str:
         tail = f"{int(requests)} req"
         average = usage.get("average")
         if average is not None:
-            tail = f"{tail}({format_average(average)})"
+            # Δ marks the value as the latest sample pair, not the period average.
+            tail = f"{tail}(Δ{format_average(average)})"
         body = f"{body} | {tail}" if body else tail
     return f"{prefix}{body}"
 
@@ -299,6 +300,61 @@ def read_cached_plan(now: float) -> dict[str, Any]:
     if period_end <= now or now - updated_at > PLAN_CACHE_TTL:
         return {}
     return {"plan": plan, "period_end": period_end}
+
+
+def read_previous_sample() -> Optional[tuple[float, float, Optional[float]]]:
+    """Return (month_used, requests, average_cost) of the newest usable row."""
+    try:
+        connection = connect_database()
+        try:
+            row = connection.execute(
+                "SELECT month_used, requests, average_cost FROM usage_samples "
+                "WHERE month_used IS NOT NULL AND requests IS NOT NULL "
+                "ORDER BY id DESC LIMIT 1"
+            ).fetchone()
+        finally:
+            connection.close()
+    except (OSError, sqlite3.Error):
+        return None
+    if row is None:
+        return None
+    month_used = float(row[0])
+    requests = float(row[1])
+    average = None if row[2] is None else float(row[2])
+    if not all(
+        math.isfinite(value)
+        for value in (month_used, requests, average)
+        if value is not None
+    ):
+        return None
+    return month_used, requests, average
+
+
+def apply_marginal_average(usage: dict[str, Any]) -> None:
+    """Replace the period-wide average with what the last refresh cost per request.
+
+    The subscription average covers the whole billing period, so requests made on
+    a cheaper model earlier in the cycle keep pulling it down after the model
+    changes. The newest stored row carries the previous balance and request count,
+    so the difference between the two samples prices only this refresh. Call it
+    before the current sample is recorded, or the "previous" row becomes this one.
+    """
+    previous = read_previous_sample()
+    if previous is None:
+        return
+    previous_used, previous_requests, previous_average = previous
+    if previous_average is not None:
+        # No request landed since the last sample, or the period reset: the pair of
+        # rows cannot be divided, so repeat the last known marginal price.
+        usage["average"] = previous_average
+    month_used = usage.get("month_used")
+    requests = usage.get("requests")
+    if month_used is None or requests is None:
+        return
+    delta_requests = requests - previous_requests
+    delta_cost = month_used - previous_used
+    if delta_requests > 0 and delta_cost >= 0:
+        usage["average"] = delta_cost / delta_requests
 
 
 def record_sample(usage: dict[str, Any], sampled_at: float) -> Optional[str]:
@@ -533,7 +589,7 @@ def print_history(limit: int) -> None:
     if not rows:
         print("No samples recorded yet.")
         return
-    print(f"{'when':<17}{'5h':>9}{'7d':>9}{'month':>9}{'req':>8}{'avg':>10}{'d(5h)':>9}")
+    print(f"{'when':<17}{'5h':>9}{'7d':>9}{'month':>9}{'req':>8}{'d_avg':>10}{'d(5h)':>9}")
     total = len(rows)
     for index, row in enumerate(rows):
         sampled_at, five_hour, weekly, month, requests, average = row
@@ -565,6 +621,7 @@ def main() -> None:
     except ProviderError as error:
         render_failure(error)
         return
+    apply_marginal_average(usage)
     record_sample(usage, time.time())
     try:
         clear_error()

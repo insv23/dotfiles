@@ -10,6 +10,12 @@
 - **时钟改为开始时间**：`POWERLEVEL9K_TIME_UPDATE_ON_COMMAND` 由 `false` 改为 `true`，按回车时刷新，每条命令行右侧的时间是该命令自己的开始时间。
 - **阈值、格式与退出码**：`COMMAND_DURATION_THRESHOLD` 默认 3 秒以下不打印，时长格式沿用 p10k 的 `d h m s`；`_command_duration_precmd` 进入即存住并用 `return $ret` 还原 `$?`，否则算术会改写退出码，污染 p10k 的 `status` segment。`zsh/zshrc` 在 jj-status 之后 source 该文件。
 
+### Herdr
+
+- **每次请求单价改为边际值**：`herdr/commandcode-usage.py` 不再直接显示订阅接口返回的 `averageCost`，改为用本次采样的 `totalCost`/`totalCount` 减去数据库中最新一条记录的对应值，两笔差值相除得到这一轮刷新的水单单价，标签加 `Δ` 前缀。
+- **换模型后均价失真**：接口均价按整个账期加权，本账期前几天跑的是低价模型，近两天换成高价模型后全期均价仍只有 $0.0034/req，实际边际单价已到 $0.015/req 左右，差 4 倍以上，改后跟着当前模型走。
+- **分不出差值时回退**：无历史行时沿用接口均价；本次无新增请求、或账期重置导致差值为负时，重复上一行已存的边际单价，避免显示 $0.0000。`--history` 表头 `avg` 改为 `d_avg`。
+
 ## 2026-09-16
 
 ### Hammerspoon
