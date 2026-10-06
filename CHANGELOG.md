@@ -2,10 +2,6 @@
 
 ## 2026-10-06
 
-### Herdr
-
-- **共享配置脱离 dotfiles 管理**：Herdr GPUI 拒绝符号链接形式的 `~/.config/herdr/config.toml`（要求 owned regular file），设置页底部一直显示 Unavailable，放宽权限无法解决，拒绝依据是文件类型。`install.conf.yaml` 移除该 link 条目，`~/.config/herdr/config.toml` 改为普通文件由 Herdr 自行读写；此后该文件不再随 dotfiles 同步。
-
 ### Hammerspoon
 
 - **重载清理残留监听**：`hs.caffeinate.watcher` 原先未保存引用，Hammerspoon 重载配置时旧 watcher 既不停止也不回收，每次重载多留一份唤醒回调，多次重载后同一唤醒会并发触发多轮标题重算。改为模块级局部变量持有并先 `:stop()` 再重建。
