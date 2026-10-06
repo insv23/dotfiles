@@ -2,6 +2,10 @@
 
 ## 2026-10-06
 
+### Vim
+
+- **移除 vim-oscyank**：Herdr 自己在 PTY 层接管 OSC 52（服务端 `src/pane.rs` 解析并校验 base64，客户端 `src/client/clipboard_forwarding.rs` 落地到本机剪贴板），跨机复制不再依赖远程装插件；本地又因 vimrc 里的 `$SSH_CONNECTION` 门控从不触发，插件实际只剩「不用 herdr 直接 ssh 连远程 vim」一个场景。删掉 clone 行、`TextYankPost` 自动同步 autocmd 与 PLUGINS.md 对应章节。
+
 ### Docs
 
 - **重写 dotdrop 迁移方案**：原方案按「全部 nolink 复制」写，与「仓库只有一份」的模型矛盾。改为默认 `link: absolute`，只把 Herdr 的共享配置标为 `nolink`（GPUI 拒绝符号链接）。映射表按「谁决定文件路径」重新分类：程序硬编码查找的 16 条必须映射，被 `zshrc` 等主动 source 的（`~/.zsh/aliases/`、`~/.vim/` 等）删除，26 条缩到 16 条。

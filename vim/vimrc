@@ -130,11 +130,6 @@ augroup END
 set history=8192                " more history
 set nojoinspaces                " suppress inserting two spaces between sentences
 
-" 在 SSH 环境下，每次 yank 自动通过 OSC 52 同步到本地剪贴板
-if !empty($SSH_CONNECTION)
-    autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankRegister "' | endif
-endif
-
 nnoremap H 0
 nnoremap L $
 onoremap H 0
