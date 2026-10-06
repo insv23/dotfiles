@@ -6,6 +6,7 @@
 
 - **zsh 与 vim 插件改用仓库路径**：`zsh/zshenv` 导出 `DOTFILES="$HOME/.dotfiles"`，`zshrc`（9 处）、`fzf.zsh`、`aliases.sh`（12 处）、`hosts/local_index.sh`、两个 `install_plugins.sh` 的插件与子配置引用全部改用它；`vim/vimrc` 开头加 `let &packpath = expand('$HOME/.dotfiles/vim') . ',' . &packpath`。用 `let` 而非 `set packpath^=`，因为后者的 `$HOME` 会被 vim 保留为字面量不展开（实测）。`~/.zsh`、`~/.vim` 两条符号链接随之删除，`install.conf.yaml` 移除对应 link 并在 shell 段加清理命令，同时删掉 `git clean -fdx vim/pack/vendor/start/`——插件现在就是仓库内容，清不得。
 - **实测**：把两个链接物理移走后，新 shell 的 prompt（p10k）、缩写（abbr）、补全 `fpath` 与 vim 的 8 个插件均正常加载，不再依赖链接。
+- **删链接前先判定**：`install.conf.yaml` 里的清理步骤统一写成 `[ -L 路径 ] && rm -f 路径`，只有目标确实是符号链接才删，避免落到同名普通文件上。
 
 ### Vim
 

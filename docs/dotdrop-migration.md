@@ -364,11 +364,15 @@ done
 2. **vim 的 `.gitmodules` 三条残留已删除。** nerdtree、vim-tmux-clipboard、vim-tmux-focus-events 三条记录在 commit `494ca5b` 中清掉；`git ls-files -s` 从头到尾只列出 `dotbot` 一个 gitlink，这些目录一直由 `install_plugins.sh` 克隆。`.git/modules/vim/` 不存在，无需清理。
 3. **默认链接，只有 Herdr 复制。** 不做逐目录评估。
 4. **插件留在仓库，`~/.zsh` 与 `~/.vim` 两条链接删除。** 配置改为自己指向仓库：`zshenv` 导出 `DOTFILES`，`vimrc` 用 `packpath`。已落地并实测（把两个链接物理移走后 zsh 与 vim 仍正常加载插件）。
+5. **删链接先做 `[ -L ]` 判定。** `install.conf.yaml` 的 shell 段与将来 `install` 脚本里的删链接步骤统一写成 `[ -L 路径 ] && rm -f 路径`，不用无条件 `rm -f`。
+6. **`install_plugins.sh` 的 clone 目标已是 `$DOTFILES`。** 两个脚本都改成 `${DOTFILES:-$HOME/.dotfiles}/...`，不依赖已删除的 `~/.zsh`、`~/.vim` 链接。
 
 ## 待你决定的问题
 
-1. **`install_plugins.sh` 里的目标路径。** 两个脚本现在写 `~/.zsh/plugins/`、`~/.vim/pack/vendor/start/`。链接删除后这两个路径不再存在，需要改成 `$DOTFILES/zsh/plugins/`、`$DOTFILES/vim/pack/vendor/start/`。建议随迁移一起改。
-2. **`install` 脚本里删链接步骤的形态。** 需要决定它是无条件 `rm -f` 目标链接，还是先检查目标是否是链接（`[ -L ]`）。后者更安全，推荐后者。
+暂无。原两条已在 2026-10-06 落地：
+
+- `install_plugins.sh` 的 clone 目标改成 `${DOTFILES:-$HOME/.dotfiles}/...`，已实测克隆到仓库。
+- 删链接一律用 `[ -L 路径 ] && rm -f 路径` 判定后再删，不用无条件 `rm -f`，避免误删同名普通文件。
 
 ## 附：Dotbot 与 dotdrop 行为对照
 
