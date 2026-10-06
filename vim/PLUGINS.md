@@ -69,14 +69,14 @@
 
 ## vim9-stargate — 全屏双向跳转
 
-类似 Neovim 的 leap.nvim，输入两个字符后，屏幕上所有匹配位置（上下方向均包含）显示标签，按标签字母直接跳转。使用 popup window 显示标签，不修改 buffer 内容。
+类似 Neovim 的 leap.nvim，输入一个字符后，屏幕上所有匹配位置（上下方向均包含）显示标签，按标签字母直接跳转。使用 popup window 显示标签，不修改 buffer 内容。
 
 | 快捷键 | 效果 |
 |--------|------|
-| `s{char}{char}` | 全屏双向搜索，所有匹配显示标签，按标签跳转 |
+| `s{char}` | 全屏双向搜索，所有匹配显示标签，按标签跳转 |
 | `<Esc>` / `<C-c>` | 退出 stargate 模式 |
 
-vimrc 中已配置 `noremap s <Cmd>call stargate#OKvim(2)<CR>`，按 `s` 触发 2 字符双向搜索。
+vimrc 中已配置 `noremap s <Cmd>call stargate#OKvim(1)<CR>`，按 `s` 触发 1 字符双向搜索。截数越大候选标签越稀疏，代价是多敲字符；要换 2 字符把参数改成 `OKvim(2)` 即可。
 
 ---
 

@@ -9,6 +9,8 @@
 
 ### Docs
 
+- **补齐 dotdrop 迁移方案的落地细节**：把「插件搬家」拆成独立小节（先复制、再删链接、最后删仓库那份），删链接改用「删链接」这一说法，新增「已定的决策」一节记录四条结论（`zsh/hosts` 保持仓库路径、vim 三条 `.gitmodules` 残留已删、默认链接只有 Herdr 复制、插件搬到独立家目录待执行），并把 `.gitmodules`、README、tmux 三处已完成项标注为已完成。
+- **修正 stargate 的文档参数**：`vim/PLUGINS.md` 写的是 `OKvim(2)`，而 `vimrc` 实际为 `OKvim(1)`。按 vimrc 为准改写文档，并补一句参数含义（数值越大候选标签越稀疏，代价是多敲字符）。
 - **重写 dotdrop 迁移方案**：原方案按「全部 nolink 复制」写，与「仓库只有一份」的模型矛盾。改为默认 `link: absolute`，只把 Herdr 的共享配置标为 `nolink`（GPUI 拒绝符号链接）。映射表按「谁决定文件路径」重新分类：程序硬编码查找的 16 条必须映射，被 `zshrc` 等主动 source 的（`~/.zsh/aliases/`、`~/.vim/` 等）删除，26 条缩到 16 条。
 
 ### Tmux

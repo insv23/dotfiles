@@ -242,17 +242,17 @@ profiles:
 | `dotbot/` 子模块 | `git submodule deinit -f dotbot`、`git rm -f dotbot`、删 `.git/modules/dotbot`，并删 `.gitmodules` 里的 `submodule.dotbot.*` 四条 |
 | `init_dotfiles.sh` | 删除。它是 Dotbot 仓库的配置生成器，全仓库无引用（`grep -rn init_dotfiles` 只命中自身） |
 | `.idea/vcs.xml` 里的 dotbot 映射 | 该文件未被 git 跟踪，可删或手工编辑，不影响仓库 |
-| `.gitmodules` 里 vim 的三条 | 见「待你决定的问题」第 2 条 |
+| `.gitmodules` 里 vim 的三条 | **已完成**，见 commit `494ca5b` |
 
 ### 要改写的
 
 | 对象 | 改动 |
 |---|---|
-| `install` | 改为调用 `dotdrop --cfg config.yaml install --profile <host>`；保留 `set -e`；保留 submodule 与插件安装逻辑；增加「先摘掉旧符号链接」的步骤 |
+| `install` | 改为调用 `dotdrop --cfg config.yaml install --profile <host>`；保留 `set -e`；保留 submodule 与插件安装逻辑；增加「先删掉旧符号链接」的步骤（用 `[ -L ]` 判定后再 `rm -f`） |
 | `zsh/aliases.sh` 的 `dfu()` | 行为不变（`git pull --ff-only` + `./install` + `exec zsh`），但 `install` 语义变化需要在提示语里说明 |
-| `README.md` / `README-en.md` | 「基于 Dotbot 的一键安装」改为 dotdrop；「如果某些文件已存在，需要先删除」那段按 dotdrop 的 `backup: true` 行为重写；目录结构一节删掉 `tmux/` |
+| `README.md` / `README-en.md` | 「基于 Dotbot 的一键安装」改为 dotdrop；「如果某些文件已存在，需要先删除」那段按 dotdrop 的 `backup: true` 行为重写；目录结构一节已删 `tmux/`（commit `ea58879`） |
 | `CHANGELOG.md` | 追加迁移条目 |
-| `.gitmodules` | 删掉 dotbot 段；vim 三条见第 2 条 |
+| `.gitmodules` | 删掉 dotbot 段（vim 三条已在 `494ca5b` 删除） |
 | `context.md`、`research.md` | 未被跟踪，不涉及 |
 
 ### 要新增的
@@ -278,24 +278,47 @@ profiles:
 
 ### 阶段 2：本机切换
 
-1. 逐个摘掉现有符号链接。**注意 `~/.zsh/` 和 `~/.vim/` 要保留目录本身**，只删链接后重建为普通目录（插件在里面）：
+先做「插件搬家」，再做映射部署。顺序不能反：必须**先复制、再删链接、最后删仓库里那两份**，任何一步失败都还有备份。
 
-   ```sh
-   for f in ~/.bashrc ~/.profile ~/.inputrc ~/.gitconfig ~/.p10k.zsh ~/.zshenv ~/.zprofile ~/.zshrc; do
-     [ -L "$f" ] && rm -f "$f"
-   done
-   for d in ~/.hammerspoon ~/.config/yazi ~/.config/kitty ~/.config/lazygit \
-            ~/.config/atuin ~/.config/ghostty ~/.config/karabiner; do
-     [ -L "$d" ] && rm -f "$d"
-   done
-   # ~/.zsh 和 ~/.vim 在新方案里不再是链接，摘掉后插件目录仍在原位
-   [ -L ~/.zsh ] && { rm -f ~/.zsh; mkdir -p ~/.zsh; mv ~/.zsh.bak-plugins ~/.zsh/plugins; }
-   ```
-   `~/.zsh` 和 `~/.vim` 的摘链需要特殊处理：它们是链接时插件实际在仓库里（`zsh/plugins/`），摘掉链接后要先把插件目录移到新位置，否则 `mkdir` 出来的空目录没有插件。这一步的具体命令见「待你决定的问题」第 3 条。
+#### 2.1 插件搬到独立目录
 
-2. `dotdrop install -c config.yaml`，生成映射。
-3. 逐个功能验证：新开 zsh（插件、缩写、别名、prompt）、vim（插件加载）、hammerspoon 重载、yazi、kitty、lazygit、atuin、Herdr 设置页底部不再显示 Unavailable。
-4. 验证插件目录未被清空：`~/.zsh/plugins/`、`~/.vim/pack/vendor/start/`。
+当前 `~/.zsh` 和 `~/.vim` 是指向仓库的符号链接，插件实际落在仓库的 `zsh/plugins/`、`vim/pack/vendor/` 里（被 gitignore）。这两个目录在新方案里不再映射，插件要改用家目录路径。
+
+```sh
+# 1. 复制插件（不删原件）
+mkdir -p ~/.zsh ~/.vim/pack/vendor
+cp -a ~/.dotfiles/zsh/plugins      ~/.zsh/plugins
+cp -a ~/.dotfiles/vim/pack/vendor/start ~/.vim/pack/vendor/start
+
+# 2. 确认复制完整后再删链接
+[ -L ~/.zsh ] && rm -f ~/.zsh
+[ -L ~/.vim ] && rm -f ~/.vim
+
+# 3. 确认新位置可用后再删仓库里那两份
+rm -rf ~/.dotfiles/zsh/plugins ~/.dotfiles/vim/pack
+```
+
+第 1 步之后要核对 `~/.zsh/plugins/` 有 10 个目录、`~/.vim/pack/vendor/start/` 有 8 个目录。**注意第 2 步删的是链接不是内容**，仓库里那两份仍在，所以这一步本身不会丢数据。
+
+删链接的替代方案：保留 `~/.zsh`、`~/.vim` 两条映射不动，接受它们继续指向仓库，只在 `config.yaml` 里给这两条加 `instignore` 排除 `*/plugins/*`、`*/pack/vendor/*`。改动更小，代价是 `~/.zsh/aliases/` 那些副本继续存在。
+
+#### 2.2 摘掉其余旧链接
+
+```sh
+for f in ~/.bashrc ~/.profile ~/.inputrc ~/.gitconfig ~/.p10k.zsh ~/.zshenv ~/.zprofile ~/.zshrc; do
+  [ -L "$f" ] && rm -f "$f"
+done
+for d in ~/.hammerspoon ~/.config/yazi ~/.config/kitty ~/.config/lazygit \
+         ~/.config/atuin ~/.config/ghostty ~/.config/karabiner; do
+  [ -L "$d" ] && rm -f "$d"
+done
+```
+
+#### 2.3 部署与验证
+
+1. `dotdrop install -c config.yaml`。
+2. 逐个功能验证：新开 zsh（插件、缩写、别名、prompt）、vim（插件加载）、hammerspoon 重载、yazi、kitty、lazygit、atuin、Herdr 设置页底部不再显示 Unavailable。
+3. 验证插件仍在：`~/.zsh/plugins/` 10 个、`~/.vim/pack/vendor/start/` 8 个。
 
 ### 阶段 3：清理 Dotbot
 
@@ -311,7 +334,7 @@ profiles:
 
 1. `git pull`。
 2. `brew install dotdrop`（Linux 上用 `pipx install dotdrop` 或发行版包）。
-3. 执行阶段 2 第 1 步的摘链 loop。**这一步必需**，否则残留链接会与新部署冲突。
+3. 执行阶段 2.1 与 2.2 的删链接步骤。**这一步必需**，否则残留链接会与新部署冲突；远程机器若没有插件目录需要搬家，只跑 2.2。
 4. `dotdrop install -c config.yaml`。
 5. `dfu` 验证：`git pull --ff-only` + `./install` + `exec zsh` 全程无报错。
 
@@ -323,11 +346,11 @@ profiles:
 
 | 风险 | 影响 | 缓解 |
 |---|---|---|
-| 摘掉 `~/.zsh` / `~/.vim` 链接时丢插件 | 插件目录被删，shell 与 vim 起不来 | 摘链前先把 `zsh/plugins/` 和 `vim/pack/` 移出，或改用手工逐个处理这两个目录 |
+| 插件搬家时丢插件 | 插件目录被删，shell 与 vim 起不来 | 严格按「先 `cp -a`、再删链接、最后删仓库那份」的顺序；插件可随时用 `zsh/install_plugins.sh`、`vim/install_plugins.sh` 重新克隆，丢失可恢复 |
 | `install` 语义从「建链接」变为「建链接 + 复制一个文件」 | Herdr 配置被仓库版本覆盖 | `backup: true` 留 `.dotdropbak`；迁移前先 `dotdrop compare` |
 | 目录条目 `nolink` 复制插件 | 复制上万个文件，慢且占空间 | `instignore` 排除 `*/plugins/*`、`*/pack/vendor/*` |
 | 权限位丢失 | `host-status.sh`、`codex-usage.py` 失去可执行位 | `force_chmod: true` |
-| 远程机器忘记摘旧链接 | `dotdrop install` 报冲突 | `install` 脚本内置摘链 loop |
+| 远程机器残留旧符号链接 | `dotdrop install` 报冲突 | `install` 脚本内置删链接的 loop |
 | 运行时文件被 `update` 收进仓库 | `karabiner.json`、`state.yml` 进 git | `upignore` 显式排除 |
 | dotdrop 只在 macOS/Linux 可用 | 无 Windows 支持 | 本仓库本来就没有 Windows 目标 |
 
@@ -341,21 +364,17 @@ profiles:
 - `dotdrop update -c config.yaml` 之后 `git status` 只显示预期改动。
 - 远程机器 `dfu` 后 `exec zsh` 进入新 shell 无报错。
 
+## 已定的决策
+
+1. **`zsh/hosts/local_index.sh` 保持仓库路径。** 该脚本在缺主机文件时 `touch` 新建，指向 `$HOME/.dotfiles/zsh/hosts` 时新增的主机配置会被 git 跟踪，符合预期。
+2. **vim 的 `.gitmodules` 三条残留已删除。** nerdtree、vim-tmux-clipboard、vim-tmux-focus-events 三条记录在 commit `494ca5b` 中清掉；`git ls-files -s` 从头到尾只列出 `dotbot` 一个 gitlink，这些目录一直由 `install_plugins.sh` 克隆。`.git/modules/vim/` 不存在，无需清理。
+3. **默认链接，只有 Herdr 复制。** 不做逐目录评估。
+4. **插件搬到独立家目录。** `~/.zsh/plugins/`、`~/.vim/pack/vendor/start/` 从「仓库内被忽略目录」改为「家目录内独立目录」，见阶段 2.1。
+
 ## 待你决定的问题
 
-1. **`zsh/hosts/local_index.sh` 的目录归属。**
-   该脚本在缺主机文件时会 `touch` 新建。当前指向 `$HOME/.dotfiles/zsh/hosts`，新增的主机文件会被 git 跟踪。如果改成 `~/.zsh/hosts`，则新文件不进仓库、需要另配一条映射。建议保持现状（仓库路径），因为新增的主机配置本来就该进 git。
-
-2. **vim 的三条 `.gitmodules` 残留是否一并删除。**
-   `.gitmodules` 里有 `vim/pack/vendor/start/nerdtree`、`vim-tmux-clipboard`、`vim-tmux-focus-events` 三条，但 git 索引里**没有**对应 gitlink（只有 `dotbot` 一个），指向的目录还被 `.gitignore` 忽略。也就是历史残留，目录由 `vim/install_plugins.sh` 克隆。建议随本次迁移一并删除这三条记录和对应的 `.git/modules/vim/...` 缓存。要你确认。
-
-3. **`~/.zsh` 和 `~/.vim` 摘链的具体手法。**
-   两者当前都是指向仓库的符号链接，插件实际在 `zsh/plugins/` 和 `vim/pack/vendor/`。摘掉链接后插件必须留在 `~/.zsh/plugins/`、`~/.vim/pack/vendor/`，而仓库里那两份要被 gitignore 忽略。
-   方案：先用 `cp -a` 把插件目录复制到临时位置，再摘链、建目录、移回。或者更稳的做法是**保留这两个目录的链接不摘**，接受它们继续指向仓库（插件照旧被忽略，重复内容是摆设但不影响运行），只在 config.yaml 里给这两条加 `instignore` 排除插件路径。
-   建议后者：改动小、无数据风险，代价是 `~/.zsh/aliases/` 那些副本继续存在。要你选。
-
-4. **是否给整目录条目改用链接而非复制。**
-   本方案已定：全部链接，只有 Herdr 复制。无需再决。
+1. **是否执行阶段 2.1 的插件搬家。** 本次先不动，等真正迁移时再定。要执行就按该节的顺序；不执行则保留 `~/.zsh`、`~/.vim` 两条映射并加 `instignore`。
+2. **`install` 脚本里删链接步骤的形态。** 需要决定它是无条件 `rm -f` 目标链接，还是先检查目标是否是链接（`[ -L ]`）。后者更安全，推荐后者。
 
 ## 附：Dotbot 与 dotdrop 行为对照
 
