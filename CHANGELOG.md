@@ -2,6 +2,10 @@
 
 ## 2026-10-06
 
+### Tmux
+
+- **退役 tmux 配置**：`tmux/` 移入 `.deprecated/tmux/`（`tmux.conf`、`scripts/persistent-popup.sh`、`install_tpm.sh`）。`install.conf.yaml` 移除 `~/.tmux` 与 `~/.tmux.conf` 两条链接，并加一条 shell 命令把旧机器上遗留的这两个符号链接摘掉；`setup.zsh` 去掉「安装 Tmux 插件」步骤；`.gitignore` 的插件规则改指 `.deprecated/tmux/plugins`。仓库里的 `zsh/abbreviations`（`tmat`/`tmkt`/`tmls`）与 vim 的 tmux 相关插件不动，留待后续单独处理。
+
 ### Hammerspoon
 
 - **重载清理残留监听**：`hs.caffeinate.watcher` 原先未保存引用，Hammerspoon 重载配置时旧 watcher 既不停止也不回收，每次重载多留一份唤醒回调，多次重载后同一唤醒会并发触发多轮标题重算。改为模块级局部变量持有并先 `:stop()` 再重建。

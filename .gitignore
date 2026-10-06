@@ -13,8 +13,9 @@ lazy-lock.json
 # lazygit
 lazygit/state.yml
 
-# tmux plugins
+# tmux plugins (config moved to .deprecated/tmux)
 tmux/plugins
+.deprecated/tmux/plugins
 
 # zsh plugins
 zsh/plugins

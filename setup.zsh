@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 # setup.zsh — 新机器初始化向导
-# 交互式多选菜单，逐步安装 zsh 插件、vim 插件、Homebrew 及相关应用、tmux 插件。
+# 交互式多选菜单，逐步安装 zsh 插件、vim 插件、Homebrew 及相关应用。
 # 用法：./setup.zsh
 setopt NO_XTRACE
 
@@ -17,7 +17,6 @@ steps=(
     "安装 Vim 插件"       "./vim/install_plugins.sh"
     "安装 Homebrew"       "./brew/0.install.sh"
     "安装 Homebrew 应用"  "./brew/1.brewInstallApps.sh"
-    "安装 Tmux 插件"      "./tmux/install_tpm.sh"
 )
 
 n=$(( ${#steps} / 2 ))

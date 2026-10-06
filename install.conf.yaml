@@ -27,8 +27,6 @@
     ~/.inputrc: ./bash/inputrc
     ~/.profile: ./bash/profile
     ~/.p10k.zsh: ./zsh/p10k.zsh
-    ~/.tmux:
-    ~/.tmux.conf: ./tmux/tmux.conf
     ~/.vim:
     ~/.vimrc: ./vim/vimrc
     ~/.zsh:
@@ -40,6 +38,11 @@
     - touch ~/.hushlogin
     - git submodule sync --recursive
     - git submodule update --init --recursive
+    - command: >
+        [ -L ~/.tmux ] && rm -f ~/.tmux;
+        [ -L ~/.tmux.conf ] && rm -f ~/.tmux.conf;
+        exit 0
+      description: Detach the retired tmux config links
     - >
       git clean -fdx
       vim/pack/vendor/start/
