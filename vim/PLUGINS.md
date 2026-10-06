@@ -50,27 +50,6 @@
 
 ---
 
-## vim-tmux-clipboard — Vim 与 Tmux 剪贴板互通
-
-在 Tmux 会话中，Vim 的默认寄存器和 Tmux 的粘贴缓冲区自动同步。
-
-- Vim 中 `y` 复制 → Tmux 中 `prefix + ]` 可粘贴
-- Tmux 中复制 → Vim 中 `p` 可粘贴
-
-无需额外快捷键，装上即生效。
-
----
-
-## vim-tmux-focus-events — Tmux 焦点事件修复
-
-让 Tmux 内的 Vim 能正确接收 `FocusGained` / `FocusLost` 事件。
-
-作用：确保切换窗口后 `autoread` 等依赖焦点事件的功能正常工作。是 vim-tmux-clipboard 的依赖。
-
-无需额外配置，装上即生效。
-
----
-
 ## targets.vim — 增强文本对象
 
 自动检测最近的包围符号，无需手动指定是哪种引号或括号。

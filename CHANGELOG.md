@@ -4,6 +4,7 @@
 
 ### Vim
 
+- **移除两个 tmux 插件**：`vim-tmux-clipboard`、`vim-tmux-focus-events` 随 tmux 退役一起删除（clone 行、PLUGINS.md 两节）。同时清掉 `.gitmodules` 里 nerdtree、vim-tmux-clipboard、vim-tmux-focus-events 三条残留记录——git 索引里从来没有对应 gitlink（`git ls-files -s` 只列出 `dotbot`），这些目录一直由 `install_plugins.sh` 克隆，记录是历史遗留。
 - **移除 vim-oscyank**：Herdr 自己在 PTY 层接管 OSC 52（服务端 `src/pane.rs` 解析并校验 base64，客户端 `src/client/clipboard_forwarding.rs` 落地到本机剪贴板），跨机复制不再依赖远程装插件；本地又因 vimrc 里的 `$SSH_CONNECTION` 门控从不触发，插件实际只剩「不用 herdr 直接 ssh 连远程 vim」一个场景。删掉 clone 行、`TextYankPost` 自动同步 autocmd 与 PLUGINS.md 对应章节。
 
 ### Docs

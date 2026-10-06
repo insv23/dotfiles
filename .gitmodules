@@ -2,12 +2,3 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
-[submodule "vim/pack/vendor/start/nerdtree"]
-	path = vim/pack/vendor/start/nerdtree
-	url = https://github.com/preservim/nerdtree.git
-[submodule "vim/pack/vendor/start/vim-tmux-clipboard"]
-	path = vim/pack/vendor/start/vim-tmux-clipboard
-	url = https://github.com/roxma/vim-tmux-clipboard.git
-[submodule "vim/pack/vendor/start/vim-tmux-focus-events"]
-	path = vim/pack/vendor/start/vim-tmux-focus-events
-	url = https://github.com/tmux-plugins/vim-tmux-focus-events.git
