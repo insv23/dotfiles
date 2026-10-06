@@ -63,11 +63,18 @@ zsh 是第二类的典型。`~/.zshrc` 是 zsh 硬编码要读的，必须映射
 
 | 目标 | 处理 |
 |---|---|
-| `~/.zsh/` | 删除。只保留 `~/.zsh/plugins/`，由 `zsh/install_plugins.sh` 克隆 |
-| `~/.vim/` | 删除。`vim/vimrc` 内部用的是绝对路径，插件目录由 `vim/install_plugins.sh` 创建 |
+| `~/.zsh/` | 删除。`zsh/` 下的配置与插件改为由 `$DOTFILES` 直接引用，见下节 |
+| `~/.vim/` | 删除。`vimrc` 用 `packpath` 直接指向仓库，见下节 |
 | `~/.tmux/`、`~/.tmux.conf` | 已在本轮退役（commit `ea58879`） |
 
-`~/.zsh/` 和 `~/.vim/` 的问题在于自相矛盾：`zsh/plugins/` 和 `vim/pack/vendor/` 被 `.gitignore` 忽略，却被符号链接把整个父目录暴露出去，等于把「仓库内容」和「运行时克隆的插件」混在同一个目录条目里。
+`~/.zsh/` 和 `~/.vim/` 原先的问题在于自相矛盾：`zsh/plugins/` 和 `vim/pack/vendor/` 被 `.gitignore` 忽略，却被符号链接把整个父目录暴露出去，等于把「仓库内容」和「运行时克隆的插件」混在同一个目录条目里。
+
+**已在 2026-10-06 解决**：不再映射这两个目录，改为让配置自己指向仓库。
+
+- `zsh/zshenv` 导出 `DOTFILES="$HOME/.dotfiles"`，`zshrc`、`fzf.zsh`、`aliases.sh`、`hosts/local_index.sh` 里的插件与子配置引用全部改用该变量。
+- `vim/vimrc` 开头加 `let &packpath = expand('$HOME/.dotfiles/vim') . ',' . &packpath`，插件从仓库加载；用 `let` 而非 `set packpath^=`，因为后者的 `$HOME` 会被 vim 保留为字面量（实测）。
+
+两个改动都不依赖 `~/.zsh`、`~/.vim` 链接存在，实测把链接移走后 zsh 的 prompt/缩写/插件与 vim 的 8 个插件均正常加载。
 
 ### 必须排除的内容
 
@@ -75,8 +82,8 @@ zsh 是第二类的典型。`~/.zshrc` 是 zsh 硬编码要读的，必须映射
 
 | 路径 | 体积 | 原因 |
 |---|---|---|
-| `zsh/plugins/` | 10 个第三方插件 | `.gitignore` 忽略，`zsh/install_plugins.sh` 克隆 |
-| `vim/pack/vendor/` | 11 个第三方插件 | `.gitignore` 忽略，`vim/install_plugins.sh` 克隆 |
+| `zsh/plugins/` | 9 个第三方插件 | `.gitignore` 忽略，`zsh/install_plugins.sh` 克隆 |
+| `vim/pack/vendor/` | 8 个第三方插件 | `.gitignore` 忽略，`vim/install_plugins.sh` 克隆 |
 | `lazygit/state.yml` | 运行时状态 | `.gitignore` 忽略，lazygit 写入 |
 | `karabiner/karabiner.json` | 运行时生成 | `.gitignore` 忽略，Karabiner 写入 |
 | `karabiner/automatic_backups/` | 自动备份 | `.gitignore` 忽略 |
@@ -108,18 +115,12 @@ config:
   create: true
   force_chmod: true
   cmpignore:
-    - '*/plugins/*'
-    - '*/pack/vendor/*'
     - '*/automatic_backups/*'
     - '*/state.yml'
     - '*.secret*'
   instignore:
-    - '*/plugins/*'
-    - '*/pack/vendor/*'
     - '*/automatic_backups/*'
   upignore:
-    - '*/plugins/*'
-    - '*/pack/vendor/*'
     - '*/automatic_backups/*'
     - '*/state.yml'
     - '*/karabiner.json'
@@ -274,35 +275,29 @@ profiles:
 
 1. 新增 `config.yaml`，映射照抄上表。
 2. `dotdrop compare -c config.yaml` 看差异，确认 src/dst 解析正确。
-3. `dotdrop install --dry -c config.yaml` 预演，确认不触碰 `plugins/`、`pack/vendor/`。
+3. `dotdrop install --dry -c config.yaml` 预演，确认不触碰 `zsh/plugins/`、`vim/pack/`（`~/.zsh`、`~/.vim` 已不在映射表里，正常不会被引用）。
 
 ### 阶段 2：本机切换
 
-先做「插件搬家」，再做映射部署。顺序不能反：必须**先复制、再删链接、最后删仓库里那两份**，任何一步失败都还有备份。
+顺序是先删旧链接，再部署新映射。
 
-#### 2.1 插件搬到独立目录
+#### 2.1 删掉 zsh 与 vim 的目录链接
 
-当前 `~/.zsh` 和 `~/.vim` 是指向仓库的符号链接，插件实际落在仓库的 `zsh/plugins/`、`vim/pack/vendor/` 里（被 gitignore）。这两个目录在新方案里不再映射，插件要改用家目录路径。
+`zsh/zshenv` 现在导出 `DOTFILES`，`vimrc` 用 `packpath` 指向仓库，插件与子配置都已按仓库路径引用，所以 `~/.zsh`、`~/.vim` 这两条链接可以直接删除，不需要搬家、不需要重装插件。
 
 ```sh
-# 1. 复制插件（不删原件）
-mkdir -p ~/.zsh ~/.vim/pack/vendor
-cp -a ~/.dotfiles/zsh/plugins      ~/.zsh/plugins
-cp -a ~/.dotfiles/vim/pack/vendor/start ~/.vim/pack/vendor/start
-
-# 2. 确认复制完整后再删链接
 [ -L ~/.zsh ] && rm -f ~/.zsh
 [ -L ~/.vim ] && rm -f ~/.vim
-
-# 3. 确认新位置可用后再删仓库里那两份
-rm -rf ~/.dotfiles/zsh/plugins ~/.dotfiles/vim/pack
 ```
 
-第 1 步之后要核对 `~/.zsh/plugins/` 有 10 个目录、`~/.vim/pack/vendor/start/` 有 8 个目录。**注意第 2 步删的是链接不是内容**，仓库里那两份仍在，所以这一步本身不会丢数据。
+删之前先确认两件事：
 
-删链接的替代方案：保留 `~/.zsh`、`~/.vim` 两条映射不动，接受它们继续指向仓库，只在 `config.yaml` 里给这两条加 `instignore` 排除 `*/plugins/*`、`*/pack/vendor/*`。改动更小，代价是 `~/.zsh/aliases/` 那些副本继续存在。
+1. `$DOTFILES` 已生效：`zsh -i -c 'echo $DOTFILES'` 输出 `$HOME/.dotfiles`。
+2. 没有别的东西依赖这两个路径。检查方式：临时 `mv ~/.zsh ~/.zsh.bak`、`mv ~/.vim ~/.vim.bak`，开一个新 shell 看 prompt/缩写/补全是否正常，`vim` 打开文件看 `:scriptnames` 是否列出仓库插件，确认后再删。
 
-#### 2.2 摘掉其余旧链接
+这两条删完，仓库里的 `zsh/plugins/`、`vim/pack/vendor/` 就是插件的唯一位置，`zsh/install_plugins.sh`、`vim/install_plugins.sh` 照旧克隆到那里（脚本里写的是 `~/.zsh/plugins/`，若链接已删需要改成 `$DOTFILES/zsh/plugins/`）。
+
+#### 2.2 删掉其余旧链接
 
 ```sh
 for f in ~/.bashrc ~/.profile ~/.inputrc ~/.gitconfig ~/.p10k.zsh ~/.zshenv ~/.zprofile ~/.zshrc; do
@@ -317,8 +312,8 @@ done
 #### 2.3 部署与验证
 
 1. `dotdrop install -c config.yaml`。
-2. 逐个功能验证：新开 zsh（插件、缩写、别名、prompt）、vim（插件加载）、hammerspoon 重载、yazi、kitty、lazygit、atuin、Herdr 设置页底部不再显示 Unavailable。
-3. 验证插件仍在：`~/.zsh/plugins/` 10 个、`~/.vim/pack/vendor/start/` 8 个。
+2. 逐个功能验证：新开 zsh（插件、缩写、补全、prompt）、vim（`:scriptnames` 列出 8 个仓库插件）、hammerspoon 重载、yazi、kitty、lazygit、atuin、Herdr 设置页底部不再显示 Unavailable。
+3. 验证插件仍在：`$DOTFILES/zsh/plugins/` 9 个、`$DOTFILES/vim/pack/vendor/start/` 8 个。
 
 ### 阶段 3：清理 Dotbot
 
@@ -334,7 +329,7 @@ done
 
 1. `git pull`。
 2. `brew install dotdrop`（Linux 上用 `pipx install dotdrop` 或发行版包）。
-3. 执行阶段 2.1 与 2.2 的删链接步骤。**这一步必需**，否则残留链接会与新部署冲突；远程机器若没有插件目录需要搬家，只跑 2.2。
+3. 执行阶段 2.1 与 2.2 的删链接步骤。**这一步必需**，否则残留链接会与新部署冲突。
 4. `dotdrop install -c config.yaml`。
 5. `dfu` 验证：`git pull --ff-only` + `./install` + `exec zsh` 全程无报错。
 
@@ -346,9 +341,8 @@ done
 
 | 风险 | 影响 | 缓解 |
 |---|---|---|
-| 插件搬家时丢插件 | 插件目录被删，shell 与 vim 起不来 | 严格按「先 `cp -a`、再删链接、最后删仓库那份」的顺序；插件可随时用 `zsh/install_plugins.sh`、`vim/install_plugins.sh` 重新克隆，丢失可恢复 |
+| 删掉 `~/.zsh` / `~/.vim` 后发现仍有引用 | shell 或 vim 找不到插件 | 删之前先 `mv` 改名验证一轮；即使漏了，插件仍在仓库，`install_plugins.sh` 可重装 |
 | `install` 语义从「建链接」变为「建链接 + 复制一个文件」 | Herdr 配置被仓库版本覆盖 | `backup: true` 留 `.dotdropbak`；迁移前先 `dotdrop compare` |
-| 目录条目 `nolink` 复制插件 | 复制上万个文件，慢且占空间 | `instignore` 排除 `*/plugins/*`、`*/pack/vendor/*` |
 | 权限位丢失 | `host-status.sh`、`codex-usage.py` 失去可执行位 | `force_chmod: true` |
 | 远程机器残留旧符号链接 | `dotdrop install` 报冲突 | `install` 脚本内置删链接的 loop |
 | 运行时文件被 `update` 收进仓库 | `karabiner.json`、`state.yml` 进 git | `upignore` 显式排除 |
@@ -369,11 +363,11 @@ done
 1. **`zsh/hosts/local_index.sh` 保持仓库路径。** 该脚本在缺主机文件时 `touch` 新建，指向 `$HOME/.dotfiles/zsh/hosts` 时新增的主机配置会被 git 跟踪，符合预期。
 2. **vim 的 `.gitmodules` 三条残留已删除。** nerdtree、vim-tmux-clipboard、vim-tmux-focus-events 三条记录在 commit `494ca5b` 中清掉；`git ls-files -s` 从头到尾只列出 `dotbot` 一个 gitlink，这些目录一直由 `install_plugins.sh` 克隆。`.git/modules/vim/` 不存在，无需清理。
 3. **默认链接，只有 Herdr 复制。** 不做逐目录评估。
-4. **插件搬到独立家目录。** `~/.zsh/plugins/`、`~/.vim/pack/vendor/start/` 从「仓库内被忽略目录」改为「家目录内独立目录」，见阶段 2.1。
+4. **插件留在仓库，`~/.zsh` 与 `~/.vim` 两条链接删除。** 配置改为自己指向仓库：`zshenv` 导出 `DOTFILES`，`vimrc` 用 `packpath`。已落地并实测（把两个链接物理移走后 zsh 与 vim 仍正常加载插件）。
 
 ## 待你决定的问题
 
-1. **是否执行阶段 2.1 的插件搬家。** 本次先不动，等真正迁移时再定。要执行就按该节的顺序；不执行则保留 `~/.zsh`、`~/.vim` 两条映射并加 `instignore`。
+1. **`install_plugins.sh` 里的目标路径。** 两个脚本现在写 `~/.zsh/plugins/`、`~/.vim/pack/vendor/start/`。链接删除后这两个路径不再存在，需要改成 `$DOTFILES/zsh/plugins/`、`$DOTFILES/vim/pack/vendor/start/`。建议随迁移一起改。
 2. **`install` 脚本里删链接步骤的形态。** 需要决定它是无条件 `rm -f` 目标链接，还是先检查目标是否是链接（`[ -L ]`）。后者更安全，推荐后者。
 
 ## 附：Dotbot 与 dotdrop 行为对照

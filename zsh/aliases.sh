@@ -9,19 +9,19 @@
 
 
 # ---- 分类模块 ----
-# 各模块放在 ~/.dotfiles/zsh/aliases/ 目录下独立维护
-source ~/.dotfiles/zsh/aliases/fzf.zsh           # fzf 模糊查找组合命令（fbrs、fkill、fgco 等）
-source ~/.dotfiles/zsh/aliases/network.zsh       # 网络相关工具（ping、curl、端口检查等）
-source ~/.dotfiles/zsh/aliases/files.zsh         # 文件与目录操作
-source ~/.dotfiles/zsh/aliases/vim.zsh           # Vim/vi 草稿工作流
-source ~/.dotfiles/zsh/aliases/bark.zsh          # Bark 推送通知（iOS 消息提醒）
-source ~/.dotfiles/zsh/aliases/ssh.zsh           # SSH 快捷连接与管理
-source ~/.dotfiles/zsh/aliases/vscode-backup.zsh # VS Code 配置备份
-source ~/.dotfiles/zsh/aliases/vscode-remote.zsh # 远程开发连接相关
-source ~/.dotfiles/zsh/aliases/log.zsh           # 带日志输出的命令运行工具
-source ~/.dotfiles/zsh/aliases/tts.zsh           # 文字转语音（TTS）
-source ~/.dotfiles/zsh/aliases/clipboard.zsh     # 剪贴板粘贴相关工具
-source ~/.dotfiles/zsh/aliases/codename.zsh      # 随机项目代号生成器（如 DH-09）
+# 各模块放在 $DOTFILES/zsh/aliases/ 目录下独立维护
+source "$DOTFILES/zsh/aliases/fzf.zsh"           # fzf 模糊查找组合命令（fbrs、fkill、fgco 等）
+source "$DOTFILES/zsh/aliases/network.zsh"       # 网络相关工具（ping、curl、端口检查等）
+source "$DOTFILES/zsh/aliases/files.zsh"         # 文件与目录操作
+source "$DOTFILES/zsh/aliases/vim.zsh"           # Vim/vi 草稿工作流
+source "$DOTFILES/zsh/aliases/bark.zsh"          # Bark 推送通知（iOS 消息提醒）
+source "$DOTFILES/zsh/aliases/ssh.zsh"           # SSH 快捷连接与管理
+source "$DOTFILES/zsh/aliases/vscode-backup.zsh" # VS Code 配置备份
+source "$DOTFILES/zsh/aliases/vscode-remote.zsh" # 远程开发连接相关
+source "$DOTFILES/zsh/aliases/log.zsh"           # 带日志输出的命令运行工具
+source "$DOTFILES/zsh/aliases/tts.zsh"           # 文字转语音（TTS）
+source "$DOTFILES/zsh/aliases/clipboard.zsh"     # 剪贴板粘贴相关工具
+source "$DOTFILES/zsh/aliases/codename.zsh"      # 随机项目代号生成器（如 DH-09）
 
 
 # ---- 系统工具 ----
@@ -86,7 +86,7 @@ dfu() {
   local current_dir=$(pwd)
 
   # 2. 切换到 ~/.dotfiles 目录
-  cd ~/.dotfiles || {
+  cd "${DOTFILES:-$HOME/.dotfiles}" || {
     echo "错误：无法进入 ~/.dotfiles 目录。" >&2
     return 1
   }

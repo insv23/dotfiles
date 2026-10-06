@@ -4,16 +4,16 @@
 
 echo "🔄 安装 vim 插件..."
 
-mkdir -p ~/.vim/pack/vendor/start/
+mkdir -p "${DOTFILES:-$HOME/.dotfiles}/vim/pack/vendor/start/"
 
-git clone --depth=1 https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
-git clone --depth=1 https://github.com/tpope/vim-commentary.git ~/.vim/pack/vendor/start/vim-commentary
-git clone --depth=1 https://github.com/jiangmiao/auto-pairs.git ~/.vim/pack/vendor/start/auto-pairs
-git clone --depth=1 https://github.com/rust-lang/rust.vim.git ~/.vim/pack/vendor/start/rust.vim
-git clone --depth=1 https://github.com/wellle/targets.vim.git ~/.vim/pack/vendor/start/targets.vim
-git clone --depth=1 https://github.com/monkoose/vim9-stargate.git ~/.vim/pack/vendor/start/vim9-stargate
-git clone --depth=1 https://github.com/airblade/vim-gitgutter.git ~/.vim/pack/vendor/start/vim-gitgutter
-git clone --depth=1 https://github.com/liuchengxu/vim-which-key.git ~/.vim/pack/vendor/start/vim-which-key
+git clone --depth=1 https://github.com/preservim/nerdtree.git ${DOTFILES:-$HOME/.dotfiles}/vim/pack/vendor/start/nerdtree
+git clone --depth=1 https://github.com/tpope/vim-commentary.git ${DOTFILES:-$HOME/.dotfiles}/vim/pack/vendor/start/vim-commentary
+git clone --depth=1 https://github.com/jiangmiao/auto-pairs.git ${DOTFILES:-$HOME/.dotfiles}/vim/pack/vendor/start/auto-pairs
+git clone --depth=1 https://github.com/rust-lang/rust.vim.git ${DOTFILES:-$HOME/.dotfiles}/vim/pack/vendor/start/rust.vim
+git clone --depth=1 https://github.com/wellle/targets.vim.git ${DOTFILES:-$HOME/.dotfiles}/vim/pack/vendor/start/targets.vim
+git clone --depth=1 https://github.com/monkoose/vim9-stargate.git ${DOTFILES:-$HOME/.dotfiles}/vim/pack/vendor/start/vim9-stargate
+git clone --depth=1 https://github.com/airblade/vim-gitgutter.git ${DOTFILES:-$HOME/.dotfiles}/vim/pack/vendor/start/vim-gitgutter
+git clone --depth=1 https://github.com/liuchengxu/vim-which-key.git ${DOTFILES:-$HOME/.dotfiles}/vim/pack/vendor/start/vim-which-key
 
 echo "✅ vim 插件安装完成"
 echo

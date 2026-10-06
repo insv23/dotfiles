@@ -9,22 +9,22 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet # 当主题加载时保持安静，不显示警告信息
 
-source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
+source $DOTFILES/zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 
 # ---- jj-status (自定义) ----
 # 在 p10k 提示符中显示 jujutsu (jj) 仓库状态
-source ~/.zsh/custom-plugins/jj-status/jj-status.plugin.zsh
+source $DOTFILES/zsh/custom-plugins/jj-status/jj-status.plugin.zsh
 
 
 # ---- command-duration (自定义) ----
 # 在提示符之前打印上一条命令的耗时，让它紧贴自己的输出（p10k 的 segment 做不到这一点）
-source ~/.zsh/command-duration.zsh
+source $DOTFILES/zsh/command-duration.zsh
 
 
 # ---- zsh-completions ----
 # 一个补全规则的集合, 提供了各种命令、选项、文件名、目录名、变量名等的补全规则。
 # 支持的列表: https://github.com/zsh-users/zsh-completions/tree/master/src
-fpath=(~/.zsh/plugins/zsh-completions/src $fpath)
+fpath=($DOTFILES/zsh/plugins/zsh-completions/src $fpath)
 
 
 # ---- compinit ----
@@ -43,7 +43,7 @@ unset _comp_dumpfile
 # ---- fzf-tab ----
 # 接管 zsh 原生 Tab 补全菜单，将所有补全候选通过 fzf 展示（git、brew、cd 等全部覆盖）
 # 必须在 compinit 之后、zsh-autosuggestions 之前加载
-source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
+source $DOTFILES/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
 
 
 # ---- zsh-abbr ----
@@ -51,7 +51,7 @@ source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
 # 设置缩写存储位置到 dotfiles 目录，便于版本控制
 # 文档: https://zsh-abbr.olets.dev/
 export ABBR_USER_ABBREVIATIONS_FILE="$HOME/.dotfiles/zsh/abbreviations"
-source ~/.zsh/plugins/zsh-abbr/zsh-abbr.zsh
+source $DOTFILES/zsh/plugins/zsh-abbr/zsh-abbr.zsh
 source ~/.dotfiles/zsh/abbr-shell-integration.zsh
 
 
@@ -59,17 +59,17 @@ source ~/.dotfiles/zsh/abbr-shell-integration.zsh
 # 在你输入命令时，zsh-autosuggestions 会根据你的历史命令记录，在你输入的位置之后，以灰色文本显示建议的命令。
 # 演示: https://asciinema.org/a/37390
 # 使用右方向键接受整个, 可与 vi 联合使用, 逐个字母/单词的接受建议
-source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $DOTFILES/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # ---- zsh-autosuggestions-abbreviations-strategy ----
 # 让 autosuggestions 能够建议 zsh-abbr 的缩写
 # 必须在 zsh-abbr 和 zsh-autosuggestions 之后加载
-source ~/.zsh/plugins/zsh-autosuggestions-abbreviations-strategy/zsh-autosuggestions-abbreviations-strategy.zsh
+source $DOTFILES/zsh/plugins/zsh-autosuggestions-abbreviations-strategy/zsh-autosuggestions-abbreviations-strategy.zsh
 
 # ---- zsh-syntax-highlighting ----
 # 可执行命令是 绿色的, 不可执行命令是 红色的
 # MUST be sourced at the END of the .zshrc file
-source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $DOTFILES/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 
 # ---- zsh-autocomplete ----
@@ -80,14 +80,14 @@ source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # cd 的自动补全效果一般，按下 tab 就把第一个补上了... 因此更推荐使用 z 直接跳转 或 yazi
 # 2025-05-31 已弃用:
 # 按下 down arrow key 这个操作我始终想不起来，只会用 tab, 而它直接补全了第一个，让很多软件都几乎无法使用
-# source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# source $DOTFILES/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 
 
 # ---- 自定义激活----
-source ~/.zsh/aliases.sh
+source $DOTFILES/zsh/aliases.sh
 
-source ~/.zsh/hosts/local_index.sh
+source $DOTFILES/zsh/hosts/local_index.sh
 
 # fzf 还是用不太习惯
 # 使用参考: https://www.notion.so/fzf-b15582832ee449dbbec50c0b0481852b?pvs=4

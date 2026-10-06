@@ -27,9 +27,7 @@
     ~/.inputrc: ./bash/inputrc
     ~/.profile: ./bash/profile
     ~/.p10k.zsh: ./zsh/p10k.zsh
-    ~/.vim:
     ~/.vimrc: ./vim/vimrc
-    ~/.zsh:
     ~/.zshenv: ./zsh/zshenv
     ~/.zprofile: ./zsh/zprofile
     ~/.zshrc: ./zsh/zshrc
@@ -41,11 +39,10 @@
     - command: >
         [ -L ~/.tmux ] && rm -f ~/.tmux;
         [ -L ~/.tmux.conf ] && rm -f ~/.tmux.conf;
+        [ -L ~/.zsh ] && rm -f ~/.zsh;
+        [ -L ~/.vim ] && rm -f ~/.vim;
         exit 0
-      description: Detach the retired tmux config links
-    - >
-      git clean -fdx
-      vim/pack/vendor/start/
+      description: Detach retired tmux, zsh and vim directory links
     - command: >
         if command -v herdr >/dev/null 2>&1; then
         herdr plugin list --json | grep -q 'osamahbeig.pane-mover'

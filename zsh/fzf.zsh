@@ -48,4 +48,4 @@ _fzf_comprun() {
 
 # -- fzf-git --
 # https://github.com/junegunn/fzf-git.sh
-source ~/.zsh/plugins/fzf-git.sh/fzf-git.sh
+source $DOTFILES/zsh/plugins/fzf-git.sh/fzf-git.sh

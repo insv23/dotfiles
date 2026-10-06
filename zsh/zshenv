@@ -48,6 +48,9 @@ export PATH
 # 让 macOS 上的工具（如 lazygit）使用 ~/.config 而不是 ~/Library/Application Support
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# 仓库根目录。插件与子配置都以它为基准引用，不再依赖 ~/.zsh 之类的符号链接。
+export DOTFILES="$HOME/.dotfiles"
+
 # Pi Coding Agent and web-search share Pi's default config directory
 export PI_CODING_AGENT_DIR="$HOME/.pi/agent"
 

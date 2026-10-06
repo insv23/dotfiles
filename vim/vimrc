@@ -1,6 +1,10 @@
 set nocompatible " not vi compatible
 let mapleader = " "
 
+" Plugins live in this repository, not in ~/.vim, so point packpath at it instead
+" of relying on a ~/.vim symlink. Always prepended, so a real ~/.vim still works.
+let &packpath = expand('$HOME/.dotfiles/vim') . ',' . &packpath
+
 " -----------------
 "  Style
 " -----------------
