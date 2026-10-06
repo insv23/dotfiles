@@ -31,7 +31,9 @@ linemode       = "size"
 [plugin]
 prepend_previewers = [
     { url = "*/", run = "eza-preview" },
-    { url = "*", run = "git-diff-preview" },
+    # 只接管文本；Yazi 预览器首个命中即止，url = "*" 会连图片一起抢走
+    { mime = "text/*", run = "git-diff-preview" },
+    { url = "*.{js,ts,jsx,tsx,json,jsonc,md,mdx,yml,yaml,toml,rs,go,py,lua,sh,zsh,bash,fish,html,css,scss,sql,xml,vue,svelte,lock}", run = "git-diff-preview" },
 ]
 
 prepend_fetchers = [
@@ -43,11 +45,15 @@ prepend_fetchers = [
 zed = [
     { run = 'zed "$@"', block = false, desc = "Zed", for = "macos" },
 ]
+losslesscut = [
+    # 按 bundle id 而非 app 名调用，app 改名或换路径后依然有效
+    { run = 'open -b no.mifi.losslesscut-mac "$@"', block = false, desc = "LosslessCut", for = "macos" },
+]
 
 [open]
 prepend_rules = [
-    # 视频文件 - 走 macOS 系统默认 App（例如 LosslessCut）
-    { mime = "video/*", use = "open" },
+    # 视频文件 - Open 走系统默认 App，另可指定 LosslessCut
+    { mime = "video/*", use = [ "open", "losslesscut", "reveal" ] },
     # 文本文件和代码文件 - 可用 Zed 打开（按 O 选择）
     { mime = "text/*", use = [ "edit", "zed", "open", "reveal" ] },
     { url = "*.{js,ts,jsx,tsx,json,jsonc,md,mdx,yml,yaml,toml,rs,go,py,lua,sh,zsh,bash,fish,html,css,scss,sql,xml,vue,svelte,lock}", use = [ "edit", "zed", "open", "reveal" ] },

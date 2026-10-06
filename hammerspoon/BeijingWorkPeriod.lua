@@ -1,67 +1,53 @@
 -- Menu bar indicator for Beijing work hours.
--- This machine runs on Beijing time, so the local clock is the wall clock: no timezone
--- conversion is involved anywhere in this file.
--- Peak periods are weekdays 09:00-12:00 and 14:00-18:00, so the state only flips at the
--- four boundaries below.
-local periodBoundaries = { "09:00", "12:00", "14:00", "18:00" }
+-- This machine runs on Beijing time, so the local clock is the wall clock and no timezone
+-- conversion is involved. Peak hours are weekdays 09:00-12:00 and 14:00-18:00.
+--
+-- The title is a pure function of the clock, so it can only change at the four boundaries.
+-- One timer chained to the next boundary is enough; no polling.
 
--- Keep the menu, timers and wake watcher alive for the whole Hammerspoon session.
-beijingWorkPeriodState = beijingWorkPeriodState or {}
+local peakBoundaries = { 9, 12, 14, 18 } -- hours at which the title flips
 
-if beijingWorkPeriodState.timers then
-    for _, timer in ipairs(beijingWorkPeriodState.timers) do
-        timer:stop()
-    end
-end
-beijingWorkPeriodState.timers = {}
+local menu = hs.menubar.new()
+local pendingTimer
 
-if beijingWorkPeriodState.wakeWatcher then
-    beijingWorkPeriodState.wakeWatcher:stop()
-end
-
-if beijingWorkPeriodState.menu then
-    beijingWorkPeriodState.menu:delete()
-end
-
-beijingWorkPeriodState.menu = hs.menubar.new()
-
-local function isWorkPeak(now)
-    local isWeekday = now.wday >= 2 and now.wday <= 6
-    local isMorningPeak = now.hour >= 9 and now.hour < 12
-    local isAfternoonPeak = now.hour >= 14 and now.hour < 18
+local function isWorkPeak(t)
+    local isWeekday = t.wday >= 2 and t.wday <= 6
+    local isMorningPeak = t.hour >= 9 and t.hour < 12
+    local isAfternoonPeak = t.hour >= 14 and t.hour < 18
 
     return isWeekday and (isMorningPeak or isAfternoonPeak)
 end
 
-local function updateBeijingWorkPeriodTitle()
-    beijingWorkPeriodState.menu:setTitle(isWorkPeak(os.date("*t")) and "梁文峰" or "梁文谷")
+local function secondsUntilNextBoundary()
+    local now = os.date("*t")
+    local nowSeconds = now.hour * 3600 + now.min * 60 + now.sec
+
+    for _, hour in ipairs(peakBoundaries) do
+        local delta = hour * 3600 - nowSeconds
+        if delta > 0 then return delta end
+    end
+
+    return 24 * 3600 - nowSeconds + peakBoundaries[1] * 3600
 end
 
-local function scheduleBoundaryTimers()
-    for _, timer in ipairs(beijingWorkPeriodState.timers) do
-        timer:stop()
-    end
-    beijingWorkPeriodState.timers = {}
+local function refreshTitle()
+    -- +1s grace: NSTimer may fire up to 1s early (see the notes on hs.timer.doAt), which
+    -- would sample the previous hour and freeze the wrong title until the next boundary.
+    menu:setTitle(isWorkPeak(os.date("*t", os.time() + 1)) and "梁文峰" or "梁文谷")
 
-    for _, timeOfDay in ipairs(periodBoundaries) do
-        -- Fires at that wall-clock time every day, until the next reload.
-        local timer = hs.timer.doAt(timeOfDay, "1d", updateBeijingWorkPeriodTitle)
-        table.insert(beijingWorkPeriodState.timers, timer)
-    end
+    -- Chain to the next boundary. A one-shot NSTimer whose fire date passed during sleep
+    -- fires as soon as the run loop resumes, so a missed boundary self-corrects on wake.
+    if pendingTimer then pendingTimer:stop() end
+    pendingTimer = hs.timer.doAfter(secondsUntilNextBoundary(), refreshTitle)
 end
 
--- NSTimer pauses while the system sleeps, so a boundary crossing during sleep is missed.
--- Re-deriving the title on wake covers that gap.
-beijingWorkPeriodState.wakeWatcher = hs.caffeinate.watcher.new(function(event)
-    local happenedAtWake = event == hs.caffeinate.watcher.systemDidWake
+-- Safety net for clock changes that do not come with a boundary crossing.
+hs.caffeinate.watcher.new(function(event)
+    local woke = event == hs.caffeinate.watcher.systemDidWake
         or event == hs.caffeinate.watcher.screensDidWake
         or event == hs.caffeinate.watcher.screensDidUnlock
 
-    if happenedAtWake then
-        updateBeijingWorkPeriodTitle()
-        scheduleBoundaryTimers()
-    end
+    if woke then refreshTitle() end
 end):start()
 
-updateBeijingWorkPeriodTitle()
-scheduleBoundaryTimers()
+refreshTitle()

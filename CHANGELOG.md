@@ -1,5 +1,56 @@
 # Changelog
 
+## 2026-10-06
+
+### Herdr
+
+- **共享配置脱离 dotfiles 管理**：Herdr GPUI 拒绝符号链接形式的 `~/.config/herdr/config.toml`（要求 owned regular file），设置页底部一直显示 Unavailable，放宽权限无法解决，拒绝依据是文件类型。`install.conf.yaml` 移除该 link 条目，`~/.config/herdr/config.toml` 改为普通文件由 Herdr 自行读写；此后该文件不再随 dotfiles 同步。
+
+### Hammerspoon
+
+- **重载清理残留监听**：`hs.caffeinate.watcher` 原先未保存引用，Hammerspoon 重载配置时旧 watcher 既不停止也不回收，每次重载多留一份唤醒回调，多次重载后同一唤醒会并发触发多轮标题重算。改为模块级局部变量持有并先 `:stop()` 再重建。
+
+### Zsh
+
+- **移除 ccx 函数**：卸载 cliproxyapi（`brew uninstall`，LaunchAgent `sh.brew.cliproxyapi` 与 `~/.cli-proxy-api/` 一并删除）后，8317 端口不再有服务，`ccx` 只会在每次调用时报错。退掉 Codex 订阅就让整条本地代理链路一起下线。
+- **回车前清除前导空白**：包装 `accept-line`，回车执行前剥掉缓冲区开头的所有空白（空格、Tab、粘贴带入的前导空行）。粘贴命令常带前导空白，而 atuin 把以空白开头的命令整条丢弃不记录，事后搜不到。
+- **新增 codex 与 cxa 缩写**：`codex` 展开为跳过确认并关闭沙箱的完整形式，`cxa` 在其上再指定 `gpt-6-astra` 模型，与既有 `cx` / `cxl` / `cxt` 系列对齐。
+
+## 2026-10-01
+
+### Yazi
+
+- **视频文件补齐 Reveal**：`[open] prepend_rules` 的 `{ mime = "video/*" }` 规则排在预设前面且首条命中即止，整条替换了预设的 `{ mime = "{audio,video}/*", use = ["play", "reveal"] }`，Shift+O 只剩 Open 一行。改回 `use = [ "open", "reveal" ]`。
+- **新增 LosslessCut opener**：`[opener]` 添加 `losslesscut`，用 `open -b no.mifi.losslesscut-mac` 按 bundle id 调用，视频的 open 菜单变为 Open / LosslessCut / Reveal。
+
+## 2026-09-29
+
+### Yazi
+
+- **修复图片预览失效**：`prepend_previewers` 中新增的 `{ url = "*", run = "git-diff-preview" }` 通吃所有文件，而 Yazi 的预览器选择是「首个命中即止」（`Plugin::previewer` 只做一次 `find`），预设的 `{ mime = "image/*", run = "image" }` 不再执行；插件对非差异文件回退到 `code`，二进制文件于是渲染成一行 "Binary file"。改为 `mime = "text/*"` 加扩展名列表两条规则，图片、视频、PDF 让回预设预览器。
+
+## 2026-09-24
+
+### Herdr
+
+- **复制当前窗格 ID**：新增 `prefix+i` 绑定，`type = "shell"`，把 herdr 注入的 `HERDR_ACTIVE_PANE_ID`（客户端当前 focus 的窗格）拼成 `herdr pane id: w1:p1` 写入 macOS 剪贴板。给 AI 交代「在哪个窗格干活」时，focus 目标窗格按一下，粘到 AI 窗格里即可接自己的指令。不写插件：`[[keys.command]]` 已注入该环境变量，一条 pbcopy 管道够用。
+
+## 2026-09-23
+
+### Herdr
+
+- **停用 Codex usage**：`tab_bar_right` 不再调用 `codex-usage.py`，脚本与 `codex-usage.db` 保留但不再执行；同时删掉 `host-status.sh` 里按 `~/.cache/herdr/usage-display` 在 Codex 与 Command Code 之间轮流显示的逻辑，该状态文件已无用。
+- **两项按主机门控**：`host-status.sh` 改为匹配「主机:数据源」——`macmini:power` 跑 `mac-power.py`，`mba:commandcode` 跑 `commandcode-usage.py`，其余组合直接 `exit 0`。Herdr 会清空空输出的条目，所以每台机器只显示一项，仍共用同一份 `config.toml`。
+- **刷新频率各自保留**：`interval_seconds` 属于条目而非输出，一条配置装不下两套频率；拆成两个条目后 Mac mini 的 Power 仍是 2 秒，Command Code usage 由 30 秒改为 60 秒。
+
+## 2026-09-21
+
+### Hammerspoon
+
+- **单定时器链替代四个每日定时器**：`BeijingWorkPeriod.lua` 改为只排下一个边界（09/12/14/18），触发时从当前时钟重算标题并重排下一个边界。原先四个 `hs.timer.doAt` 每个边界只采样一次，一次落在边界前就冻结错误状态 2–4 小时（周四起下午一直显示「梁文谷」）。
+- **早触发容差**：判断时钟加 1 秒宽限，吃掉 NSTimer 文档中「可能提前 1 秒触发」的抖动，13:59:59 也算作 14:00。
+- **漏触发自愈**：一次性 NSTimer 的 fire date 在休眠中过期后，唤醒即补发并重算，不再依赖四个定时器各自的锚定时间；唤醒监听降级为时钟跳变的兜底。
+
 ## 2026-09-17
 
 ### Zsh

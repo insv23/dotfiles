@@ -14,7 +14,6 @@
     ~/.config/atuin/: ./atuin
     ~/.config/karabiner/: ./karabiner
     ~/.config/ghostty/: ./ghostty
-    ~/.config/herdr/config.toml: ./herdr/config.toml
     ~/.config/herdr/codex-usage.py: ./herdr/codex-usage.py
     ~/.config/herdr/commandcode-usage.py: ./herdr/commandcode-usage.py
     ~/.config/herdr/host-status.sh: ./herdr/host-status.sh

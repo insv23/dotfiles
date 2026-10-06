@@ -3,8 +3,11 @@ onboarding = false
 [ui]
 status_indicators = "symbols"
 prompt_new_tab_name = false
+# One entry per data source, because the refresh interval belongs to the entry.
+# Each entry stays silent on hosts that cannot read its source, and Herdr clears
+# an entry with empty output, so every machine shows exactly one value.
 tab_bar_right = [
-  { type = "command", command = "~/.config/herdr/host-status.sh codex", interval_seconds = 30, timeout_seconds = 10 },
+  { type = "command", command = "~/.config/herdr/host-status.sh commandcode", interval_seconds = 60, timeout_seconds = 10 },
   { type = "command", command = "~/.config/herdr/host-status.sh power", interval_seconds = 2, timeout_seconds = 10 },
 ]
 
@@ -53,4 +56,10 @@ command = 'exec "${SHELL:-sh}"'
 description = "open scratch terminal"
 width = "80%"
 height = "80%"
+
+[[keys.command]]
+key = "prefix+i"
+type = "shell"
+command = 'printf "herdr pane id: %s" "$HERDR_ACTIVE_PANE_ID" | pbcopy'
+description = "copy focused pane id"
 

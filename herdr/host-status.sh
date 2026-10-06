@@ -1,33 +1,17 @@
 #!/bin/sh
 
-status_dir="$HOME/.cache/herdr"
-usage_state="$status_dir/usage-display"
-
-case "$1:$(hostname -s)" in
-  power:macmini)
+# Herdr runs one tab-bar entry per data source, so this script only maps the
+# requested source to the host that can read it. Codex usage is paused: no entry
+# calls codex-usage.py. A host/source pair without a match prints nothing, and
+# Herdr clears entries with empty output.
+case "$(hostname -s):$1" in
+  macmini:power)
     exec "$HOME/.config/herdr/mac-power.py"
     ;;
-  codex:mba)
-    # Each Herdr call is a new process, so the previous choice lives in a file.
-    next=codex
-    if [ -r "$usage_state" ]; then
-      read -r last <"$usage_state" || last=""
-      case "$last" in
-        codex) next=commandcode ;;
-        commandcode) next=codex ;;
-      esac
-    fi
-    mkdir -p "$status_dir" 2>/dev/null
-    printf '%s\n' "$next" >"$usage_state" 2>/dev/null
-    case "$next" in
-      codex) exec "$HOME/.config/herdr/codex-usage.py" ;;
-      *) exec "$HOME/.config/herdr/commandcode-usage.py" ;;
-    esac
-    ;;
-  power:* | codex:*)
-    exit 0
+  mba:commandcode)
+    exec "$HOME/.config/herdr/commandcode-usage.py"
     ;;
   *)
-    exit 2
+    exit 0
     ;;
 esac

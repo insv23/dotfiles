@@ -84,6 +84,16 @@ clear-quote-content () {
 zle -N clear-quote-content
 bindkey '^d' clear-quote-content
 
+# accept-line: 回车前清除缓冲区开头全部空白（空格、Tab、粘贴带进来的前导空行）。
+# 粘贴命令常带前导空白，而 atuin 把空白开头的命令整条丢弃不记录，历史搜不到。
+# ponytail: 前导空白一律清除，无例外；若 heredoc 正文恰好是当前缓冲区且以缩进开头，该缩进会丢失，升级条件是用户真的需要保留 heredoc 首行缩进。
+accept-line () {
+    setopt localoptions extendedglob
+    BUFFER="${BUFFER##[[:space:]]#}"
+    zle .accept-line
+}
+zle -N accept-line
+
 # ^G: 进入 vim 编辑当前命令
 autoload -Uz edit-command-line
 zle -N edit-command-line
