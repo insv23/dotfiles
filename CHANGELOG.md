@@ -2,6 +2,10 @@
 
 ## 2026-10-06
 
+### Docs
+
+- **重写 dotdrop 迁移方案**：原方案按「全部 nolink 复制」写，与「仓库只有一份」的模型矛盾。改为默认 `link: absolute`，只把 Herdr 的共享配置标为 `nolink`（GPUI 拒绝符号链接）。映射表按「谁决定文件路径」重新分类：程序硬编码查找的 16 条必须映射，被 `zshrc` 等主动 source 的（`~/.zsh/aliases/`、`~/.vim/` 等）删除，26 条缩到 16 条。
+
 ### Tmux
 
 - **退役 tmux 配置**：`tmux/` 移入 `.deprecated/tmux/`（`tmux.conf`、`scripts/persistent-popup.sh`、`install_tpm.sh`）。`install.conf.yaml` 移除 `~/.tmux` 与 `~/.tmux.conf` 两条链接，并加一条 shell 命令把旧机器上遗留的这两个符号链接摘掉；`setup.zsh` 去掉「安装 Tmux 插件」步骤；`.gitignore` 的插件规则改指 `.deprecated/tmux/plugins`。仓库里的 `zsh/abbreviations`（`tmat`/`tmkt`/`tmls`）与 vim 的 tmux 相关插件不动，留待后续单独处理。
