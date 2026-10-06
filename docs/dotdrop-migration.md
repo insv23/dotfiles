@@ -6,7 +6,7 @@
 
 顺带要修的是映射表本身没想清楚：现在是「把 `zsh/`、`vim/`、`tmux/` 整目录链回家目录」，等于把仓库内容与运行时克隆的插件混在同一个目录条目里，26 条映射里有一半是不必要的。
 
-迁移目标：改用 dotdrop，**默认符号链接**（保持「仓库只有一份」的模型），**只把 Herdr 共享配置改成复制**。映射表从 26 条缩到 16 条。
+迁移目标：改用 dotdrop，**默认符号链接**（保持「仓库只有一份」的模型），**只把 Herdr 共享配置改成复制**。映射表从 26 条缩到 24 条。
 
 ## 核心模型
 
@@ -19,7 +19,7 @@
 
 zsh 是第二类的典型。`~/.zshrc` 是 zsh 硬编码要读的，必须映射；`zsh/zle.zsh`、`zsh/aliases/*.zsh` 是被 `zshrc` 里那行 `source ~/.dotfiles/zsh/zle.zsh` 拉进来的，路径由我们自己写，所以**不需要**在 `~/.zsh/` 留副本。`~/.zsh/aliases/` 那份复制品目前没有任何东西读。
 
-推论：**只映射 16 条，全部用链接，除了 Herdr 那一条用复制。**
+推论：**实际映射 24 条，全部用链接，除了 Herdr 那条用复制。**
 
 链接的好处正是「只有一份」：改 `zsh/zshrc` 立即生效，没有 install 延迟。复制才有两份，才有漂移。Herdr 是例外，因为它的 GPUI 显式拒绝链接。
 
@@ -29,7 +29,7 @@ zsh 是第二类的典型。`~/.zshrc` 是 zsh 硬编码要读的，必须映射
 
 `install.conf.yaml` 的 link 段。按上面的模型分类：
 
-**必须映射（16 条）**
+**必须映射（20 条，原表 16 条 + 下面 4 条）**
 
 | 目标 | 源 | 谁要求这个路径 |
 |---|---|---|
@@ -212,15 +212,15 @@ dotfiles:
     dst: ~/.config/herdr/commandcode-usage.py
 
 profiles:
-  mba:
-    dotfiles: ALL
-  macmini:
-    dotfiles: ALL
-  ycy-2C2G:
+  default:
     dotfiles: ALL
 ```
 
 `~/.claude/` 和 `~/.codex/` 是外部工具管理的目录，dotdrop 的 `create: true` 会按需创建父目录，不会碰目录里的其他文件。
+
+### profile 只留一个
+
+profile 是「一组 dotfiles 的选集」，命令形如 `dotdrop -p <名字> install`。原方案按机器名写了 `mba`、`macmini`、`ycy-2C2G` 三份，但三份内容都是 `ALL`，等于没有裁剪，代价是每台机器必须传对 `--profile`，而 dotdrop 默认 profile 取当前主机名，新主机名上还会直接报 `no dotfile defined for this profile`。留一个 `default: ALL`，命令不用带 `-p`（或显式 `-p default`），将来真要按主机裁剪再加。
 
 ### 唯一一条 nolink
 
@@ -230,7 +230,7 @@ profiles:
 - Herdr GUI 写入后要 `dotdrop update` 收进仓库
 - 两侧漂移用 `dotdrop compare` 看
 
-这一条可以接受，因为它就是本次迁移的直接起因。
+这一条可以接受，因为它就是本次迁移的直接起因。**落地时家目录那份才是要保留的版本**：家目录是 `delivery = "system"`，仓库里是 09-24 提交的 `terminal`。先 `cp ~/.config/herdr/config.toml herdr/config.toml` 收回仓库再安装，否则 `nolink` 会用旧值盖掉正在用的设置。
 
 ## 清理清单
 
@@ -249,7 +249,7 @@ profiles:
 
 | 对象 | 改动 |
 |---|---|
-| `install` | 改为调用 `dotdrop --cfg config.yaml install --profile <host>`；保留 `set -e`；保留 submodule 与插件安装逻辑；增加「先删掉旧符号链接」的步骤（用 `[ -L ]` 判定后再 `rm -f`） |
+| `install` | 改为调用 `dotdrop --cfg config.yaml install`（单 `default` profile，不传 `--profile`）；保留 `set -e`；保留插件安装逻辑；增加「先删掉旧符号链接」的步骤（用 `[ -L ]` 判定后再 `rm -f`） |
 | `zsh/aliases.sh` 的 `dfu()` | 行为不变（`git pull --ff-only` + `./install` + `exec zsh`），但 `install` 语义变化需要在提示语里说明 |
 | `README.md` / `README-en.md` | 「基于 Dotbot 的一键安装」改为 dotdrop；「如果某些文件已存在，需要先删除」那段按 dotdrop 的 `backup: true` 行为重写；目录结构一节已删 `tmux/`（commit `ea58879`） |
 | `CHANGELOG.md` | 追加迁移条目 |
@@ -268,14 +268,14 @@ profiles:
 ### 阶段 0：准备
 
 1. 在本地和 macmini 各跑一次「家目录有哪些文件仓库里没有」的清点，确认没有只存在于家目录的配置。重点检查 `zsh/hosts/`、`karabiner/`、`lazygit/`。
-2. `brew install dotdrop`（本地与所有远程机器）。依赖是 `certifi`、`libmagic`、`python@3.14`。
+2. 安装 dotdrop。macOS 14 上 `brew install dotdrop` 会源码重建 7 个依赖（含 `python@3.14`、`openssl@3`），本机实测卡在 openssl 源码包下载；改用 pipx 路线：`pipx install dotdrop` + `brew install libmagic` + `pipx inject --force dotdrop python-magic`。仅 `pipx install` 会报 `missing python module python-magic`，缺了 libmagic 则 `import magic` 失败，这条 `inject` 不能省。
 3. 确认所有机器的仓库都是干净工作树。
 
 ### 阶段 1：建立配置
 
 1. 新增 `config.yaml`，映射照抄上表。
-2. `dotdrop compare -c config.yaml` 看差异，确认 src/dst 解析正确。
-3. `dotdrop install --dry -c config.yaml` 预演，确认不触碰 `zsh/plugins/`、`vim/pack/`（`~/.zsh`、`~/.vim` 已不在映射表里，正常不会被引用）。
+2. `dotdrop -c config.yaml -p default compare` 看差异，确认 src/dst 解析正确。单 profile 也需显式 `-p default`，否则按当前主机名取 profile。
+3. `dotdrop -c config.yaml -p default install --dry` 预演，确认不触碰 `zsh/plugins/`、`vim/pack/`（`~/.zsh`、`~/.vim` 已不在映射表里，正常不会被引用）。
 
 ### 阶段 2：本机切换
 
@@ -366,6 +366,8 @@ done
 4. **插件留在仓库，`~/.zsh` 与 `~/.vim` 两条链接删除。** 配置改为自己指向仓库：`zshenv` 导出 `DOTFILES`，`vimrc` 用 `packpath`。已落地并实测（把两个链接物理移走后 zsh 与 vim 仍正常加载插件）。
 5. **删链接先做 `[ -L ]` 判定。** `install.conf.yaml` 的 shell 段与将来 `install` 脚本里的删链接步骤统一写成 `[ -L 路径 ] && rm -f 路径`，不用无条件 `rm -f`。
 6. **`install_plugins.sh` 的 clone 目标已是 `$DOTFILES`。** 两个脚本都改成 `${DOTFILES:-$HOME/.dotfiles}/...`，不依赖已删除的 `~/.zsh`、`~/.vim` 链接。
+7. **profile 只留一个 `default: ALL`。** 原方案的三份按主机名的 profile 内容相同，等于没有裁剪，却要求每台机器传对 `--profile`，新主机名还会因缺 profile 报 `no dotfile defined for this profile`。
+8. **Herdr 配置以家目录版为准。** 家目录在用 `delivery = "system"`，仓库里是 09-24 提交的 `terminal`，两侧已漂移。`nolink` 会用仓库版覆盖家目录版，所以先 `cp ~/.config/herdr/config.toml herdr/config.toml` 收回仓库再安装。
 
 ## 待你决定的问题
 
@@ -373,6 +375,14 @@ done
 
 - `install_plugins.sh` 的 clone 目标改成 `${DOTFILES:-$HOME/.dotfiles}/...`，已实测克隆到仓库。
 - 删链接一律用 `[ -L 路径 ] && rm -f 路径` 判定后再删，不用无条件 `rm -f`，避免误删同名普通文件。
+
+## 落地记录（本机 mba，2026-10-06）
+
+- 迁移前打 tag `pre-dotdrop`（`df020fc`）。
+- dotdrop 1.17.0 经 pipx 安装，`python-magic` 已 inject。
+- `dotdrop compare` 首次只有 `mac-power.py` 未链；`install` 后 `compare` 无输出，24 条 dotfile 全部一致。
+- `~/.config/herdr/config.toml` 是普通文件且与仓库一致；其余 23 条仍是绝对符号链接，未重复重链。
+- 验证通过：`DOTFILES` 生效、abbr 71 条、p10k 加载、`$fpath` 含仓库两目录、`z` 命令可用（`abbr list` 在非交互 `zsh -i -c` 下报 `can't change option: zle` 属正常）；`&packpath` 为 `/Users/tony/.dotfiles/vim` 且 `globpath` 列出 8 个仓库插件；`zsh/plugins` 9 个、`vim/pack/vendor/start` 8 个仍在。
 
 ## 附：Dotbot 与 dotdrop 行为对照
 

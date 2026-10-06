@@ -14,14 +14,14 @@ lazy-lock.json
 lazygit/state.yml
 
 # tmux plugins (config moved to .deprecated/tmux)
-tmux/plugins
-.deprecated/tmux/plugins
+tmux/plugins/
+.deprecated/tmux/plugins/
 
 # zsh plugins
-zsh/plugins
+zsh/plugins/
 
 # vim plugins
-vim/pack/vendor/start
+vim/pack/vendor/start/
 
 # envrc
 .envrc

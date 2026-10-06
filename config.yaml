@@ -1,0 +1,110 @@
+config:
+  dotpath: .
+  link_dotfile_default: absolute
+  backup: true
+  create: true
+  force_chmod: true
+  # 运行时状态不进仓库，也不参与比较
+  cmpignore:
+    - '*/automatic_backups/*'
+    - '*/state.yml'
+    - '*.secret*'
+  upignore:
+    - '*/automatic_backups/*'
+    - '*/state.yml'
+    - '*/karabiner.json'
+
+dotfiles:
+  # --- shell ---
+  f_bashrc:
+    src: bash/bashrc
+    dst: ~/.bashrc
+  f_profile:
+    src: bash/profile
+    dst: ~/.profile
+  f_inputrc:
+    src: bash/inputrc
+    dst: ~/.inputrc
+  f_zshenv:
+    src: zsh/zshenv
+    dst: ~/.zshenv
+  f_zprofile:
+    src: zsh/zprofile
+    dst: ~/.zprofile
+  f_zshrc:
+    src: zsh/zshrc
+    dst: ~/.zshrc
+  f_p10k:
+    src: zsh/p10k.zsh
+    dst: ~/.p10k.zsh
+
+  # --- git ---
+  f_gitconfig:
+    src: git/gitconfig
+    dst: ~/.gitconfig
+
+  # --- agents ---
+  f_claude_md:
+    src: agents/CLAUDE.md
+    dst: ~/.claude/CLAUDE.md
+  f_codex_agents:
+    src: agents/CODEX.md
+    dst: ~/.codex/AGENTS.md
+
+  # --- vim ---
+  f_vimrc:
+    src: vim/vimrc
+    dst: ~/.vimrc
+
+  # --- apps ---
+  d_hammerspoon:
+    src: hammerspoon
+    dst: ~/.hammerspoon
+  d_yazi:
+    src: yazi
+    dst: ~/.config/yazi
+  d_kitty:
+    src: kitty
+    dst: ~/.config/kitty
+  d_lazygit:
+    src: lazygit
+    dst: ~/.config/lazygit
+    upignore:
+      - '*/state.yml'
+  d_atuin:
+    src: atuin
+    dst: ~/.config/atuin
+  d_ghostty:
+    src: ghostty
+    dst: ~/.config/ghostty
+  d_karabiner:
+    src: karabiner
+    dst: ~/.config/karabiner
+    upignore:
+      - '*/karabiner.json'
+      - '*/automatic_backups/*'
+  f_hunk:
+    src: hunk/config.toml
+    dst: ~/.config/hunk/config.toml
+
+  # --- herdr ---
+  f_herdr_config:
+    src: herdr/config.toml
+    dst: ~/.config/herdr/config.toml
+    link: nolink              # Herdr GPUI 拒绝符号链接，本条必须复制
+  f_herdr_host_status:
+    src: herdr/host-status.sh
+    dst: ~/.config/herdr/host-status.sh
+  f_herdr_mac_power:
+    src: herdr/mac-power.py
+    dst: ~/.config/herdr/mac-power.py
+  f_herdr_codex_usage:
+    src: herdr/codex-usage.py
+    dst: ~/.config/herdr/codex-usage.py
+  f_herdr_commandcode_usage:
+    src: herdr/commandcode-usage.py
+    dst: ~/.config/herdr/commandcode-usage.py
+
+profiles:
+  default:
+    dotfiles: ALL

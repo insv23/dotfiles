@@ -13,7 +13,7 @@ tab_bar_right = [
 
 agent_panel_sort = "spaces"
 [ui.toast]
-delivery = "terminal"
+delivery = "system"
 
 [theme.custom]
 # Make the active Space and focused Agent rows easier to distinguish.

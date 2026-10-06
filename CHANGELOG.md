@@ -33,6 +33,18 @@
 - **回车前清除前导空白**：包装 `accept-line`，回车执行前剥掉缓冲区开头的所有空白（空格、Tab、粘贴带入的前导空行）。粘贴命令常带前导空白，而 atuin 把以空白开头的命令整条丢弃不记录，事后搜不到。
 - **新增 codex 与 cxa 缩写**：`codex` 展开为跳过确认并关闭沙箱的完整形式，`cxa` 在其上再指定 `gpt-6-astra` 模型，与既有 `cx` / `cxl` / `cxt` 系列对齐。
 
+### Dotdrop
+
+- **从 Dotbot 迁移到 dotdrop**：新增 `config.yaml`（`dotpath: .`、`link_dotfile_default: absolute`、`backup/create/force_chmod: true`），23 条映射覆盖原 26 条链接，`profiles` 只留一个 `default: ALL`。整目录链 `zsh/`、`vim/` 两条删除，插件与子配置已由 `DOTFILES` 与 `packpath` 指向仓库；`zsh/plugins/`、`vim/pack/` 这类 gitignore 的运行时目录不再被映射表带进来。唯一 `link: nolink` 是 `herdr/config.toml`，Herdr GPUI 拒绝符号链接。
+- **`install` 改写**：删掉 dotbot submodule 调用，改为 dotdrop 可用性检查加 `dotdrop --cfg config.yaml install`；保留 `~/.hushlogin` 与 herdr pane-mover 插件检查，保留 `[ -L ]` 判定后清理 `~/.zsh`、`~/.vim`、`~/.tmux`、`~/.tmux.conf` 退役链接。
+- **移除 Dotbot**：`install.conf.yaml`、`install.conf.README.txt`、`init_dotfiles.sh` 删除，`dotbot` 子模块 deinit 并 `git rm`，`.gitmodules`（删后为空）一并删除。迁移前打 tag `pre-dotdrop` 作为回滚锚点。
+- **Herdr 配置以家目录版为准**：家目录正在用的是 `[ui.toast] delivery = "system"`，仓库里是 09-24 提交的 `terminal`，先收回仓库再交给 `nolink` 安装，避免安装时把在用的设置覆盖回旧值。
+- **README 两份同步**：Dotbot 改 dotdrop，安装步骤补 `brew install dotdrop`，「文件已存在需先删除」按 `backup: true` 的 `.dotdropbak` 行为重写，目录结构一节补 `config.yaml`、`herdr/`、`hunk/`，去掉已退役的 `tmux/`。
+
+### Gitignore
+
+- **插件目录规则补尾斜杠**：`zsh/plugins`、`vim/pack/vendor/start`、`tmux/plugins`、`.deprecated/tmux/plugins` 四条改为带尾斜杠的形式，只匹配目录。无斜杠写法会把同名普通文件一并忽略，带斜杠能保留将来把该路径换成普通文件时的可见性。`automatic_backups/`、`/claude/` 等原本已带斜杠的条目以及 `lazygit/state.yml`、`karabiner.json`、`*.secret` 这类文件规则不动。
+
 ## 2026-10-01
 
 ### Yazi

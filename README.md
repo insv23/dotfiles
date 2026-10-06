@@ -4,7 +4,7 @@
 
 ## 特点
 
-- 🚀 基于 [Dotbot](https://github.com/anishathalye/dotbot) 的一键安装
+- 🚀 基于 [dotdrop](https://github.com/deadc0de6/dotdrop) 的一键安装，默认符号链接，仅 Herdr 配置复制
 - 🖥️ 基于主机名的智能配置管理
 - 🔧 完整的终端开发环境：
   - 💻 使用 zsh + [Powerlevel10k](https://github.com/romkatv/powerlevel10k) 打造美观高效的 shell
@@ -52,10 +52,16 @@
 
 2. 运行安装脚本
 
-   如果某些文件已存在，需要先删除:
+   需要先安装 dotdrop：
 
    ```bash
-   rm -f ~/.profile ~/.bashrc ~/.gitconfig ~/.zshrc && ./install
+   brew install dotdrop    # Linux 可用 pipx install dotdrop
+   ```
+
+   随后直接运行 `./install`。目标位置已有的文件会被备份成 `.dotdropbak` 再被替换，不需要手动删除：
+
+   ```bash
+   ./install
    source ~/.zshrc
    ```
 
@@ -105,11 +111,13 @@ dfu
 ├── bash/           # Bash 配置（bashrc、profile、inputrc）
 ├── brew/           # Homebrew 安装脚本与应用列表
 ├── git/            # Git 配置（gitconfig、gitignore_global）
+├── config.yaml     # dotdrop 映射表
 ├── hammerspoon/    # Hammerspoon 自动化配置
+├── herdr/          # Herdr 配置与状态脚本
+├── hunk/           # Hunk 配置
 ├── karabiner/      # Karabiner 键位映射配置
 ├── kitty/          # Kitty 终端配置
 ├── lazygit/        # Lazygit 配置
-├── tmux/           # Tmux 配置与插件
 ├── vim/            # Vim 配置与插件
 ├── yazi/           # Yazi 文件管理器配置
 └── zsh/            # Zsh 配置、插件、别名
@@ -162,9 +170,9 @@ dfu
 
 ### 文件链接错误
 
-- 检查目标位置是否有同名文件
-- 使用 `rm -f` 删除已存在的文件
-- 重新运行 `./install`
+- 用 `dotdrop -c config.yaml compare` 查看 src 与 dst 的差异
+- 目标位置有同名文件时，`backup: true` 会留一份 `.dotdropbak` 再覆盖
+- 修好后重新运行 `./install`
 
 ## 贡献
 
@@ -172,7 +180,7 @@ dfu
 
 ## 致谢
 
-- [Dotbot](https://github.com/anishathalye/dotbot)
+- [dotdrop](https://github.com/deadc0de6/dotdrop)
 - [Homebrew](https://brew.sh/)
 - 以及所有优秀的开源工具
 

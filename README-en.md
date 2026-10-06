@@ -6,7 +6,7 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 
 ## Features
 
-- 🚀 One-click installation powered by [Dotbot](https://github.com/anishathalye/dotbot)
+- 🚀 One-click installation powered by [dotdrop](https://github.com/deadc0de6/dotdrop), symlinked by default with only the Herdr config copied
 - 🖥️ Smart configuration management based on hostname
 - 🔧 Complete terminal development environment:
   - 💻 Beautiful and efficient shell with zsh + [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
@@ -54,10 +54,16 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 
 2. Run the installation script
 
-   If some files already exist, remove them first:
+   Install dotdrop first:
 
    ```zsh
-   rm -f ~/.profile ~/.bashrc ~/.gitconfig ~/.zshrc && ./install
+   brew install dotdrop    # on Linux use pipx install dotdrop
+   ```
+
+   Then run `./install`. Existing files at the target locations are backed up to `.dotdropbak` before being replaced, so manual cleanup is no longer needed:
+
+   ```zsh
+   ./install
    source ~/.zshrc
    ```
 
@@ -109,11 +115,13 @@ This fast-forward syncs the latest remote changes to your local repo (uses `git 
 ├── bash/           # Bash config (bashrc, profile, inputrc)
 ├── brew/           # Homebrew install scripts and app lists
 ├── git/            # Git config (gitconfig, gitignore_global)
+├── config.yaml     # dotdrop mapping table
 ├── hammerspoon/    # Hammerspoon automation config
+├── herdr/          # Herdr config and status scripts
+├── hunk/           # Hunk config
 ├── karabiner/      # Karabiner key remapping config
 ├── kitty/          # Kitty terminal config
 ├── lazygit/        # Lazygit config
-├── tmux/           # Tmux config and plugins
 ├── vim/            # Vim config and plugins
 ├── yazi/           # Yazi file manager config
 └── zsh/            # Zsh config, plugins, aliases
@@ -166,9 +174,9 @@ This fast-forward syncs the latest remote changes to your local repo (uses `git 
 
 ### File Linking Errors
 
-- Check if files already exist at target locations
-- Use `rm -f` to remove existing files
-- Run `./install` again
+- Run `dotdrop -c config.yaml compare` to inspect src/dst differences
+- When a file already exists, `backup: true` keeps a `.dotdropbak` copy before overwriting
+- Re-run `./install` once fixed
 
 ## Contributing
 
@@ -176,6 +184,6 @@ Issues and Pull Requests are welcome!
 
 ## Acknowledgments
 
-- [Dotbot](https://github.com/anishathalye/dotbot)
+- [dotdrop](https://github.com/deadc0de6/dotdrop)
 - [Homebrew](https://brew.sh/)
 - And all the excellent open-source tools

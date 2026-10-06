@@ -2,14 +2,27 @@
 
 set -e
 
-CONFIG="install.conf.yaml"
-DOTBOT_DIR="dotbot"
-
-DOTBOT_BIN="bin/dotbot"
+CONFIG="config.yaml"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd "${BASEDIR}"
-git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
-git submodule update --init --recursive "${DOTBOT_DIR}"
 
-"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+if ! command -v dotdrop >/dev/null 2>&1; then
+  echo "错误：未找到 dotdrop，先安装：brew install dotdrop" >&2
+  exit 1
+fi
+
+# 干净环境要补一个文件，避免 zsh 打印登录提示
+touch ~/.hushlogin
+
+# 早前版本链接过的目录，旧链接会挡住新的部署
+for link in ~/.tmux ~/.tmux.conf ~/.zsh ~/.vim; do
+  [ -L "$link" ] && rm -f "$link"
+done
+
+if command -v herdr >/dev/null 2>&1; then
+  herdr plugin list --json | grep -q 'osamahbeig.pane-mover' \
+    || herdr plugin install osamahbeig/herdr-pane-mover --yes
+fi
+
+dotdrop --cfg "${CONFIG}" install "${@}"
