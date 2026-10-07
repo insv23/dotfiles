@@ -3,3 +3,6 @@
 typeset -U path PATH
 path=(/opt/homebrew/bin /opt/homebrew/sbin $path)
 export PATH
+
+# OrbStack 集成。未安装 OrbStack 的机器上该行是空操作。
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :

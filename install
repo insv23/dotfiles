@@ -25,4 +25,5 @@ if command -v herdr >/dev/null 2>&1; then
     || herdr plugin install osamahbeig/herdr-pane-mover --yes
 fi
 
-dotdrop --cfg "${CONFIG}" install "${@}"
+# dotdrop 按主机名取默认 profile，仓库只有一个 default，显式指定避免新主机上静默不安装
+DOTDROP_PROFILE=default dotdrop --cfg "${CONFIG}" install "${@}"

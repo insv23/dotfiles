@@ -45,6 +45,11 @@
 
 - **插件目录规则补尾斜杠**：`zsh/plugins`、`vim/pack/vendor/start`、`tmux/plugins`、`.deprecated/tmux/plugins` 四条改为带尾斜杠的形式，只匹配目录。无斜杠写法会把同名普通文件一并忽略，带斜杠能保留将来把该路径换成普通文件时的可见性。`automatic_backups/`、`/claude/` 等原本已带斜杠的条目以及 `lazygit/state.yml`、`karabiner.json`、`*.secret` 这类文件规则不动。
 
+### Dotdrop
+
+- **修正 `install` 的 profile 缺陷**：dotdrop 的 `-p` 默认值是当前主机名，仓库只有一个 `default`，不带 `-p` 时它只打印 `no dotfile defined for this profile` 就以退出码 0 结束，新机器上会静默一条都不装。`install` 改为在调用前设 `DOTDROP_PROFILE=default`，仍可用 `-p` 覆盖。
+- **`zsh/zprofile` 并入 OrbStack 集成**：macmini 的 `~/.zprofile` 里有一行 `source ~/.orbstack/shell/init.zsh 2>/dev/null`，属于家目录独家内容。该行带 `2>/dev/null` 保护，未装 OrbStack 的机器上是空操作，收进仓库后各机可统一用仓库版，不再需要在本地留例外。
+
 ## 2026-10-01
 
 ### Yazi
