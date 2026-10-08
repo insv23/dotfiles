@@ -15,11 +15,6 @@ fi
 # 干净环境要补一个文件，避免 zsh 打印登录提示
 touch ~/.hushlogin
 
-# 早前版本链接过的目录，旧链接会挡住新的部署
-for link in ~/.tmux ~/.tmux.conf ~/.zsh ~/.vim; do
-  [ -L "$link" ] && rm -f "$link"
-done
-
 # 插件不在这里装：清单与用途记录在 herdr/plugins.md，换设备时按那份文件手动装。
 
 # dotdrop 按主机名取默认 profile，仓库只有一个 default，显式指定避免新主机上静默不安装

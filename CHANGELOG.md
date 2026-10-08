@@ -64,6 +64,7 @@
 
 ### Dotdrop
 
+- **删除 Dotbot 时代的退役链接清理**：`install` 里原来还有一段 `[ -L ]` 判定后删 `~/.zsh`、`~/.vim`、`~/.tmux`、`~/.tmux.conf` 的代码，来自 Dotbot 时代的整目录链。两台设备都已完成 dotdrop 迁移，这四个路径在本机早已不存在，仓库里也没有其他地方引用它们，这段循环每次只会空转。删掉；`touch ~/.hushlogin` 保留，新环境仍需要它。
 - **从 Dotbot 迁移到 dotdrop**：新增 `config.yaml`（`dotpath: .`、`link_dotfile_default: absolute`、`backup/create/force_chmod: true`），23 条映射覆盖原 26 条链接，`profiles` 只留一个 `default: ALL`。整目录链 `zsh/`、`vim/` 两条删除，插件与子配置已由 `DOTFILES` 与 `packpath` 指向仓库；`zsh/plugins/`、`vim/pack/` 这类 gitignore 的运行时目录不再被映射表带进来。唯一 `link: nolink` 是 `herdr/config.toml`，Herdr GPUI 拒绝符号链接。
 - **`install` 改写**：删掉 dotbot submodule 调用，改为 dotdrop 可用性检查加 `dotdrop --cfg config.yaml install`；保留 `~/.hushlogin` 与 herdr pane-mover 插件检查，保留 `[ -L ]` 判定后清理 `~/.zsh`、`~/.vim`、`~/.tmux`、`~/.tmux.conf` 退役链接。
 - **移除 Dotbot**：`install.conf.yaml`、`install.conf.README.txt`、`init_dotfiles.sh` 删除，`dotbot` 子模块 deinit 并 `git rm`，`.gitmodules`（删后为空）一并删除。迁移前打 tag `pre-dotdrop` 作为回滚锚点。
