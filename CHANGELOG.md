@@ -4,6 +4,7 @@
 
 ### Herdr
 
+- **新增 `herdr/plugins.md` 记录插件**：Herdr 的插件清单只存在 `~/.config/herdr/plugins.json`，在仓库外，新设备无从得知装过什么。`install` 里原来那行硬编码的 pane-mover 检查删掉：装插件不是 dotfiles 的职责，仓库只负责说清楚装过什么、每个是干什么的，换设备时按这份清单手动装。
 - **通知投递由 system 改为 terminal**：`system` 在 macOS 上先找 `terminal-notifier`，本机没装，退回 `/usr/bin/osascript`，通知在通知中心显示为 Script Editor，图标与行为都不对，点击也无法激活宿主终端。改为 `terminal` 后由 kitty 自己发桌面通知，点击可唤回窗口。`[ui.toast]` 上方补了四种 delivery 的注释，以及这两条本地结论。
 - **装上 herdr-focus-notify 插件**：自带通知进不了具体 pane，插件监听 `pane.agent_status_changed`，在 agent 变 `blocked`/`done` 且你没在看那个 pane 时发通知，点击后先激活 kitty 再跑 `herdr agent focus <pane>`。插件补上桌面通知后，`[ui.toast]` 的 `delivery` 从 `terminal` 改为 `herdr`，只留应用内 toast，否则同一次状态变化收两条。通知后端是 `alerter`（`brew install vjeantet/tap/alerter`，已加入 `brew/brew-mac.txt`），配置写在 `~/.config/herdr/plugins/config/herdr-focus-notify/.env`（该目录不进仓库）。
 - **`open_notification_target` 增加 `ctrl+b`**：保留默认 `prefix+o`，两个键都能跳到当前通知的目标 pane。
