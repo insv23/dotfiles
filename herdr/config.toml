@@ -23,7 +23,10 @@ agent_panel_sort = "spaces"
 # 行为都不对，点击也无法激活宿主终端。本机没装 terminal-notifier。
 # 用 kitty 时选 terminal，通知由 kitty 自己发，点击时由 kitty 唤回窗口。
 # 跳进 Herdr 内的 workspace/tab/pane 不靠点击通知，用 keys.open_notification_target。
-delivery = "terminal"
+#
+# 已装 herdr-focus-notify 插件接管桌面通知（可点击并聚焦到具体 pane），故这里只留
+# 应用内 toast，避免同一次状态变化收到两条通知。
+delivery = "herdr"
 
 [theme.custom]
 # Make the active Space and focused Agent rows easier to distinguish.
@@ -44,6 +47,7 @@ previous_workspace = "alt+shift+tab"
 # Free prefix+g for the lazygit popup. Default goto picker is prefix+g.
 goto = ""
 rename_tab = "prefix+r"
+open_notification_target = ["ctrl+b", "prefix+o"]
 
 [[keys.command]]
 key = "prefix+m"

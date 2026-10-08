@@ -6,6 +6,7 @@ jq
 python-argcomplete
 ripgrep
 unar
+vjeantet/tap/alerter
 wget
 yazi
 zlib 

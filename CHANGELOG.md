@@ -5,6 +5,9 @@
 ### Herdr
 
 - **通知投递由 system 改为 terminal**：`system` 在 macOS 上先找 `terminal-notifier`，本机没装，退回 `/usr/bin/osascript`，通知在通知中心显示为 Script Editor，图标与行为都不对，点击也无法激活宿主终端。改为 `terminal` 后由 kitty 自己发桌面通知，点击可唤回窗口。`[ui.toast]` 上方补了四种 delivery 的注释，以及这两条本地结论。
+- **装上 herdr-focus-notify 插件**：自带通知进不了具体 pane，插件监听 `pane.agent_status_changed`，在 agent 变 `blocked`/`done` 且你没在看那个 pane 时发通知，点击后先激活 kitty 再跑 `herdr agent focus <pane>`。插件补上桌面通知后，`[ui.toast]` 的 `delivery` 从 `terminal` 改为 `herdr`，只留应用内 toast，否则同一次状态变化收两条。通知后端是 `alerter`（`brew install vjeantet/tap/alerter`，已加入 `brew/brew-mac.txt`），配置写在 `~/.config/herdr/plugins/config/herdr-focus-notify/.env`（该目录不进仓库）。
+- **`open_notification_target` 增加 `ctrl+b`**：保留默认 `prefix+o`，两个键都能跳到当前通知的目标 pane。
+- **顺带修好 rust toolchain**：stable toolchain 缺 `rustc` 组件、`aarch64-apple-darwin` 缺 rust-std，插件的 `cargo build --release` 因此失败；`rustup component add rustc` 与 `rustup component add rust-std` 补回。不在仓库内，仅记录。
 
 ### Yazi
 
