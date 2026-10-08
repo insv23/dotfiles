@@ -6,7 +6,7 @@
 
 顺带要修的是映射表本身没想清楚：现在是「把 `zsh/`、`vim/`、`tmux/` 整目录链回家目录」，等于把仓库内容与运行时克隆的插件混在同一个目录条目里，26 条映射里有一半是不必要的。
 
-迁移目标：改用 dotdrop，**默认符号链接**（保持「仓库只有一份」的模型），**只把 Herdr 共享配置改成复制**。映射表从 26 条缩到 24 条。
+迁移目标：改用 dotdrop，**默认符号链接**（保持「仓库只有一份」的模型），**只把 Herdr 共享配置改成复制**。映射表从 26 条缩到 20 条。
 
 ## 核心模型
 
@@ -19,7 +19,7 @@
 
 zsh 是第二类的典型。`~/.zshrc` 是 zsh 硬编码要读的，必须映射；`zsh/zle.zsh`、`zsh/aliases/*.zsh` 是被 `zshrc` 里那行 `source ~/.dotfiles/zsh/zle.zsh` 拉进来的，路径由我们自己写，所以**不需要**在 `~/.zsh/` 留副本。`~/.zsh/aliases/` 那份复制品目前没有任何东西读。
 
-推论：**实际映射 24 条，全部用链接，除了 Herdr 那条用复制。**
+推论：**实际映射 20 条，全部用链接。**（迁移当时是 24 条，含 Herdr 那条复制；GPUI 停用后恢复链接，四个脚本条目改由配置直接引用仓库路径，共删 4 条。）
 
 链接的好处正是「只有一份」：改 `zsh/zshrc` 立即生效，没有 install 延迟。复制才有两份，才有漂移。Herdr 是例外，因为它的 GPUI 显式拒绝链接。
 
@@ -48,16 +48,15 @@ zsh 是第二类的典型。`~/.zshrc` 是 zsh 硬编码要读的，必须映射
 | `~/.config/kitty/` | `kitty` | kitty 默认配置目录 |
 | `~/.config/lazygit/` | `lazygit` | lazygit 默认配置目录 |
 | `~/.config/atuin/` | `atuin` | atuin 默认配置目录 |
-| `~/.config/herdr/` 三件套 | `herdr/{config.toml,host-status.sh,*.py}` | herdr 默认目录 + `config.toml` 里写死的 `~/.config/herdr/host-status.sh` |
+| `~/.config/herdr/config.toml` | `herdr/config.toml` | herdr 默认目录；同目录的辅助脚本不进映射表 |
 
-另外还有 4 条属于这一类但需要单独说明：
+另外还有 3 条属于这一类但需要单独说明：
 
 | 目标 | 源 | 说明 |
 |---|---|---|
 | `~/.config/karabiner/` | `karabiner` | 目录里混有被忽略的 `karabiner.json`（运行时生成）和 `automatic_backups/` |
 | `~/.config/ghostty/` | `ghostty` | 本机没装 Ghostty，映射指向不存在的程序 |
 | `~/.config/hunk/config.toml` | `hunk/config.toml` | hunk 默认路径 |
-| `~/.config/herdr/*.py` | `herdr/*.py` | 其中 `codex-usage.py` 已不再被 `tab_bar_right` 调用 |
 
 **不需要映射（10 条，可直接删除）**
 
@@ -194,21 +193,11 @@ dotfiles:
     dst: ~/.config/hunk/config.toml
 
   # --- herdr ---
+  # 辅助脚本放在 herdr/ 里由配置直接按仓库路径引用，不进映射表，
+  # 免得每加一个脚本就往这里补一行
   f_herdr_config:
     src: herdr/config.toml
     dst: ~/.config/herdr/config.toml
-  f_herdr_host_status:
-    src: herdr/host-status.sh
-    dst: ~/.config/herdr/host-status.sh
-  f_herdr_mac_power:
-    src: herdr/mac-power.py
-    dst: ~/.config/herdr/mac-power.py
-  f_herdr_codex_usage:
-    src: herdr/codex-usage.py
-    dst: ~/.config/herdr/codex-usage.py
-  f_herdr_commandcode_usage:
-    src: herdr/commandcode-usage.py
-    dst: ~/.config/herdr/commandcode-usage.py
 
 profiles:
   default:
@@ -223,7 +212,9 @@ profile 是「一组 dotfiles 的选集」，命令形如 `dotdrop -p <名字> i
 
 ### 全部条目都是默认软链接
 
-`f_herdr_config` 曾经是唯一需要复制的条目（Herdr GPUI 拒绝符号链接形式的共享配置）。GPUI 停用后该限制消失，本条已恢复默认链接，24 条现在全是绝对符号链接，没有任何一条需要 `install` 跟进。
+`f_herdr_config` 曾经是唯一需要复制的条目（Herdr GPUI 拒绝符号链接形式的共享配置）。GPUI 停用后该限制消失，本条已恢复默认链接，映射表现在只有 20 条，全部是绝对符号链接，没有任何一条需要 `install` 跟进。
+
+原方案里 `host-status.sh`、`mac-power.py`、`codex-usage.py`、`commandcode-usage.py` 各占一条映射，已删除：它们是第一类「程序按固定路径查找」里唯一能用第二种办法处理的一组——Herdr 只能启动 `config.toml` 里写的那条命令，但那条命令是脚本，脚本内部引用兄弟脚本的路径由我们自己写。所以 `config.toml` 指向仓库里的 `host-status.sh`，`host-status.sh` 用自身目录 `SCRIPT_DIR` 定位其余脚本，`~/.config/herdr/` 不再堆链接，以后往 `herdr/` 新增脚本也不必改 `config.yaml`。代价是路径写死 `~/.dotfiles`。
 
 早前的落地顺序记录如下，保留作为历史：迁移当天家目录那份才是要保留的版本（家目录是 `delivery = "system"`，仓库里是 09-24 提交的 `terminal`），所以先 `cp ~/.config/herdr/config.toml herdr/config.toml` 收回仓库再安装。
 
@@ -375,8 +366,8 @@ done
 
 - 迁移前打 tag `pre-dotdrop`（`df020fc`）。
 - dotdrop 1.17.0 经 pipx 安装，`python-magic` 已 inject。
-- `dotdrop compare` 首次只有 `mac-power.py` 未链；`install` 后 `compare` 无输出，24 条 dotfile 全部一致。
-- `~/.config/herdr/config.toml` 是普通文件且与仓库一致；其余 23 条仍是绝对符号链接，未重复重链。
+- `dotdrop compare` 首次只有 `mac-power.py` 未链；`install` 后 `compare` 无输出，24 条 dotfile 全部一致（当时含 4 个脚本条目，现已删除，剩 20 条）。
+- `~/.config/herdr/config.toml` 是普通文件且与仓库一致；其余 23 条仍是绝对符号链接，未重复重链（当时另含 4 个脚本链接，现已删除）。
 - 验证通过：`DOTFILES` 生效、abbr 71 条、p10k 加载、`$fpath` 含仓库两目录、`z` 命令可用（`abbr list` 在非交互 `zsh -i -c` 下报 `can't change option: zle` 属正常）；`&packpath` 为 `/Users/tony/.dotfiles/vim` 且 `globpath` 列出 8 个仓库插件；`zsh/plugins` 9 个、`vim/pack/vendor/start` 8 个仍在。
 
 ## 附：Dotbot 与 dotdrop 行为对照

@@ -7,8 +7,8 @@ prompt_new_tab_name = false
 # Each entry stays silent on hosts that cannot read its source, and Herdr clears
 # an entry with empty output, so every machine shows exactly one value.
 tab_bar_right = [
-  { type = "command", command = "~/.config/herdr/host-status.sh commandcode", interval_seconds = 60, timeout_seconds = 10 },
-  { type = "command", command = "~/.config/herdr/host-status.sh power", interval_seconds = 2, timeout_seconds = 10 },
+  { type = "command", command = "~/.dotfiles/herdr/host-status.sh commandcode", interval_seconds = 60, timeout_seconds = 10 },
+  { type = "command", command = "~/.dotfiles/herdr/host-status.sh power", interval_seconds = 2, timeout_seconds = 10 },
 ]
 
 agent_panel_sort = "spaces"

@@ -88,21 +88,11 @@ dotfiles:
     dst: ~/.config/hunk/config.toml
 
   # --- herdr ---
+  # 辅助脚本放在 herdr/ 里由配置直接按仓库路径引用，不进映射表，
+  # 免得每加一个脚本就往这里补一行
   f_herdr_config:
     src: herdr/config.toml
     dst: ~/.config/herdr/config.toml
-  f_herdr_host_status:
-    src: herdr/host-status.sh
-    dst: ~/.config/herdr/host-status.sh
-  f_herdr_mac_power:
-    src: herdr/mac-power.py
-    dst: ~/.config/herdr/mac-power.py
-  f_herdr_codex_usage:
-    src: herdr/codex-usage.py
-    dst: ~/.config/herdr/codex-usage.py
-  f_herdr_commandcode_usage:
-    src: herdr/commandcode-usage.py
-    dst: ~/.config/herdr/commandcode-usage.py
 
 profiles:
   default:
