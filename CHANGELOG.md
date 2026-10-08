@@ -2,6 +2,10 @@
 
 ## 2026-10-08
 
+### Herdr
+
+- **通知投递由 system 改为 terminal**：`system` 在 macOS 上先找 `terminal-notifier`，本机没装，退回 `/usr/bin/osascript`，通知在通知中心显示为 Script Editor，图标与行为都不对，点击也无法激活宿主终端。改为 `terminal` 后由 kitty 自己发桌面通知，点击可唤回窗口。`[ui.toast]` 上方补了四种 delivery 的注释，以及这两条本地结论。
+
 ### Yazi
 
 - **停用右侧 Git diff 预览**：删除 `yazi.toml` `prepend_previewers` 里 `git-diff-preview` 的两条规则（`mime = "text/*"` 与代码扩展名列表），只留 `eza-preview`。Yazi 预览器首个命中即止，任何自定义预览器都会接管掉一批内置预览器（图片、视频、PDF、code），后续每遇到一种就要再补丁一次；改成不接管右侧，改动都收敛在 `yazi.toml` 一处。`git-diff-preview.yazi` 目录保留，但在 `main.lua` 顶部加了一段中文警告：不要重新启用、也不要照它的做法再写一个。

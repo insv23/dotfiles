@@ -13,7 +13,17 @@ tab_bar_right = [
 
 agent_panel_sort = "spaces"
 [ui.toast]
-delivery = "system"
+# off = disable pop-up notifications
+# herdr = show in-app toasts
+# terminal = ask the outer terminal to show a desktop notification
+# system = ask the OS notification service directly
+#
+# system 在 macOS 上先找 terminal-notifier，缺了就退回 /usr/bin/osascript，也就是
+# AppleScript 那条路。osascript 发出的通知在通知中心显示为 Script Editor，图标与
+# 行为都不对，点击也无法激活宿主终端。本机没装 terminal-notifier。
+# 用 kitty 时选 terminal，通知由 kitty 自己发，点击时由 kitty 唤回窗口。
+# 跳进 Herdr 内的 workspace/tab/pane 不靠点击通知，用 keys.open_notification_target。
+delivery = "terminal"
 
 [theme.custom]
 # Make the active Space and focused Agent rows easier to distinguish.
