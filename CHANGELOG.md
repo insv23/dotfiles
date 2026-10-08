@@ -7,6 +7,10 @@
 - **停用右侧 Git diff 预览**：删除 `yazi.toml` `prepend_previewers` 里 `git-diff-preview` 的两条规则（`mime = "text/*"` 与代码扩展名列表），只留 `eza-preview`。Yazi 预览器首个命中即止，任何自定义预览器都会接管掉一批内置预览器（图片、视频、PDF、code），后续每遇到一种就要再补丁一次；改成不接管右侧，改动都收敛在 `yazi.toml` 一处。`git-diff-preview.yazi` 目录保留，但在 `main.lua` 顶部加了一段中文警告：不要重新启用、也不要照它的做法再写一个。
 - **不受影响**：行尾 `M`/`A`/`?`/`R`/`U` 标记由 `git-status.yazi`（fetcher）提供，只作用于文件列表；目录树预览由 `eza-preview` 提供。
 
+### Kitty
+
+- **缩小字号**：`font_size` 由 14 改为 11，同一屏幕能装下更多行。
+
 ## 2026-10-06
 
 ### Shell
