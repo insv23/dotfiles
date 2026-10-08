@@ -54,3 +54,40 @@ description = "move this pane"
 ```
 
 无需额外配置或外部依赖。
+
+## kadaliao/herdr-plugins (space-index)
+
+在左侧 Spaces 侧边栏的每个 space 前面显示它的编号，也就是 `switch_workspace = "alt+1..9"`
+真正的目标位置。Herdr 的 `[ui.sidebar.spaces] rows` 只认 `state_icon`、`state_text`、
+`workspace`、`branch`、`git_status` 和自定义 `$name`，没有内置的编号 token，按快捷键前只能自己数行。
+
+插件读 `herdr workspace list` 已返回的 `number` 字段，用 `herdr workspace report-metadata`
+写回成 workspace metadata 的 `idx` token，再由侧边栏的 `"$idx"` 渲染。这个仓库是单仓库多插件，
+安装要带子目录，插件 id 仍是 `kadaliao.space-index`：
+
+```bash
+herdr plugin install kadaliao/herdr-plugins/space-index --yes
+herdr server reload-config
+herdr plugin action invoke kadaliao.space-index.refresh
+```
+
+`config.toml` 里加上渲染它的那一段（`rows` 是整段替换默认布局，所以 `branch` / `git_status`
+要写出来）。`refresh` 不必绑键，编号会在 `workspace.created`、`workspace.closed`、
+`workspace.moved`、`workspace.reordered` 以及服务器启动时自己重报，启动那次是因为 metadata
+token 只存在内存里、重启不恢复：
+
+```toml
+[ui.sidebar.spaces]
+row_gap = 0
+rows = [
+  ["$idx", "state_icon", "workspace"],
+  ["branch", "git_status"],
+]
+```
+
+依赖 `python3`（插件命令是 argv 数组，不走 shell）与 Herdr ≥ 0.9.0。只影响展开的桌面侧边栏，
+收起的窄栏和移动端布局是 Herdr 自己的紧凑版，本来就带编号。编号是事件驱动重新上报的展示用
+metadata，最多滞后一个事件；超过 9 个 space 仍会渲染，但只有 1–9 有键位。
+
+同仓库另有 `kadaliao/herdr-plugins/agent-index`（给 agent 面板编号，配 `focus_agent`）与
+`kadaliao/herdr-plugins/status-bar`，未装。

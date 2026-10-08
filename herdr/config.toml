@@ -12,6 +12,17 @@ tab_bar_right = [
 ]
 
 agent_panel_sort = "spaces"
+
+[ui.sidebar.spaces]
+# rows 整段替换默认布局，默认那两行要完整写出来。$idx 由 kadaliao/space-index
+# 插件写进 workspace metadata：它读 `herdr workspace list` 的 number 字段，也就是
+# alt+1..9 真正的目标位置，Herdr 自身没有内置的编号 token。详见 herdr/plugins.md。
+row_gap = 0
+rows = [
+  ["$idx", "state_icon", "workspace"],
+  ["branch", "git_status"],
+]
+
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
