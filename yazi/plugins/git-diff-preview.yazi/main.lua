@@ -1,3 +1,8 @@
+-- 此插件已停用，不要重新启用，也不要照它的做法再写一个。
+-- 它接管右侧预览区，而 Yazi 的预览器是首个命中即止，自定义预览器会整体盖掉内置预览（图片、视频、PDF、code）。
+-- 已观察到的后果：目录预览空白、图片预览失效，逐一打补丁只是把问题往后推。
+-- 入口注册已从 yazi.toml 移除（原为 prepend_previewers 里的 mime = "text/*" 那条）；文件列表的行尾 Git 标记由 git-status 插件负责，与这里无关。
+
 --- @since 25.5.31
 
 local function find_git_root(directory)
