@@ -4,7 +4,7 @@
 
 ## 特点
 
-- 🚀 基于 [dotdrop](https://github.com/deadc0de6/dotdrop) 的一键安装，默认符号链接，仅 Herdr 配置复制
+- 📦 基于 [dotdrop](https://github.com/deadc0de6/dotdrop) 的一键安装：默认以符号链接部署，仓库文件与部署位置是同一个文件，改完即时生效；不接受符号链接的程序可用 `link: nolink` 部署为普通文件副本
 - 🖥️ 基于主机名的智能配置管理
 - 🔧 完整的终端开发环境：
   - 💻 使用 zsh + [Powerlevel10k](https://github.com/romkatv/powerlevel10k) 打造美观高效的 shell

@@ -91,7 +91,6 @@ dotfiles:
   f_herdr_config:
     src: herdr/config.toml
     dst: ~/.config/herdr/config.toml
-    link: nolink              # Herdr GPUI 拒绝符号链接，本条必须复制
   f_herdr_host_status:
     src: herdr/host-status.sh
     dst: ~/.config/herdr/host-status.sh

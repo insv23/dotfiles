@@ -197,7 +197,6 @@ dotfiles:
   f_herdr_config:
     src: herdr/config.toml
     dst: ~/.config/herdr/config.toml
-    link: nolink              # GPUI 拒绝符号链接，本条必须复制
   f_herdr_host_status:
     src: herdr/host-status.sh
     dst: ~/.config/herdr/host-status.sh
@@ -222,15 +221,11 @@ profiles:
 
 profile 是「一组 dotfiles 的选集」，命令形如 `dotdrop -p <名字> install`。原方案按机器名写了 `mba`、`macmini`、`ycy-2C2G` 三份，但三份内容都是 `ALL`，等于没有裁剪，代价是每台机器必须传对 `--profile`，而 dotdrop 默认 profile 取当前主机名，新主机名上还会直接报 `no dotfile defined for this profile`。留一个 `default: ALL`，命令不用带 `-p`（或显式 `-p default`），将来真要按主机裁剪再加。
 
-### 唯一一条 nolink
+### 全部条目都是默认软链接
 
-`f_herdr_config` 是全部配置里唯一需要复制的。代价是：
+`f_herdr_config` 曾经是唯一需要复制的条目（Herdr GPUI 拒绝符号链接形式的共享配置）。GPUI 停用后该限制消失，本条已恢复默认链接，24 条现在全是绝对符号链接，没有任何一条需要 `install` 跟进。
 
-- 改 `herdr/config.toml` 后要 `dotdrop install` 才生效
-- Herdr GUI 写入后要 `dotdrop update` 收进仓库
-- 两侧漂移用 `dotdrop compare` 看
-
-这一条可以接受，因为它就是本次迁移的直接起因。**落地时家目录那份才是要保留的版本**：家目录是 `delivery = "system"`，仓库里是 09-24 提交的 `terminal`。先 `cp ~/.config/herdr/config.toml herdr/config.toml` 收回仓库再安装，否则 `nolink` 会用旧值盖掉正在用的设置。
+早前的落地顺序记录如下，保留作为历史：迁移当天家目录那份才是要保留的版本（家目录是 `delivery = "system"`，仓库里是 09-24 提交的 `terminal`），所以先 `cp ~/.config/herdr/config.toml herdr/config.toml` 收回仓库再安装。
 
 ## 清理清单
 
@@ -367,7 +362,7 @@ done
 5. **删链接先做 `[ -L ]` 判定。** `install.conf.yaml` 的 shell 段与将来 `install` 脚本里的删链接步骤统一写成 `[ -L 路径 ] && rm -f 路径`，不用无条件 `rm -f`。
 6. **`install_plugins.sh` 的 clone 目标已是 `$DOTFILES`。** 两个脚本都改成 `${DOTFILES:-$HOME/.dotfiles}/...`，不依赖已删除的 `~/.zsh`、`~/.vim` 链接。
 7. **profile 只留一个 `default: ALL`。** 原方案的三份按主机名的 profile 内容相同，等于没有裁剪，却要求每台机器传对 `--profile`，新主机名还会因缺 profile 报 `no dotfile defined for this profile`。
-8. **Herdr 配置以家目录版为准。** 家目录在用 `delivery = "system"`，仓库里是 09-24 提交的 `terminal`，两侧已漂移。`nolink` 会用仓库版覆盖家目录版，所以先 `cp ~/.config/herdr/config.toml herdr/config.toml` 收回仓库再安装。
+8. **Herdr 配置以家目录版为准。** 家目录在用 `delivery = "system"`，仓库里是 09-24 提交的 `terminal`，两侧已漂移。当时那条是 `nolink`，会用仓库版覆盖家目录版，所以先 `cp ~/.config/herdr/config.toml herdr/config.toml` 收回仓库再安装（该条现已恢复默认链接）。
 
 ## 待你决定的问题
 
@@ -389,8 +384,8 @@ done
 | 场景 | Dotbot（现在） | dotdrop（迁移后） |
 |---|---|---|
 | 部署文件 | 建符号链接 | 默认链接，逐条可改复制 |
-| 改仓库文件后 | 立即生效 | 立即生效（`nolink` 的条目需 `install`） |
-| 改家目录文件后 | 改的就是仓库文件 | `nolink` 条目需 `update` |
+| 改仓库文件后 | 立即生效 | 立即生效（`nolink` 的条目需 `install`，当前无此类条目） |
+| 改家目录文件后 | 改的就是仓库文件 | 改的就是仓库文件（`nolink` 条目需 `update`，当前无此类条目） |
 | 家目录已有文件 | 报错要求手删 | `backup: true` 留 `.dotdropbak` 后覆盖 |
 | 按主机裁剪 | 无 | profiles |
 | 忽略子目录 | 无 | `instignore` / `upignore` / `cmpignore` |

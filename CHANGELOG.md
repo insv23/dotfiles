@@ -11,6 +11,15 @@
 
 - **缩小字号**：`font_size` 由 14 改为 11，同一屏幕能装下更多行。
 
+### Herdr
+
+- **恢复符号链接部署**：`config.yaml` 的 `f_herdr_config` 去掉 `link: nolink`，`~/.config/herdr/config.toml` 重新是指向 `herdr/config.toml` 的绝对链接（旧普通文件备份为 `.dotdropbak`，内容与仓库逐字节相同）。复制唯一的原因是 Herdr GPUI 拒绝符号链接，GPUI 已停用，该限制随之消失；这一条也是 24 条里唯一需要手动 `install` / `update` 的，留着就是漂移源。`compare -L` 跑完无差异，24 条全部一致。
+
+### Docs
+
+- **AGENTS.md 补部署同步规则**：新增中文「部署与同步」一节——软链下仓库文件与部署位置是同一个文件、改完即时生效且无需命令；写了 `link: nolink` 的条目才是两份独立文件，`install` 是仓库盖到部署位置，`update <路径>` 是部署位置收回仓库，两者都会覆盖对面。要求改完配置后先查有没有 nolink 条目，有则 `compare -L` 比出差异、判断哪边新、把该跑的命令报给用户确认，不自动执行方向性覆盖。
+- **文档措辞跟随两种部署方式**：`docs/dotdrop-migration.md` 的「唯一一条 nolink」一节改为「全部条目都是默认软链接」，行为对照表两行补上「当前无此类条目」；README 与 README-en 的特性描述从「全部符号链接 / no copied entries」改为说明默认符号链接、以及不接受符号链接的程序可用 dotdrop 的 `link: nolink` 部署为普通文件副本（术语即 dotdrop 的 link options，取值 absolute / relative / link_children / nolink）。
+
 ## 2026-10-06
 
 ### Shell

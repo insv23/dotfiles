@@ -6,7 +6,7 @@ My dotfiles configuration, focused on providing a clean, maintainable, and cross
 
 ## Features
 
-- 🚀 One-click installation powered by [dotdrop](https://github.com/deadc0de6/dotdrop), symlinked by default with only the Herdr config copied
+- 📦 One-click installation powered by [dotdrop](https://github.com/deadc0de6/dotdrop): deployed as symlinks by default, so the repo file and the deployed path are one file and edits take effect immediately; a program that refuses symlinks can be deployed as a standalone copy with `link: nolink`
 - 🖥️ Smart configuration management based on hostname
 - 🔧 Complete terminal development environment:
   - 💻 Beautiful and efficient shell with zsh + [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
