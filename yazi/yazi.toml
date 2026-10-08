@@ -31,6 +31,9 @@ linemode       = "size"
 [plugin]
 prepend_previewers = [
     { url = "*/", run = "eza-preview" },
+    # 只接管文本；Yazi 预览器首个命中即止，url = "*" 会连图片一起抢走
+    { mime = "text/*", run = "git-diff-preview" },
+    { url = "*.{js,ts,jsx,tsx,json,jsonc,md,mdx,yml,yaml,toml,rs,go,py,lua,sh,zsh,bash,fish,html,css,scss,sql,xml,vue,svelte,lock}", run = "git-diff-preview" },
 ]
 
 prepend_fetchers = [

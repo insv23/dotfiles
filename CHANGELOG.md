@@ -16,6 +16,7 @@
 - **关闭 eza 的 git-ignore**：`eza-preview` 默认带 `--git-ignore`，被 `.gitignore` 命中的目录（如 agentbsm 里的 `datas/`）整个被判为 ignore，右侧只显示 No items；在 `init.lua` 里加 `require("eza-preview"):setup({ git_ignore = false })`，所有目录恢复预览。代价是 `node_modules`、`.venv` 这类目录也会出现在预览里，需要时再配 `ignore_glob`。
 - **停用右侧 Git diff 预览**：删除 `yazi.toml` `prepend_previewers` 里 `git-diff-preview` 的两条规则（`mime = "text/*"` 与代码扩展名列表），只留 `eza-preview`。Yazi 预览器首个命中即止，任何自定义预览器都会接管掉一批内置预览器（图片、视频、PDF、code），后续每遇到一种就要再补丁一次；改成不接管右侧，改动都收敛在 `yazi.toml` 一处。`git-diff-preview.yazi` 目录保留，但在 `main.lua` 顶部加了一段中文警告：不要重新启用、也不要照它的做法再写一个。
 - **不受影响**：行尾 `M`/`A`/`?`/`R`/`U` 标记由 `git-status.yazi`（fetcher）提供，只作用于文件列表；目录树预览由 `eza-preview` 提供。
+- **恢复右侧 Git diff 预览**：上一版把 `git-diff-preview` 的注册整个删掉是过度反应。它会盖掉内置预览的场景来自更早那版 `url = "*"`，缩小到 `mime = "text/*"` 后已经不会命中图片、视频、PDF；且插件在目录、非 Git 仓库、无 diff、二进制四种情况下都退回 `require("code"):peek`。注册加回 `yazi.toml`，`main.lua` 顶部警告换成回退说明。
 
 ### Kitty
 
