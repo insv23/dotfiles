@@ -1,5 +1,11 @@
 require("git-status"):setup()
 
+-- 关掉 eza 的 --git-ignore：被 .gitignore 命中的目录（如项目里的 datas/）
+-- 否则整个目录被判为 ignore，右侧只显示 No items
+require("eza-preview"):setup({
+    git_ignore = false,
+})
+
 require("projects"):setup({
     save = {
         method = "yazi", -- yazi | lua
