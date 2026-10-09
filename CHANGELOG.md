@@ -1,6 +1,26 @@
 # Changelog
 
+## 2026-10-09
+
+### Vim
+- **状态栏文件名改为中间截断，去掉行列号**：原 `statusline` 里 `目录/文件名` 过长时，Vim 默认从最左边截断（显示成 `<ice-body-...`），文件名开头和目录信息都丢了。新增 `StatuslineName()`，超出窗口宽度时保留首尾、中间用 `…` 替换；宽度按 `strdisplaywidth` 计算，中文双宽字符不会算错，`winwidth(0)` 让分屏窗口各自适配。同时去掉右侧的 `行:列`（`%l:%c`），只保留修改标记 `[+]`。
+
+### Ghostty
+- **韩文改用 Sarasa Mono K**：Maple Mono NF CN 不含韩文，回退到 Apple SD Gothic Neo 后被 Ghostty 按汉字宽度放大，韩文比 kitty 里大。用 `font-codepoint-map` 把谚文区段（U+1100-11FF、U+3130-318F、U+AC00-D7AF）固定到 Sarasa Mono K，效果待实测；若仍偏大可换 Sarasa Term K 或 Sarasa Fixed K。
+- **新增 Ghostty 智能粘贴（Karabiner + AppleScript）**：Ghostty 没有 kitty 的 `launch` 与 `send-text`，`performable:super+v` 在 1.3.1 的 macOS 上实测无效，所以拆成两段。触发：`karabiner/karabiner.json` 新增规则，Ghostty 前台时拦截 Cmd+V 调 `ghostty/scripts/ghostty-smart-paste.sh`。注入：脚本用 Ghostty 1.3 的 AppleScript，文本走 `perform action "paste_from_clipboard"`，只有图片时存临时 PNG 再 `input text` 粘贴路径（经 argv 传入免转义）。逻辑沿用 kitty-smart-paste.sh。首次运行需在系统设置里允许 Karabiner 控制 Ghostty（自动化权限）。`karabiner.json` 被 .gitignore，这条规则只存在于本机，不进仓库。
+- **主题切为 Catppuccin Mocha**：从 kitty 迁到 Ghostty 后补上主题。Ghostty 内置主题列表里的 `Catppuccin Mocha`（注意带空格和大小写，不是 kitty 那边的 catppuccin-mocha），与 kitty `current-theme.conf` 那份同源，一行 `theme = Catppuccin Mocha` 即可，不需要手动搬 16 色；光标样式（`cursor-style = bar`）在 theme 之外单独控制，不会被主题覆盖。
+- **herdr/plugins.md 纠正过时描述**：插件早已不写死 kitty——点击链路是从 herdr 客户端进程祖先链动态探测终端 bundle id 后 `open -b`，`--sender` 也不再传；清单同步改成动态探测的说法。顺手用同一套参数重测了 `--sender com.mitchellh.ghostty`：与 kitty 同样发不出可见通知（alerter 挂起不退），结论「只有默认 Terminal 身份能投递」扩展到 Ghostty，已记入清单。
+
+### Herdr
+- **关闭 MBA 的 CommandCode usage 显示**：从 `config.toml` 的 `tab_bar_right` 删掉 `commandcode` 那一项，并从 `host-status.sh` 删掉 `mba:commandcode` 分支，MBA 的 tab bar 右侧不再拉 CommandCode 用量。脚本 `commandcode-usage.py` 按 `codex-usage.py` 的同样方式暂停保留在仓库里，没有 entry 调用它；要恢复就把两处一起加回。
+- **通知插件换成自写的 `herdr-notify-focus`**：卸掉 `llmxby/herdr-focus-notify` 与上游 `yankewei/herdr-focus-notify`，改用 `~/code/herdr-plugins/herdr-notify-focus/`（Node，无编译，`herdr plugin link` 装入）。上游 0.8.0 为了零配置用 `lsappinfo info -only bundleID <ASN>` 取前台 app，而 macOS 14.6 上 `lsappinfo info` 只认 `-app` / `-pid` 寻址，传 ASN 没有任何输出；取不到就不写终端绑定，点击通知因此什么都不做。自写这版把点击链路换回不依赖任何探测的那条（`open -a kitty` 加 `herdr agent focus`），正文改成「状态 · 工作区 · tab」/「agent · git 状态」/ pane 的终端标题，替代原来那句「Click to focus this Herdr agent pane.」加 pane id。插件清单同步记入 `herdr/plugins.md`。
+- **通知状态扩大到 `idle`**：Herdr 的 `idle` 与 `done` 是同一个「空闲、等你输入」状态的两个名字，tab 被你看过叫 `idle`、没看过才叫 `done`；自写插件起初只认 `blocked`/`done`，实测一轮结束时 herdr 报的是 `idle`、一次 `done` 都没有，于是在别的 app 里干完活反而收不到通知。现在三种状态都算（`idle` 与 `done` 都显示「跑完了」），放不放仍然只看「你是不是正在看那个 pane」。
+- **通知图标定性为 Terminal**：横幅图标由通知的发送方身份决定，不是 `--app-icon`。alerter 的 `--app-icon` 走 `NSUserNotification` 私有键 `_identityImage`，macOS 14 忽略它；`--sender net.kovidgoyal.kitty` 冒充 kitty 实测发不出可见通知（同一套参数只换身份，Terminal 身份出现、kitty 身份不出现），只有 alerter 默认的 Terminal 身份能投递。结论：图标固定是 Terminal 的，想要别的图标只能自己写一个带授权的通知 app。这两条结论已写进插件自身注释与 `herdr/plugins.md`，避免以后又改回去。
 ## 2026-10-08
+
+### Zsh
+
+- **`pxyon` 端口改为 7897**：`zsh/aliases/network.zsh` 的 Darwin 分支原来写死 `127.0.0.1:7890`，而 Clash Verge 当前配置的 `mixed-port` 是 7897（`socks-port` 7898、`port` 7899），7890 上没有任何进程监听。开了 `pxyon` 就等于把 `http_proxy` 指向死端口，git 的 push/pull 会直接连不上；TUN 模式下再叠一层环境变量代理也是同样结果。改为 7897 后，环境变量代理与 TUN 两条路径都指向真实端口。WSL 分支仍走 `7890`（那边是 Windows 侧 Clash，端口不同）。
 
 ### Herdr
 

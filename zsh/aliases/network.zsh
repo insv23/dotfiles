@@ -8,10 +8,10 @@
 pxyon() {
   export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
   if uname -a | grep -q "Darwin"; then
-    export http_proxy="http://127.0.0.1:7890"
-    export https_proxy="http://127.0.0.1:7890"
-    export all_proxy="http://127.0.0.1:7890"
-    echo -e "\033[32m[√] Proxy On 127.0.0.1:7890\033[0m"
+    export http_proxy="http://127.0.0.1:7897"
+    export https_proxy="http://127.0.0.1:7897"
+    export all_proxy="http://127.0.0.1:7897"
+    echo -e "\033[32m[√] Proxy On 127.0.0.1:7897\033[0m"
   elif cat /proc/version | grep -q "WSL"; then
     if [ -f /etc/resolv.conf ]; then
       pxy_ip=$(cat /etc/resolv.conf | grep "nameserver" | cut -f 2 -d " " | head -n 1)

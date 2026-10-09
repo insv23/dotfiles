@@ -11,32 +11,47 @@ herdr plugin install <owner>/<repo> --yes
 
 插件装完由 `herdr` 自己编译（`cargo build --release`），所以目标机器需要可用的 Rust 工具链。
 
-## llmxby/herdr-focus-notify
+## herdr-notify-focus（自写）
 
-macOS 上可点击的通知。agent 变成 `blocked` 或 `done`、且你不是正在看那个 pane 时发通知，
-点击后先把终端拉到前台，再跑 `herdr agent focus <pane_id>` 跳到那个 pane。
+macOS 上可点击的通知。agent 变成 `blocked`、`done` 或 `idle`、且你不是正在看那个 pane 时发通知，
+点击后先激活终端（终端不是写死的：插件从 herdr 客户端进程的祖先链里找它所在的 .app，
+拿 bundle id `open -b` 拉到前台，可用 `HERDR_NOTIFY_TERMINAL_BUNDLE` 强制指定），
+再跑 `herdr agent focus <pane_id>` 跳到那个 pane。
 Herdr 自带的通知只能唤回窗口，进不到具体 pane，这个插件补的正是这一段。
+
+只看三种状态，因为 Herdr 的 `idle` 与 `done` 是同一个「空闲、等你输入」状态的两个名字：
+那个 tab 被你看过就叫 `idle`，没看过才叫 `done`。只认 `done` 会漏掉大半情况——实测一轮结束时
+常常只收到 `idle`。发不发的判断只在一件事上：你是不是正在看那个 pane（前台是这个终端、且 Herdr
+聚焦的也是它，就不发）。
+
+代码在 `~/code/herdr-plugins/herdr-notify-focus/`：`herdr-plugin.toml` 加 `plugin.js`（Node，无编译）。
+不是从 GitHub 装的，换设备要把这个目录一起带过去，然后：
+
+```bash
+herdr plugin link ~/code/herdr-plugins/herdr-notify-focus
+```
 
 依赖 [alerter](https://github.com/vjeantet/alerter) 作为通知后端（能上报点击事件），
 macOS 需 `brew install vjeantet/tap/alerter`；该条目已在 `brew/brew-mac.txt` 中。
+插件零配置：终端从 herdr 客户端进程的祖先链自动探测（kitty、Ghostty 换着用都行，
+多终端同时开也都认），换终端不需要改任何东西。
 
-配置写在 `~/.config/herdr/plugins/config/herdr-focus-notify/.env`，该目录不进仓库，内容：
+`config.toml` 的 `[ui.toast] delivery` 保持 `herdr`，只留应用内 toast；设成 `terminal` 或 `system`
+会和插件的桌面通知重复。
 
-```env
-HERDR_FOCUS_NOTIFY_NOTIFIER=/opt/homebrew/bin/alerter
-HERDR_FOCUS_NOTIFY_ACTIVATE_APP=kitty
-HERDR_FOCUS_NOTIFY_STATUSES=blocked,done
-HERDR_FOCUS_NOTIFY_TIMEOUT=3600
-```
+### 为什么不用社区的 herdr-focus-notify
 
-`ACTIVATE_APP` 决定点击通知时拉起哪个终端，换终端时要改。配合使用时，
-`config.toml` 的 `[ui.toast] delivery` 应为 `herdr`，否则同一次状态变化会收到两条通知。
+先后试过 `llmxby/herdr-focus-notify`（`yankewei/herdr-focus-notify` 的 fork，停在 0.3.6）
+与上游 0.8.0，都不合用：
 
-插件还注册了 `focus-latest` action，可用全局快捷键调用：
-
-```bash
-herdr plugin action invoke focus-latest --plugin herdr-focus-notify
-```
+- 上游 0.8.0 为了零配置，用 `lsappinfo info -only bundleID <ASN>` 取前台 app。macOS 14.6 上
+  `lsappinfo info` 只认 `-app` / `-pid` 寻址，传 ASN 没有任何输出；取不到前台 app 就不写终端
+  绑定，点击通知因此什么都不做（`focus_pane` 在缺绑定处直接返回）。
+- 两者的横幅图标都靠 alerter 的 `--app-icon`，它走 NSUserNotification 的私有键 `_identityImage`，
+macOS 14 上被忽略。冒充终端身份也发不出可见通知（实测同一套参数只换 `--sender`：默认
+Terminal 身份正常超时返回，`net.kovidgoyal.kitty` 和换到 Ghostty 后重测的
+`com.mitchellh.ghostty` 都是 alerter 挂起不退、横幅不出现），只有 Terminal 身份能正常投递，
+  所以图标固定是 Terminal 的。
 
 ## osamahbeig/herdr-pane-mover
 

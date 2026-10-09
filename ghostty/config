@@ -1,5 +1,8 @@
+# 主题：Ghostty 内置 Catppuccin Mocha
+theme = Catppuccin Mocha
+
 # 与 kitty 对齐的字体设置
-# kitty 使用的是 Maple Mono NF CN 全套字族，字号 14
+# kitty 使用的是 Maple Mono NF CN 全套字族
 font-family = Maple Mono NF CN
 font-family-bold = Maple Mono NF CN
 font-family-italic = Maple Mono NF CN
@@ -37,3 +40,6 @@ macos-option-as-alt = true
 
 # 光标形状改为竖杠（bar），替代默认的 block（box）
 cursor-style = bar
+
+# 隐藏标题栏：去掉标题栏但保留圆角和窗口边框
+macos-titlebar-style = hidden

@@ -114,7 +114,31 @@ set scrolloff=5                 " show lines above and below cursor (when possib
 set noshowmode                  " hide mode
 set showcmd                     " 右下角实时显示正在输入的按键序列，确认 leader 等前缀键是否已被接收
 set laststatus=2
-set statusline=%{fnamemodify(expand('%:p:h'),':t')}/%t\ %m%=%l:%c
+" 状态栏文件名过长时保留首尾、中间用省略号替换（Vim 默认只会从最左边截断）。
+" 按显示宽度计算以兼容中文双宽字符；预留 6 列给空格、修改标记和边距。
+" %{} 求值时当前窗口是正在绘制的那个窗口，所以 winwidth(0) 对分屏也正确。
+function! StatuslineName() abort
+  let name = fnamemodify(expand('%:p:h'), ':t') . '/' . expand('%:t')
+  let avail = winwidth(0) - 6 - 1
+  if strdisplaywidth(name) <= avail + 1
+    return name
+  endif
+  let head_max = avail / 2
+  let tail_max = avail - head_max
+  let chars = split(name, '\zs')
+  let head = ''
+  for c in chars
+    if strdisplaywidth(head . c) > head_max | break | endif
+    let head .= c
+  endfor
+  let tail = ''
+  for c in reverse(copy(chars))
+    if strdisplaywidth(c . tail) > tail_max | break | endif
+    let tail = c . tail
+  endfor
+  return head . '…' . tail
+endfunction
+set statusline=%{StatuslineName()}\ %m
 set backspace=indent,eol,start  " allow backspacing over everything
 set timeout timeoutlen=400 ttimeoutlen=100  " fix slow O inserts; timeoutlen 同时控制 vim-which-key 弹出延迟
 set lazyredraw                  " skip redrawing screen in some cases
