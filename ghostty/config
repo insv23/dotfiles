@@ -43,3 +43,14 @@ cursor-style = bar
 
 # 隐藏标题栏：去掉标题栏但保留圆角和窗口边框
 macos-titlebar-style = hidden
+
+# ----- 快捷键 -----
+# ctrl+tab / ctrl+shift+tab 交给 herdr 遍历 tab。Ghostty 1.3.1 默认把这两个键绑成
+# 自己的 next_tab / previous_tab，按键在 Ghostty 这层就被吃掉，herdr 收不到。
+# 用 csi: 直接送出 herdr 能解析的 kitty 键盘协议序列，不依赖两端是否协商过键盘协议：
+# 9;5u = Ctrl+Tab，9;6u = Ctrl+Shift+Tab（modifiers = 1 + shift(1) + ctrl(4)）。
+keybind = ctrl+tab=csi:9;5u
+keybind = ctrl+shift+tab=csi:9;6u
+# Ghostty 自己的 tab 切换仍有 super+shift+[ / super+shift+]（默认未改动）。
+# 改完必须手动重载：Ghostty 不监听配置文件，改 keybind 后按 cmd+shift+, 触发
+# reload_config，或重启 App；否则运行中的实例一直用旧键位。

@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-10
+
+### Ghostty
+- **ctrl+tab / ctrl+shift+tab 让给 herdr**：Ghostty 1.3.1 默认把这两个键绑成自己的 `next_tab` / `previous_tab`（`ghostty +list-keybinds --default` 可见），按键会先在 Ghostty 这层被吃掉。配置里用 `keybind = ctrl+tab=csi:9;5u` 与 `keybind = ctrl+shift+tab=csi:9;6u` 显式送出 herdr 能解析的 kitty 键盘协议序列（`9;5u` 是 Ctrl+Tab，`9;6u` 是 Ctrl+Shift+Tab，modifiers = 1 + shift(1) + ctrl(4)）。选 `csi:` 而不选 `unbind`，是因为 unbind 后 Ctrl+Tab 这种非可打印键的编码要看 Ghostty 与 herdr 是否协商过键盘协议，`csi:` 直接把字节写死，两端都已验证能处理。Ghostty 自己的 tab 切换不受影响，仍有默认的 `super+shift+[` / `super+shift+]`。`ghostty +validate-config` 通过。
+- **根因纠正：Ghostty 不自动重载配置**：上一轮改完 keybind 后 ctrl+tab 依然没反应，查下来不是 herdr 占用（Herdr 默认只在 prefix 下绑 `prefix+n` / `prefix+p`），而是运行中的 Ghostty 一直用旧键位。Ghostty 官方配置文档写明「配置可以在运行时重载」只有手动这一条路（macOS 按 cmd+shift+,，即 `reload_config`），源码里也没有任何配置文件监听器，所以改完不按就是旧键位——旧的 `ctrl+tab=next_tab` 在只有一个 Ghostty tab 时毫无可见反馈，看起来就像什么都没做。用 AppleScript 的 `send key`（走 `ghostty_surface_key`，与真实按键同一条链路）注入验证：先 `perform action "reload_config"`，再注入 ctrl+tab / ctrl+shift+tab，herdr 的焦点 tab 依次变成 wH:tN 与 wH:tV，两个方向都正确；herdr 侧另有源码佐证，`src/input/parse.rs` 把 `\x1b[9;5u` 解析为 Tab+Ctrl，`config/keybinds.rs` 把 `"ctrl+tab"` 解析成同一个键。配置里补了一条注释提醒改完要手动重载。
+
+### Herdr
+- **补上 tab 遍历绑定**：`[keys]` 里原来只有 `switch_tab = "ctrl+1..9"`（编号直跳），而 `next_tab` / `previous_tab` 两项从头没写过。Herdr 的默认值把这两个放在 prefix 下（`prefix+n` / `prefix+p`，本机即 `ctrl+a n` / `ctrl+a p`），所以 `ctrl+tab` 一直没反应——不是没生效，是没绑。现在加 `next_tab = "ctrl+tab"`、`previous_tab = "ctrl+shift+tab"`，与 `alt+tab` 遍历 workspace 的写法对齐：ctrl 一组管 tab，alt 一组管 workspace，两边都是「编号直跳 + 相邻遍历」。`herdr config check` 通过，`herdr server reload-config` 返回 `applied`。注意光改这里不够，外层终端还得把这两个键放行，见上面 Ghostty 那条。
+
 ## 2026-10-09
 
 ### Vim

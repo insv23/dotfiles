@@ -51,6 +51,10 @@ cjk_ime_agents = ["claude", "pi", "codex"]
 prefix = "ctrl+a"
 split_horizontal = "prefix+d"
 switch_tab = "ctrl+1..9"
+# tab 遍历：Herdr 默认只在 prefix 下（prefix+n / prefix+p），直接按键这一层原先空着。
+# 这样 ctrl 一组管 tab（编号直跳 + 相邻遍历），alt 一组管 workspace，两边对称。
+next_tab = "ctrl+tab"
+previous_tab = "ctrl+shift+tab"
 switch_workspace = "alt+1..9"
 next_workspace = "alt+tab"
 previous_workspace = "alt+shift+tab"
