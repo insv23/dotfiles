@@ -132,7 +132,8 @@ ZSH_AUTOSUGGEST_STRATEGY=( atuin_cwd atuin_global history abbreviations)
 
 # ---- zoxide ----
 eval "$(zoxide init zsh)"
-z() { zi "$@"; }
+# 交互选择目录后跳转并立即打开 yazi；取消选择时 zi 返回非 0，不会打开。
+z() { zi "$@" && y; }
 
 
 # ---- nvm/node ---

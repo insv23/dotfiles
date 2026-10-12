@@ -27,6 +27,10 @@
 
 - **新增剪贴板图片路径粘贴（Cmd+V 与 `<Leader>vp`）**：vim 读不到 macOS 剪贴板里的图片（它只能 `pbpaste` 拿到文本），所以图片得先落盘才有东西可插。新增 `vim/scripts/clip-to-path.sh`：优先取 `«class PNGf»` 写入 `$TMPDIR/clip-to-path/`，只有 TIFF 时用 `sips` 转成 PNG（agent 只认常见图片扩展名），两者都没有就退回 `pbpaste`，过期 7 天的文件启动时删掉。`vim/vimrc` 里加 `ClipboardPath()` 与两套映射：`<T-v>` 对应 Ghostty 放行下来的 Cmd+V（剪贴板里是文本时 Ghostty 自己粘，vim 收不到这个键，所以不会抢正常粘贴），`<Leader>vp` 是其他终端里的同一入口；插入走表达式寄存器（`"=` 与 `<C-r>=`）而不是 `execute`，避免路径或文本里的特殊字符被当成命令解析。`<T-v>` 而不是 `<D-v>`：vim 把 kitty 键盘协议里的 super 位解成 Meta（term.c 的 `decode_modifiers`，`code & 8` 给 `MOD_MASK_META`），GUI 才有的 Super/Command 修饰符在终端里不存在。脚本按仓库绝对路径调用（与 vimrc 里 `packpath` 指向 `~/.dotfiles/vim` 同一做法），不进 dotdrop 映射表，不需要符号链接与 install/update 同步。
 
+### Zsh
+
+- **合并 `z` 与 `yz`**：删除 `zsh/aliases.sh` 里的 `yz`（先用 zoxide 选目录再启动 yazi），改为在 `zsh/zshrc` 的 `z` 定义末尾串上 `y`：`z() { zi "$@" && y; }`，即 fzf 选完目录就立即打开 yazi，退出 yazi 后 shell 停在该目录。取消选择时 `zi` 返回非 0，`&&` 短路，不会打开 yazi。`bark.ignore` 同步删掉 `yz` 前缀。理由：实际使用中选完目录紧接着就按 `y`，两个命令合成一步。
+
 
 ## 2026-10-11
 
