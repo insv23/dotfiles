@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-12
+
+### Karabiner
+
+- **新增 `TapCapsLockSwitchToABC.json`**：单点 CapsLock 原来是「只发 Escape」，现在同一动作先发 `^⌥⇧⌘\`（Input Source Pro 给 ABC 输入源配的快捷键）再发 Escape，同时长按 CapsLock 仍是 Hyper Key，行为与原来 `CapslockPlus.json` 里那条一致。写法照抄现有第三条规则，用 `to_if_alone` 承载这一串按键、`to` 里的 `lazy: true` 承载长按。没有加 `input_source_unless` 条件，因为 Input Source Pro 当前已是 ABC 时按该快捷键为空操作，省掉对 Karabiner 输入源识别的依赖。CapsLock 长按出来的 Hyper 加 `\` 现在等同这条切换快捷键。注意规则优先级：同键位的规则里靠上的先命中，启用后要把新规则排在原「Tap CapsLock → Escape; Hold → Hyper」那条之前，或直接关掉旧的那条。
+
 ## 2026-10-11
 
 ### Yazi

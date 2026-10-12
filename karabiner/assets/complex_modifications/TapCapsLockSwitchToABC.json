@@ -1,0 +1,41 @@
+{
+  "title": "Tap CapsLock → Escape + Switch to ABC Input",
+  "rules": [
+    {
+      "description": "Tap CapsLock (⇪) → Ctrl+Option+Command+Shift+\\ (Input Source Pro: A / ABC) then Escape (⎋); Hold CapsLock (⇪) → Hyper Key (⇧⌃⌥⌘)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "caps_lock"
+          },
+          "to": [
+            {
+              "key_code": "left_shift",
+              "modifiers": [
+                "left_command",
+                "left_control",
+                "left_option"
+              ],
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "backslash",
+              "modifiers": [
+                "left_control",
+                "left_option",
+                "left_shift",
+                "left_command"
+              ]
+            },
+            {
+              "key_code": "escape"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}
