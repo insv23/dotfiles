@@ -5,6 +5,28 @@
 ### Karabiner
 
 - **新增 `TapCapsLockSwitchToABC.json`**：单点 CapsLock 原来是「只发 Escape」，现在同一动作先发 `^⌥⇧⌘\`（Input Source Pro 给 ABC 输入源配的快捷键）再发 Escape，同时长按 CapsLock 仍是 Hyper Key，行为与原来 `CapslockPlus.json` 里那条一致。写法照抄现有第三条规则，用 `to_if_alone` 承载这一串按键、`to` 里的 `lazy: true` 承载长按。没有加 `input_source_unless` 条件，因为 Input Source Pro 当前已是 ABC 时按该快捷键为空操作，省掉对 Karabiner 输入源识别的依赖。CapsLock 长按出来的 Hyper 加 `\` 现在等同这条切换快捷键。注意规则优先级：同键位的规则里靠上的先命中，启用后要把新规则排在原「Tap CapsLock → Escape; Hold → Hyper」那条之前，或直接关掉旧的那条。
+- **删掉 Ghostty Cmd+V 智能粘贴规则**：原来在 Ghostty 前台时拦 Cmd+V 调 `ghostty-smart-paste.sh` 的那条规则已删；排除后 `karabiner.json` 仍是合法 JSON，Karabiner 会自己重载。改动只在本地：`karabiner.json` 被 .gitignore，不进仓库。
+
+### Hammerspoon
+
+- **`SmartPaste.lua` 试过又撤掉**：最初的设想是在「剪贴板变化」这一侧动手——发现剪贴板里只有图片时就落盘成临时 PNG，再补一个 `public.file-url` 指向它，让终端 Cmd+V 走 Ghostty 原生粘贴（v1.3.1 的 `getOpinionatedStringContents` 先读 `NSURL` 并把路径做 shell 转义），从而不拦按键、不起 AppleScript。实测无效：`hs.pasteboard.writeDataForUTI(..., add=true)` 往别人持有的剪贴板补类型那一步没生效，返回 false 后又被自己写的失败清理删掉了临时文件，成了静默失败；而且这个思路本身就要求全局改写剪贴板，往 Notion 这类应用粘图会变成粘路径，与需求相悖。已删掉 `hammerspoon/SmartPaste.lua`，并回退 `init.lua` 的 require 与 `AlertClipboard` 里配合它的跳过判断。
+
+### Kitty
+
+- **删掉 Cmd+V 智能粘贴**：`kitty/kitty.conf` 里 `map cmd+v launch ... kitty-smart-paste.sh` 与 `kitty/scripts/kitty-smart-paste.sh`（含脚本目录）一并删除，Cmd+V 回到 kitty 默认的 `paste_from_clipboard`，只粘文本；同时按文件里的约定同步去掉了 KEYMAP REFERENCE 里的「剪贴板 / cmd+v」条目，并在粘贴区块注明图片路径改由 vim 的 `<Leader>vp` 兜底。原因：Ghostty 里 pi 自己就能处理 Cmd+V（已实测），其他要路径的场合在 vim 里按一下就够了，不必在终端这一层拦键、起脚本、调远程控制。kitty 没有 Ghostty 的 `performable:` 机制，拦键方案要常驻一套 `allow_remote_control` 与临时目录管理，收益与复杂度不成比例。
+
+### Ghostty
+
+- **删掉 `ghostty-smart-paste.sh`**：`ghostty/scripts/ghostty-smart-paste.sh` 与脚本目录已删，连同 Karabiner 那条触发规则，整条「拦键 + AppleScript 回注」链路下线。它当初是为了绕开 Ghostty 粘不出图片才做的；现在 Cmd+V 在 pi 里由 pi 自己读剪贴板（已实测可用），需要路径的场合走 vim 的 `<Leader>vp`，这条链路不再有任何调用方。
+
+### pi
+
+- **把 Cmd+V 绑到 pi 自己的粘贴**：`~/.pi/agent/keybindings.json` 给 `app.clipboard.pasteImage` 加上 `super+v`，与默认的 `ctrl+v` 并列。pi 的 Ctrl+V 一直是自己读剪贴板（图片、文本、文件都处理），所以只要 Cmd+V 能落到 pi，就与 Ctrl+V 一样即时，不需要改剪贴板、不需要拦键与 AppleScript。注意该文件在 `~/.pi/agent/` 下，被仓库的 .gitignore 排除，目前不进版本控制。
+
+### Vim
+
+- **新增剪贴板图片路径粘贴（Cmd+V 与 `<Leader>vp`）**：vim 读不到 macOS 剪贴板里的图片（它只能 `pbpaste` 拿到文本），所以图片得先落盘才有东西可插。新增 `vim/scripts/clip-to-path.sh`：优先取 `«class PNGf»` 写入 `$TMPDIR/clip-to-path/`，只有 TIFF 时用 `sips` 转成 PNG（agent 只认常见图片扩展名），两者都没有就退回 `pbpaste`，过期 7 天的文件启动时删掉。`vim/vimrc` 里加 `ClipboardPath()` 与两套映射：`<T-v>` 对应 Ghostty 放行下来的 Cmd+V（剪贴板里是文本时 Ghostty 自己粘，vim 收不到这个键，所以不会抢正常粘贴），`<Leader>vp` 是其他终端里的同一入口；插入走表达式寄存器（`"=` 与 `<C-r>=`）而不是 `execute`，避免路径或文本里的特殊字符被当成命令解析。`<T-v>` 而不是 `<D-v>`：vim 把 kitty 键盘协议里的 super 位解成 Meta（term.c 的 `decode_modifiers`，`code & 8` 给 `MOD_MASK_META`），GUI 才有的 Super/Command 修饰符在终端里不存在。脚本按仓库绝对路径调用（与 vimrc 里 `packpath` 指向 `~/.dotfiles/vim` 同一做法），不进 dotdrop 映射表，不需要符号链接与 install/update 同步。
+
 
 ## 2026-10-11
 

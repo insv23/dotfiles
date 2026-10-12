@@ -416,3 +416,17 @@ nnoremap <Leader>f :NERDTreeFind<CR>
 " LeetCode Daily  (<Leader>l 为 LeetCode 分组前缀)
 nnoremap <Leader>lt :update<Bar>execute '!leetcode test ' . split(expand('%:t'), '\.')[0]<CR>
 nnoremap <Leader>lx :execute '!leetcode exec ' . split(expand('%:t'), '\.')[0]<CR>
+
+" 粘贴剪贴板图片的路径
+" 剪贴板里是文本时 Ghostty 自己就把它用掉了（vim 根本收不到这个键），只有「只有图片」时
+" 才会把 Cmd+V 放行下来，所以这里只需处理图片：让帮助脚本把图落盘，再把路径插到光标处。
+" vim 把 kitty 键盘协议里的 super 位解成 Meta（term.c 的 decode_modifiers），所以是 <T-v>，
+" 不是 MacVim GUI 里的 <D-v>。<Leader>vp 是给其他终端留的同一功能入口。
+function! ClipboardPath() abort
+  return trim(system('$HOME/.dotfiles/vim/scripts/clip-to-path.sh'))
+endfunction
+
+nnoremap <silent> <T-v> "=ClipboardPath()<CR>p
+inoremap <silent> <T-v> <C-r>=ClipboardPath()<CR>
+nnoremap <silent> <Leader>vp "=ClipboardPath()<CR>p
+inoremap <silent> <Leader>vp <C-r>=ClipboardPath()<CR>
